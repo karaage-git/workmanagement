@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+/*
+    version情報の定義
+    下記のような番号体系とする。
+    26010000
+    →[最小SDK][メジャーバージョン2桁][マイナーバージョン2桁][パッチバージョン2桁]
+ */
+def MIN_SDK = 26
+def VERSION_CODE_MAJOR = 1  // 最大99
+def VERSION_CODE_MINOR = 0  // 最大99
+def VERSION_CODE_PATCH = 0  // 最大99
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.karaageumai.workmanagement"
+        minSdkVersion MIN_SDK
+        targetSdkVersion 30
+        versionCode getVersionCode(MIN_SDK, VERSION_CODE_MAJOR, VERSION_CODE_MINOR, VERSION_CODE_PATCH)
+        versionName getVersionName(VERSION_CODE_MAJOR, VERSION_CODE_MINOR, VERSION_CODE_PATCH)
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "_debug"
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+// バージョンコードを取得するためのメソッド
+static int getVersionCode(int aMinSDK, int aMajor, int aMinor, int aPatch) {
+    return aMinSDK * 1000000 + aMajor * 10000 + aMinor * 100 + aPatch
+}
+
+// バージョン名を取得するためのメソッド
+static String getVersionName(int aMajor, int aMinor, int aPatch) {
+    return "${aMajor}.${aMinor}.${aPatch}"
+
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}

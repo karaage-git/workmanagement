@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WorkManagement</string>
+
+    <string name="log_tag">WM</string>
+</resources>
