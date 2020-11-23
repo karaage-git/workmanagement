@@ -1,20 +1,14 @@
-package com.karaageumai.workmanagement
+package com.karaageumai.workmanagement.view
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
 
-class MainActivity : AppCompatActivity() {
+class TopMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        Log.i("初めてのログ")
-
-
-
-
+        setContentView(R.layout.activity_top_menu)
 
 
 
