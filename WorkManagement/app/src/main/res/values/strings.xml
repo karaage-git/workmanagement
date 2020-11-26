@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">WorkManagement</string>
 
+   <!--  Todo : タグは考える必要あり  -->
+   <!--  ログ向けのタグ  -->
     <string name="log_tag">WM</string>
+
+    <!--  ツールバー  -->
+    <string name="save">保存</string>
+    <string name="top_menu">トップメニュー</string>
+
+    <!--  トップメニュー  -->
+    <string name="label_top_resister">収入情報の登録</string>
+    <string name="label_top_analyze">登録したデータを解析する</string>
 </resources>

@@ -6,13 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".view.TopMenuActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_register_info"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/label_top_resister"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        app:layout_constraintBottom_toTopOf="@id/btn_show_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <Button
+        android:id="@+id/btn_show_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_top_analyze"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btn_register_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
