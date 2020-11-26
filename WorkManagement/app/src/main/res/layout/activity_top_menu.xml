@@ -6,15 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".view.TopMenuActivity">
 
+
+    <!--  Constraints設定はスタイル側で設定  -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toTopOf="parent"/>
+        style="@style/MyToolBar"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/btn_register_info"

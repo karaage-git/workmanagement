@@ -1,38 +1,24 @@
 package com.karaageumai.workmanagement.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.View
-import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
 
-class TopMenuActivity : AppCompatActivity() {
-
+class ResisterMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Log.i("onCreate()")
 
-        setContentView(R.layout.activity_top_menu)
+        setContentView(R.layout.activity_resister_menu)
 
-        // Todo:全アクティビティで共通処理となるため、BaseActivity的なものを作成してもいいかも
-        // ツールバー読み込み
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.top_menu)
+        toolbar.title = getString(R.string.resister_menu)
         setSupportActionBar(toolbar)
-
-        // 情報登録画面へ遷移
-        val resisterButton: Button = findViewById(R.id.btn_register_info)
-        resisterButton.setOnClickListener {
-            Log.i("go resister")
-            val intent = Intent(this, ResisterMenuActivity::class.java)
-            startActivity(intent)
-        }
 
     }
 
@@ -43,6 +29,4 @@ class TopMenuActivity : AppCompatActivity() {
         inflater.inflate(R.menu.menu_empty, menu)
         return true
     }
-
-
 }
