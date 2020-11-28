@@ -32,12 +32,14 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
         }
 
         debug {
             minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "_debug"
+            debuggable true
         }
 
     }

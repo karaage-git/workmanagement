@@ -1,9 +1,11 @@
 package com.karaageumai.workmanagement.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
@@ -19,6 +21,15 @@ class ResisterMenuActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.resister_menu)
         setSupportActionBar(toolbar)
+
+        val normalButton: Button = findViewById(R.id.btn_normal)
+        normalButton.setOnClickListener{
+            val intent = Intent(this, NormalMenuActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
 
     }
 

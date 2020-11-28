@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.NormalMenuActivity" >
+
+    <!-- ツールバー  -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/MyToolBar"
+        tools:ignore="MissingConstraints" />
+
+    <!--  キーボード表示を制御するため、フォーカスを当てられるようにしておく  -->
+    <TextView
+        android:id="@+id/tv_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/label_resister_normal"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        android:gravity="center"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="@+id/et_target"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar" />
+
+    <!--  YYYYMM入力欄  -->
+    <EditText
+        android:id="@+id/et_target"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_resister_normal_example"
+        android:textSize="30sp"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        android:gravity="center"
+        android:maxLength="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/toolbar"
+        android:autofillHints="no"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/purple_700"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_target" />
+
+
+    <!--  次画面遷移用のボタン  -->
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
