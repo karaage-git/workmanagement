@@ -24,7 +24,7 @@ class ResisterMenuActivity : AppCompatActivity() {
 
         val normalButton: Button = findViewById(R.id.btn_normal)
         normalButton.setOnClickListener{
-            val intent = Intent(this, NormalMenuActivity::class.java)
+            val intent = Intent(this, SalaryMenuActivity::class.java)
             startActivity(intent)
         }
 
