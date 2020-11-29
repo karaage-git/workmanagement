@@ -33,8 +33,8 @@ class CalendarUtil {
 
             // 100で割った余りを月として考える
             val month: Int = yyyymm % 100
-            // 元のyyyymmから月を引いて年を出す
-            val year: Int = yyyymm - month
+            // 100で割った商を年として考える
+            val year: Int = yyyymm / 100
 
             if((month < 1) || (month > 12)) {
                 // 月が1未満 または 12より大きい場合はNG

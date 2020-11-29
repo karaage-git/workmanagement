@@ -3,6 +3,8 @@ package com.karaageumai.workmanagement.view.resister.salary
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MotionEvent
@@ -13,11 +15,13 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.model.ModelFacade
 
-class CheckTargetYearMonthActivity : AppCompatActivity() {
+class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
     private lateinit var mEditText: EditText
     private lateinit var mTextView: TextView
+    private val mModelFacade: ModelFacade = ModelFacade
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,8 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
                 imm.hideSoftInputFromWindow(v.windowToken, 0)
             }
         }
+        mEditText.addTextChangedListener(this)
+
 
         val startButton: Button = findViewById(R.id.btn_start)
         startButton.setOnClickListener {
@@ -66,5 +72,20 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
         // 結果的に、mEditTextのフォーカスが外れ、キーボードが消える
         mTextView.requestFocus()
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+        if(s?.length == 6) {
+            val result = mModelFacade.checkYearMonth(s.toString())
+            Log.i(result.toString())
+        }
     }
 }
