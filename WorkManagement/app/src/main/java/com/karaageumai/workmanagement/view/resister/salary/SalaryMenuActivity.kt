@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view
+package com.karaageumai.workmanagement.view.resister.salary
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity

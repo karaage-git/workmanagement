@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view
+package com.karaageumai.workmanagement.view.resister
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
+import com.karaageumai.workmanagement.view.resister.salary.SalaryMenuActivity
 
 class ResisterMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

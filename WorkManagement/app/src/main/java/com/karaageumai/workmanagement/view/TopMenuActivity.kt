@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
+import com.karaageumai.workmanagement.view.resister.ResisterMenuActivity
 
 class TopMenuActivity : AppCompatActivity() {
 
