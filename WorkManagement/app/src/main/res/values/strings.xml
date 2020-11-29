@@ -38,6 +38,10 @@
         入力形式が正しくありません。\n
         もう一度入力した値を確認してください。
     </string>
+    <string name="check_yyyymm_result_ng_out_range">
+        入力形式が正しくありません。\n
+        2000年〜2050年の間で入力してください。
+    </string>
     <string name="check_yyyymm_result_ok_new">新規データを登録します。</string>
     <string name="check_yyyymm_result_ok_already">
         過去に入力したデータがあります。\n

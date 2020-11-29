@@ -1,6 +1,7 @@
 package com.karaageumai.workmanagement.view.resister.salary
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -16,12 +18,27 @@ import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
+import com.karaageumai.workmanagement.util.CalendarUtil
 
 class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
-    private lateinit var mEditText: EditText
-    private lateinit var mTextView: TextView
-    private val mModelFacade: ModelFacade = ModelFacade
+
+    companion object {
+        // 各View
+        private lateinit var mEditText: EditText
+        private lateinit var mTextView: TextView
+        private lateinit var mResultTextView: TextView
+        private lateinit var mStartButton: Button
+
+        // ModelFacade
+        private val mModelFacade: ModelFacade = ModelFacade
+
+        private lateinit var mYearMonth: String
+        private lateinit var mResultStatus: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE
+
+        private const val KEY_CHECK_RESULT: String = "KEY_CHECK_RESULT"
+        private const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +53,16 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
         // 説明文
         mTextView = findViewById(R.id.tv_normal)
-
         // 入力エリア
+        mEditText = findViewById(R.id.et_target)
+        // 入力のチェック結果を出力するTextView
+        mResultTextView = findViewById(R.id.tv_message)
+        // スタートボタン
+        mStartButton = findViewById(R.id.btn_start)
+
         /*
             自身以外にフォーカスが移った際に、キーボードを消す
          */
-        mEditText = findViewById(R.id.et_target)
         mEditText.setOnFocusChangeListener { v, hasFocus ->
             if(!hasFocus) {
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -50,10 +71,15 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
         }
         mEditText.addTextChangedListener(this)
 
-
-        val startButton: Button = findViewById(R.id.btn_start)
-        startButton.setOnClickListener {
-
+        // 初期表示は非表示しておく
+        mStartButton.visibility = View.GONE
+        mStartButton.setOnClickListener {
+            val intent: Intent = Intent(this, SalaryActivity::class.java)
+            intent.putExtra(KEY_CHECK_RESULT, mResultStatus)
+            intent.putExtra(KEY_YEAR_MONTH, mYearMonth)
+            startActivity(intent)
+            // 戻ってこられないようにしておく
+            finish()
         }
 
     }
@@ -84,8 +110,37 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {
         if(s?.length == 6) {
-            val result = mModelFacade.checkYearMonth(s.toString())
-            Log.i(result.toString())
+
+            mYearMonth = s.toString()
+            mResultStatus = mModelFacade.checkYearMonth(mYearMonth)
+
+            // 入力文字が6桁のみのときに判定を行う
+            when(mResultStatus) {
+                // 新しいエントリー
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
+                    mResultTextView.text = getString(R.string.check_yyyymm_result_ok_new)
+                    mStartButton.visibility = View.VISIBLE
+                }
+                // すでに存在する場合
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
+                    mResultTextView.text = getString(R.string.check_yyyymm_result_ok_already)
+                    mStartButton.visibility = View.VISIBLE
+                }
+                // 形式が異なる場合
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT -> {
+                    mResultTextView.text = getString(R.string.check_yyyymm_result_ng_illegal)
+                    mStartButton.visibility = View.GONE
+                }
+                // 範囲外の数値が来た場合
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE -> {
+                    mResultTextView.text = getString(R.string.check_yyyymm_result_ng_out_range)
+                    mStartButton.visibility = View.GONE
+                }
+            }
+        } else {
+            // 結果をクリア
+            mResultTextView.text = ""
+            mStartButton.visibility = View.GONE
         }
     }
 }

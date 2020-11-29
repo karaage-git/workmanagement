@@ -1,10 +1,17 @@
 package com.karaageumai.workmanagement.model.salary
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.time.YearMonth
 
+@Entity(tableName = "salary_table")
 data class SalaryInfo(
-    // ターゲットとなる年月
-    val yearMonth: YearMonth,
+    // 主キー
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    // ターゲットとなる年
+    val year: Int,
+    // ターゲットとなる月
+    val month: Int,
     // 勤務日数（半休を考慮）
     var workingDay: Float = 0f,
     // 勤務時間（1時間未満を考慮）
