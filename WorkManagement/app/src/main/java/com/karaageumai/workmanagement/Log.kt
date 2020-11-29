@@ -1,9 +1,6 @@
-package com.karaageumai.workmanagement.util
+package com.karaageumai.workmanagement
 
 import android.util.Log
-import com.karaageumai.workmanagement.BuildConfig
-import com.karaageumai.workmanagement.MainApplication
-import com.karaageumai.workmanagement.R
 
 class Log {
 

@@ -12,7 +12,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.util.Log
+import com.karaageumai.workmanagement.Log
 
 class CheckTargetYearMonthActivity : AppCompatActivity() {
 

@@ -2,7 +2,6 @@ package com.karaageumai.workmanagement
 
 import android.app.Application
 import android.content.Context
-import com.karaageumai.workmanagement.util.Log
 
 class MainApplication : Application() {
 

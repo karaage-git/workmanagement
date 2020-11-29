@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.model
+package com.karaageumai.workmanagement.model.salary
 
 import java.time.YearMonth
 
