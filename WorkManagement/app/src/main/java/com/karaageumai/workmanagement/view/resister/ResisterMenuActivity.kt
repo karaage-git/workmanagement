@@ -9,7 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
-import com.karaageumai.workmanagement.view.resister.salary.SalaryMenuActivity
+import com.karaageumai.workmanagement.view.resister.salary.CheckTargetYearMonthActivity
 
 class ResisterMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class ResisterMenuActivity : AppCompatActivity() {
 
         val normalButton: Button = findViewById(R.id.btn_normal)
         normalButton.setOnClickListener{
-            val intent = Intent(this, SalaryMenuActivity::class.java)
+            val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
             startActivity(intent)
         }
 

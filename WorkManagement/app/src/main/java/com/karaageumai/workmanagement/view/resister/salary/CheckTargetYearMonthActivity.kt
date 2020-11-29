@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.Log
 
-class SalaryMenuActivity : AppCompatActivity() {
+class CheckTargetYearMonthActivity : AppCompatActivity() {
 
     private lateinit var mEditText: EditText
     private lateinit var mTextView: TextView
@@ -24,7 +24,7 @@ class SalaryMenuActivity : AppCompatActivity() {
 
         Log.i("onCreate()")
 
-        setContentView(R.layout.activity_salary_menu)
+        setContentView(R.layout.activity_check_target_year_month_menu)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.resister_normal_menu)
