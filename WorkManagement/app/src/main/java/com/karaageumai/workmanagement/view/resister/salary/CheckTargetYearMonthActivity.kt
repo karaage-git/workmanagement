@@ -24,21 +24,21 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
 
     companion object {
-        // 各View
-        private lateinit var mEditText: EditText
-        private lateinit var mTextView: TextView
-        private lateinit var mResultTextView: TextView
-        private lateinit var mStartButton: Button
-
-        // ModelFacade
-        private val mModelFacade: ModelFacade = ModelFacade
-
-        private lateinit var mYearMonth: String
-        private lateinit var mResultStatus: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE
-
         private const val KEY_CHECK_RESULT: String = "KEY_CHECK_RESULT"
         private const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
     }
+
+    // 各View
+    private lateinit var mEditText: EditText
+    private lateinit var mTextView: TextView
+    private lateinit var mResultTextView: TextView
+    private lateinit var mStartButton: Button
+
+    // ModelFacade
+    private val mModelFacade: ModelFacade = ModelFacade
+
+    private lateinit var mYearMonth: String
+    private lateinit var mResultStatus: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +74,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
         // 初期表示は非表示しておく
         mStartButton.visibility = View.INVISIBLE
         mStartButton.setOnClickListener {
-            val intent: Intent = Intent(this, SalaryActivity::class.java)
+            val intent = Intent(this, SalaryActivity::class.java)
             intent.putExtra(KEY_CHECK_RESULT, mResultStatus)
             intent.putExtra(KEY_YEAR_MONTH, mYearMonth)
             startActivity(intent)
