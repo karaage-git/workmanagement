@@ -37,5 +37,7 @@ data class SalaryInfo(
     // 住民税
     var residentTax: Int = 0,
     // その他
-    var other: Int = 0
+    var other: Int = 0,
+    // 完了フラグ
+    var isComplete: Boolean = false
 )
