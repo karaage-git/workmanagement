@@ -72,7 +72,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
         mEditText.addTextChangedListener(this)
 
         // 初期表示は非表示しておく
-        mStartButton.visibility = View.GONE
+        mStartButton.visibility = View.INVISIBLE
         mStartButton.setOnClickListener {
             val intent: Intent = Intent(this, SalaryActivity::class.java)
             intent.putExtra(KEY_CHECK_RESULT, mResultStatus)
@@ -129,18 +129,18 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
                 // 形式が異なる場合
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT -> {
                     mResultTextView.text = getString(R.string.check_yyyymm_result_ng_illegal)
-                    mStartButton.visibility = View.GONE
+                    mStartButton.visibility = View.INVISIBLE
                 }
                 // 範囲外の数値が来た場合
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE -> {
                     mResultTextView.text = getString(R.string.check_yyyymm_result_ng_out_range)
-                    mStartButton.visibility = View.GONE
+                    mStartButton.visibility = View.INVISIBLE
                 }
             }
         } else {
             // 結果をクリア
             mResultTextView.text = ""
-            mStartButton.visibility = View.GONE
+            mStartButton.visibility = View.INVISIBLE
         }
     }
 }

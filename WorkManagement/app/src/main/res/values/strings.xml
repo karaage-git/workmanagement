@@ -33,6 +33,11 @@
     </string>
     <string name="label_resister_normal_example">(例)202001</string>
 
+    <!--  Salary  -->
+    <string name="tab_work">勤怠状態</string>
+    <string name="tab_income">収入</string>
+    <string name="tab_deduction">控除</string>
+
     <!--  カレンダーUtil  -->
     <string name="check_yyyymm_result_ng_illegal">
         入力形式が正しくありません。\n
@@ -47,5 +52,7 @@
         過去に入力したデータがあります。\n
         データの修正を行うことができます。
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
