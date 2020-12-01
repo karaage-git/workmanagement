@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.model.salary
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.YearMonth
@@ -13,31 +14,31 @@ data class SalaryInfo(
     // ターゲットとなる月
     val month: Int,
     // 勤務日数（半休を考慮）
-    var workingDay: Float = 0f,
+    @ColumnInfo(name = "working_day") var workingDay: Float = 0f,
     // 勤務時間（1時間未満を考慮）
-    var workingTime: Float = 0f,
+    @ColumnInfo(name = "working_time") var workingTime: Float = 0f,
     // 残業時間（1時間未満を考慮）
     var overtime: Float = 0f,
     // 有給休暇日数
-    var paidHolidays: Float = 0f,
+    @ColumnInfo(name = "paid_holidays") var paidHolidays: Float = 0f,
     // 給料
     var salary: Int = 0,
     // 残業手当
-    var overtimeSalary: Int = 0,
+    @ColumnInfo(name = "overtime_salary") var overtimeSalary: Int = 0,
     // 交通費など
-    var transportationExpenses: Int = 0,
+    @ColumnInfo(name = "transportation_expenses") var transportationExpenses: Int = 0,
     // 健康保険料
-    var healthInsuranceFee: Int = 0,
+    @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
     // 年金保険料
-    var pensionFee: Int = 0,
+    @ColumnInfo(name = "pension_fee") var pensionFee: Int = 0,
     // 雇用保険料
-    var employmentInsuranceFee: Int = 0,
+    @ColumnInfo(name = "employment_insurance_fee") var employmentInsuranceFee: Int = 0,
     // 所得税
-    var incomeTax: Int = 0,
+    @ColumnInfo(name = "income_tax") var incomeTax: Int = 0,
     // 住民税
-    var residentTax: Int = 0,
+    @ColumnInfo(name = "resident_tax") var residentTax: Int = 0,
     // その他
     var other: Int = 0,
     // 完了フラグ
-    var isComplete: Boolean = false
+    @ColumnInfo(name = "is_complete") var isComplete: Boolean = false
 )
