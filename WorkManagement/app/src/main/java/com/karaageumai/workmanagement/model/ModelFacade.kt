@@ -1,11 +1,10 @@
 package com.karaageumai.workmanagement.model
 
-import android.content.Context
 import androidx.room.Room
-import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
+import kotlinx.coroutines.runBlocking
 
 // 各APIの入り口を管理するクラス
 object ModelFacade {
@@ -20,8 +19,17 @@ object ModelFacade {
     }
 
     // 年、月の情報から、DBにデータが存在するかチェックする
-    suspend fun getSalaryDataWith(aYear: Int, aMonth: Int): List<SalaryInfo> {
-        return mDao.getSalaryWithYearMonth(aYear, aMonth)
+    fun getSalaryDataWith(aYear: Int, aMonth: Int): List<SalaryInfo> {
+        return runBlocking {
+            mDao.getSalaryWithYearMonth(aYear, aMonth)
+        }
+    }
+
+    fun insertSalaryInfo(aSalaryInfo: SalaryInfo) {
+        runBlocking {
+            mDao.insert(aSalaryInfo)
+        }
+        return
     }
 
 }

@@ -4,6 +4,7 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import kotlinx.coroutines.runBlocking
+import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
 class CalendarUtil {
@@ -16,7 +17,8 @@ class CalendarUtil {
             RESULT_OK_NEW_ENTRY,
             RESULT_OK_ALREADY_EXIST,
             RESULT_NG_ILLEGAL_FORMAT,
-            RESULT_NG_OUT_OF_RANGE
+            RESULT_NG_OUT_OF_RANGE,
+            ERROR
         }
         /**
          * 入力されたYYYYMMが有効な値かチェックする
@@ -29,18 +31,14 @@ class CalendarUtil {
                 return CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT
             }
 
-            val yyyymm: Int = try {
-                aYYYYMM.toInt()
-            } catch (e: NumberFormatException) {
-                // 入力値を数値に変換できなかった場合は終了
-                Log.i("argument is not Integer", e)
+            val yearMonthPair = try {
+                splitYearMonth(aYYYYMM)
+            } catch (e: IllegalArgumentException) {
                 return CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT
             }
 
-            // 100で割った余りを月として考える
-            val month: Int = yyyymm % 100
-            // 100で割った商を年として考える
-            val year: Int = yyyymm / 100
+            val year: Int = yearMonthPair.first
+            val month: Int = yearMonthPair.second
 
             if((month < 1) || (month > 12)) {
                 // 月が1未満 または 12より大きい場合はNG
@@ -54,10 +52,8 @@ class CalendarUtil {
                 return CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE
             }
 
-            // コルーチンでDBアクセス
-            val list: List<SalaryInfo> = runBlocking {
-                modelFacade.getSalaryDataWith(year, month)
-            }
+            // DBアクセス
+            val list: List<SalaryInfo> = modelFacade.getSalaryDataWith(year, month)
 
             // 検索結果が1件以上だった場合は既存データが存在するとみなす
             if(list.isNotEmpty()) {
@@ -68,6 +64,25 @@ class CalendarUtil {
             Log.i("OK_NEW_ENTRY")
             return CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY
 
+        }
+
+        @Throws(IllegalArgumentException::class)
+        fun splitYearMonth(aYYYYMM: String): Pair<Int, Int>  {
+
+            val yyyymm: Int = try {
+                aYYYYMM.toInt()
+            } catch (e: NumberFormatException) {
+                // 入力値を数値に変換できなかった場合は終了
+                Log.i("argument is not Integer", e)
+                throw IllegalArgumentException("$aYYYYMM is not Int.")
+            }
+
+            // 100で割った余りを月として考える
+            val month: Int = yyyymm % 100
+            // 100で割った商を年として考える
+            val year: Int = yyyymm / 100
+
+            return Pair(year, month)
         }
 
     }

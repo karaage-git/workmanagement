@@ -8,7 +8,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
+import com.karaageumai.workmanagement.model.ModelFacade
+import com.karaageumai.workmanagement.model.salary.SalaryInfo
+import com.karaageumai.workmanagement.util.CalendarUtil
 
 class SalaryActivity : AppCompatActivity() {
 
@@ -17,13 +21,41 @@ class SalaryActivity : AppCompatActivity() {
         private const val PAGE_OF_WORK_STATUS = 0
         private const val PAGE_OF_INCOME = 1
         private const val PAGE_OF_DEDUCTION = 2
+        lateinit var mSalaryInfo: SalaryInfo
     }
 
+    val mModelFacade: ModelFacade = ModelFacade
     lateinit var mViewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_salary)
+
+        // intentからリザルトコードを取り出し、nullチェック、型チェックを行った上で変数に格納する
+        val checkResult: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE =
+                (intent.extras?.getSerializable(CheckTargetYearMonthActivity.KEY_CHECK_RESULT) ?: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.ERROR).let { it ->
+                    if(it is CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE) {
+                        it
+                    } else {
+                        CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.ERROR
+                    }
+                }
+
+        // intentから年月を表す文字列を取得する
+        val yearMonth: String = intent.extras?.getString(CheckTargetYearMonthActivity.KEY_YEAR_MONTH, "") ?: ""
+
+        // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
+        if ((yearMonth.isEmpty()) || (checkResult == CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.ERROR)) {
+            Log.i("can not get data. go to TopMenu.")
+            // Todo : ダイアログとか出す
+        }
+
+        val yearMonthPair: Pair<Int, Int> = CalendarUtil.splitYearMonth(yearMonth)
+        val year: Int = yearMonthPair.first
+        val month: Int = yearMonthPair.second
+
+        // データを作成
+        mSalaryInfo = SalaryInfo(0, year, month)
 
         mViewPager = findViewById(R.id.view_pager)
 
@@ -48,6 +80,8 @@ class SalaryActivity : AppCompatActivity() {
             }
 
         }.attach()
+
+        //mModelFacade.insertSalaryInfo(mSalaryInfo)
 
 
     }

@@ -24,8 +24,8 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
 
     companion object {
-        private const val KEY_CHECK_RESULT: String = "KEY_CHECK_RESULT"
-        private const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
+        const val KEY_CHECK_RESULT: String = "KEY_CHECK_RESULT"
+        const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
     }
 
     // 各View
