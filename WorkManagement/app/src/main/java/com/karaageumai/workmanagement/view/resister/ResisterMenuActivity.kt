@@ -20,7 +20,7 @@ class ResisterMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_resister_menu)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.resister_menu)
+        toolbar.title = getString(R.string.toolbar_title_resistermenu)
         setSupportActionBar(toolbar)
 
         val normalButton: Button = findViewById(R.id.btn_normal)

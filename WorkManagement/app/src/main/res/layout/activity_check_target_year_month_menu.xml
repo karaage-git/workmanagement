@@ -27,7 +27,7 @@
         android:id="@+id/tv_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/label_resister_normal"
+        android:text="@string/message_checktargetyearmonth_when"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         android:gravity="center"
@@ -39,7 +39,7 @@
         android:id="@+id/et_target"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="@string/label_resister_normal_example"
+        android:hint="@string/edittext_hint_checktargetyearmonth_yyyymm"
         android:textSize="30sp"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
@@ -57,6 +57,5 @@
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         android:gravity="center" />
-
 
 </LinearLayout>

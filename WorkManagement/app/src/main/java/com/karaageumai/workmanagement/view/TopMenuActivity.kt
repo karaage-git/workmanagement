@@ -23,7 +23,7 @@ class TopMenuActivity : AppCompatActivity() {
         // Todo:全アクティビティで共通処理となるため、BaseActivity的なものを作成してもいいかも
         // ツールバー読み込み
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.top_menu)
+        toolbar.title = getString(R.string.toolbar_title_topmenu)
         setSupportActionBar(toolbar)
 
         // 情報登録画面へ遷移

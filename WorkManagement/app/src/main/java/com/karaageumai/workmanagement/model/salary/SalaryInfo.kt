@@ -3,6 +3,7 @@ package com.karaageumai.workmanagement.model.salary
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 import java.time.YearMonth
 
 @Entity(tableName = "salary_table")
@@ -14,13 +15,13 @@ data class SalaryInfo(
     // ターゲットとなる月
     val month: Int,
     // 勤務日数（半休を考慮）
-    @ColumnInfo(name = "working_day") var workingDay: Float = 0f,
+    @ColumnInfo(name = "working_day") var workingDay: Double = 0.0,
     // 勤務時間（1時間未満を考慮）
-    @ColumnInfo(name = "working_time") var workingTime: Float = 0f,
+    @ColumnInfo(name = "working_time") var workingTime: Double = 0.0,
     // 残業時間（1時間未満を考慮）
-    var overtime: Float = 0f,
+    var overtime: Double = 0.0,
     // 有給休暇日数
-    @ColumnInfo(name = "paid_holidays") var paidHolidays: Float = 0f,
+    @ColumnInfo(name = "paid_holidays") var paidHolidays: Double = 0.0,
     // 給料
     var salary: Int = 0,
     // 残業手当
@@ -41,4 +42,4 @@ data class SalaryInfo(
     var other: Int = 0,
     // 完了フラグ
     @ColumnInfo(name = "is_complete") var isComplete: Boolean = false
-)
+) : Serializable

@@ -2,57 +2,109 @@
     <string name="app_name">WorkManagement</string>
 
     <!--  Todo:リソース名は別途考える必要あり。何か命名規則が必要。  -->
+    <!--
+        ■命名規則
+            0.画面名
+                Activity、Fragmentのフルネームor略称
+            1.ツールバーに表示する画面タイトル
+                toolbar_title_<画面名>
+            2.ユーザに表示するメッセージ
+                message_<メッセージ概要>
+            3.ボタンに表示するテキスト
+                btn_<画面名>_<テキスト概要>
+            4.タブタイトル
+                tab_title_<画面名>
+            5.共通（「保存」とか「スタート」とか）
+                短い英単語で表現
+                例：save, start
+            6.EditTextのヒント等
+                edittext_hint_<画面名>_<ヒントの内容>
+            7.レイアウトファイルに存在する項目名など
+                layoutitem_<画面名>_<アイテムの説明>
 
-    <!--  Todo : タグは考える必要あり  -->
+            追加があれば足していく...
+    -->
+
     <!--  ログ向けのタグ  -->
     <string name="log_tag">WM</string>
 
     <!--  共通  -->
     <string name="start">スタート！</string>
+    <string name="save">保存</string>
 
     <!--  ツールバー  -->
-    <string name="save">保存</string>
-    <string name="top_menu">トップメニュー</string>
-    <string name="resister_menu">登録トップ</string>
-    <string name="resister_normal_menu">毎月の給料を登録/修正</string>
+
+
+
 
     <!--  トップメニュー  -->
-    <string name="label_top_resister">収入情報の登録/修正</string>
-    <string name="label_top_analyze">登録したデータを解析する</string>
-    <string name="label_top_setting">基本設定</string>
+    <string name="toolbar_title_topmenu">トップメニュー</string>
+    <string name="btn_topmenu_resister">収入情報の登録/修正</string>
+    <string name="btn_topmenu_analyze">登録したデータを解析する</string>
+    <string name="btn_topmenu_setting">基本設定</string>
 
     <!--  登録トップメニュー  -->
-    <string name="label_resister_top_normal">毎月の給料を登録/修正</string>
-    <string name="label_resister_top_bonus">ボーナスを登録/修正</string>
+    <string name="toolbar_title_resistermenu">登録トップ</string>
+    <string name="btn_resistermenu_normal">毎月の給料を登録/修正</string>
+    <string name="btn_resistermenu_bonus">ボーナスを登録/修正</string>
 
     <!--  毎月の給料メニュー  -->
-    <string name="label_resister_normal">
+    <string name="toolbar_title_checktargetyearmonth">毎月の給料を登録/修正</string>
+    <string name="message_checktargetyearmonth_when">
         いつのデータを入力しますか？\n
         「YYYYMM形式」で入力してください。\n
         例（2020年1月の場合）：202001
     </string>
-    <string name="label_resister_normal_example">(例)202001</string>
-
-    <!--  Salary  -->
-    <string name="tab_work">勤怠状態</string>
-    <string name="tab_income">収入</string>
-    <string name="tab_deduction">控除</string>
-
-    <!--  カレンダーUtil  -->
-    <string name="check_yyyymm_result_ng_illegal">
+    <string name="edittext_hint_checktargetyearmonth_yyyymm">(例)202001</string>
+    <string name="message_yyyymm_illegal">
         入力形式が正しくありません。\n
         もう一度入力した値を確認してください。
     </string>
-    <string name="check_yyyymm_result_ng_out_range">
+    <string name="message_yyyymm_out_range">
         入力形式が正しくありません。\n
         2000年〜2050年の間で入力してください。
     </string>
-    <string name="check_yyyymm_result_ok_new">新規データを登録します。</string>
-    <string name="check_yyyymm_result_ok_already">
-        過去に入力したデータがあります。\n
-        データの修正を行うことができます。
+    <string name="message_yyyymm_result_ok_new">新規データを登録します。</string>
+    <string name="message_yyyymm_result_ok_already">
+        登録済み または 入力途中のデータがあります。
+        入力データの修正を行うことができます。
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Salary  -->
+    <string name="toolbar_title_salary">給料情報入力</string>
+    <string name="tab_title_workstatus">勤怠状態</string>
+    <string name="tab_title_income">収入</string>
+    <string name="tab_title_deduction">控除</string>
+
+    <!--  勤怠情報入力フラグメント  -->
+    <string name="layoutitem_workstatus_top">合計労働時間</string>
+    <string name="layoutitem_workstatus_top_unit">時間</string>
+    <string name="layoutitem_workstatus_workingday_title">勤務日数</string>
+    <string name="layoutitem_workstatus_workingday_subtitle">【入力必須項目】【数値のみ】0.5日単位で入力可能です。</string>
+    <string name="edittext_hint_workstatus_workingday">例：18.5</string>
+    <string name="layoutitem_workstatus_workingday_unit">日</string>
+    <string name="layoutitem_workstatus_workingday_error">
+        入力形式が正しくありません。\n
+        0.5日単位で入力してください。(最大は31です。)
+    </string>
+
+    <string name="layoutitem_workstatus_workingtime_title">所定労働時間</string>
+    <string name="layoutitem_workstatus_workingtime_subtitle">【入力必須項目】【数値のみ】0.1時間単位で入力可能です。</string>
+    <string name="edittext_hint_workstatus_workingtime">例：150</string>
+    <string name="layoutitem_workstatus_workingtime_unit">時間</string>
+    <string name="layoutitem_workstatus_workingtime_error">
+        入力形式が正しくありません。\n
+        0.1時間単位で入力してください。(最大は744です。)
+    </string>
+
+    <string name="layoutitem_workstatus_overtime_title">残業時間</string>
+    <string name="layoutitem_workstatus_overtime_subtitle">【入力必須項目】【数値のみ】0.1時間単位で入力可能です。</string>
+    <string name="edittext_hint_workstatus_overtime">例：19.3</string>
+    <string name="layoutitem_workstatus_overtime_unit">時間</string>
+    <string name="layoutitem_workstatus_overtime_error">
+        入力形式が正しくありません。\n
+        0.1時間単位で入力してください。(最大は744です。)
+    </string>
+
 
 </resources>

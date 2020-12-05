@@ -48,7 +48,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
         setContentView(R.layout.activity_check_target_year_month_menu)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.resister_normal_menu)
+        toolbar.title = getString(R.string.toolbar_title_checktargetyearmonth)
         setSupportActionBar(toolbar)
 
         // 説明文
@@ -118,22 +118,22 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
             when(mResultStatus) {
                 // 新しいエントリー
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
-                    mResultTextView.text = getString(R.string.check_yyyymm_result_ok_new)
+                    mResultTextView.text = getString(R.string.message_yyyymm_result_ok_new)
                     mStartButton.visibility = View.VISIBLE
                 }
                 // すでに存在する場合
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
-                    mResultTextView.text = getString(R.string.check_yyyymm_result_ok_already)
+                    mResultTextView.text = getString(R.string.message_yyyymm_result_ok_already)
                     mStartButton.visibility = View.VISIBLE
                 }
                 // 形式が異なる場合
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT -> {
-                    mResultTextView.text = getString(R.string.check_yyyymm_result_ng_illegal)
+                    mResultTextView.text = getString(R.string.message_yyyymm_illegal)
                     mStartButton.visibility = View.INVISIBLE
                 }
                 // 範囲外の数値が来た場合
                 CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE -> {
-                    mResultTextView.text = getString(R.string.check_yyyymm_result_ng_out_range)
+                    mResultTextView.text = getString(R.string.message_yyyymm_out_range)
                     mStartButton.visibility = View.INVISIBLE
                 }
             }

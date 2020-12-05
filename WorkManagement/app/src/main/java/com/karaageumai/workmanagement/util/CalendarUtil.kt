@@ -3,7 +3,6 @@ package com.karaageumai.workmanagement.util
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import kotlinx.coroutines.runBlocking
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
@@ -52,11 +51,8 @@ class CalendarUtil {
                 return CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE
             }
 
-            // DBアクセス
-            val list: List<SalaryInfo> = modelFacade.getSalaryDataWith(year, month)
-
-            // 検索結果が1件以上だった場合は既存データが存在するとみなす
-            if(list.isNotEmpty()) {
+            // 既存データが存在するかチェック
+            if(modelFacade.isExistSalaryInfo(year, month)) {
                 Log.i("OK_ALREADY_EXIST")
                 return CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST
             }
