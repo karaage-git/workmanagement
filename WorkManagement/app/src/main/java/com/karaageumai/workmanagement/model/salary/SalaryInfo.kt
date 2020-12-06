@@ -26,8 +26,8 @@ data class SalaryInfo(
     var salary: Int = 0,
     // 残業手当
     @ColumnInfo(name = "overtime_salary") var overtimeSalary: Int = 0,
-    // 交通費など
-    @ColumnInfo(name = "transportation_expenses") var transportationExpenses: Int = 0,
+    // その他（資格報奨金など）
+    @ColumnInfo(name = "other_income") var otherIncome: Int = 0,
     // 健康保険料
     @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
     // 年金保険料
