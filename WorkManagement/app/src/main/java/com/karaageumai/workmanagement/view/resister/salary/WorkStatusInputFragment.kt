@@ -20,13 +20,15 @@ import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
 private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
+private const val MAX_DAYS_PER_MONTH = 31.0
+private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
 
 /**
  * A simple [Fragment] subclass.
  * Use the [WorkStatusInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
+class WorkStatusInputFragment : SalaryInfoObservableFragment() {
 
     private lateinit var mView: View
     private lateinit var mSalaryInfo: SalaryInfo
@@ -47,7 +49,6 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            // Todo : 型チェックが必要
             mSalaryInfo = it.getSerializable(KEY_SALARY_INFO) as SalaryInfo
             mIsNewEntry = it.getBoolean(KEY_IS_NEW_ENTRY)
         }
@@ -99,7 +100,7 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
     override fun refreshSalaryInfo(aSalaryInfo: SalaryInfo) {
         mSalaryInfo = aSalaryInfo
         Log.i("test3:" + mSalaryInfo.workingDay)
-        updateDisplay()
+        //updateDisplay()
     }
 
     fun initView() {
@@ -136,23 +137,7 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
 
     }
 
-    // アイコンとエラーメッセージの表示切り替え
-    private fun showAndChangeIcon(
-            aImageView: ImageView,
-            aResId: Int,
-            aErrorMessageTextView: TextView,
-            isShowMessage: Boolean) {
-        val context: Context? = context
-        if(context != null) {
-            aImageView.setImageDrawable(getDrawable(context, aResId))
-            aImageView.visibility = View.VISIBLE
-        }
-        aErrorMessageTextView.visibility = if (isShowMessage) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
-    }
+
 
     // 表示データの最新化
     private fun updateDisplay() {
@@ -193,7 +178,7 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
                             // 0.5単位だったら有効
                             val temp: Double = it.toString().toDouble()
                             if(NumberFormatUtil.checkNumberFormat05(s.toString())) {
-                                if(temp > 31.0) {
+                                if(temp > MAX_DAYS_PER_MONTH) {
                                     // 1ヶ月の最大日数超えていたら無効
                                     showAndChangeIcon(mWorkingDayIcon, R.drawable.ic_baseline_error_24, mWorkingDayErrorTextView, true)
                                     0.0
@@ -219,7 +204,7 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
                             // 0.1単位だったら有効
                             val temp: Double = it.toString().toDouble()
                             if(NumberFormatUtil.checkNumberFormat01(s.toString())) {
-                                if(temp > 744.0) {
+                                if(temp > MAX_TIME_PER_MONTH) {
                                     // 1ヶ月の最大日数超えていたら無効
                                     showAndChangeIcon(mWorkingTimeIcon, R.drawable.ic_baseline_error_24, mWorkingTimeErrorTextView, true)
                                     0.0
@@ -245,7 +230,7 @@ class WorkStatusInputFragment() : SalaryInfoObservableFragment() {
                             // 0.1単位だったら有効
                             val temp: Double = it.toString().toDouble()
                             if(NumberFormatUtil.checkNumberFormat01(s.toString())) {
-                                if(temp > 744.0) {
+                                if(temp > MAX_TIME_PER_MONTH) {
                                     // 1ヶ月の最大日数超えていたら無効
                                    showAndChangeIcon(mOvertimeIcon, R.drawable.ic_baseline_error_24, mOvertimeErrorTextView, true)
                                     0.0

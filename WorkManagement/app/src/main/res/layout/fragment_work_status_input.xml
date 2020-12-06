@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0"
+            android:text="@string/zero"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:gravity="end"/>
@@ -157,6 +157,8 @@
                 android:id="@+id/tv_overtime_error"
                 style="@style/InputItemErrorText"
                 android:text="@string/layoutitem_workstatus_overtime_error"/>
+
+            <!--  Todo : 有給の項目を足す  -->
 
         </LinearLayout>
 

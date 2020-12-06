@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">WorkManagement</string>
 
-    <!--  Todo:リソース名は別途考える必要あり。何か命名規則が必要。  -->
     <!--
         ■命名規則
             0.画面名
@@ -31,6 +30,7 @@
     <!--  共通  -->
     <string name="start">スタート！</string>
     <string name="save">保存</string>
+    <string name="zero">0</string>
 
     <!--  ツールバー  -->
 
@@ -79,8 +79,9 @@
     <!--  勤怠情報入力フラグメント  -->
     <string name="layoutitem_workstatus_top">合計労働時間</string>
     <string name="layoutitem_workstatus_top_unit">時間</string>
+
     <string name="layoutitem_workstatus_workingday_title">勤務日数</string>
-    <string name="layoutitem_workstatus_workingday_subtitle">【入力必須項目】【数値のみ】0.5日単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_workingday_subtitle">【入力必須】【数値のみ】0.5日単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_workingday">例：18.5</string>
     <string name="layoutitem_workstatus_workingday_unit">日</string>
     <string name="layoutitem_workstatus_workingday_error">
@@ -89,7 +90,7 @@
     </string>
 
     <string name="layoutitem_workstatus_workingtime_title">所定労働時間</string>
-    <string name="layoutitem_workstatus_workingtime_subtitle">【入力必須項目】【数値のみ】0.1時間単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_workingtime_subtitle">【入力必須】【数値のみ】0.1時間単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_workingtime">例：150</string>
     <string name="layoutitem_workstatus_workingtime_unit">時間</string>
     <string name="layoutitem_workstatus_workingtime_error">
@@ -98,12 +99,50 @@
     </string>
 
     <string name="layoutitem_workstatus_overtime_title">残業時間</string>
-    <string name="layoutitem_workstatus_overtime_subtitle">【入力必須項目】【数値のみ】0.1時間単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_overtime_subtitle">【入力必須】【数値のみ】0.1時間単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_overtime">例：19.3</string>
     <string name="layoutitem_workstatus_overtime_unit">時間</string>
     <string name="layoutitem_workstatus_overtime_error">
         入力形式が正しくありません。\n
         0.1時間単位で入力してください。(最大は744です。)
+    </string>
+
+
+    <!--  収入情報入力フラグメント  -->
+    <string name="layoutitem_income_top">合計収入</string>
+    <string name="layoutitem_income_top_unit">円</string>
+
+    <string name="layoutitem_income_baseincome_title">基本給</string>
+    <string name="layoutitem_income_baseincome_subtitle">【入力必須】【数値のみ】1円単位で入力可能です。</string>
+    <string name="edittext_hint_income_baseincome">例：250000</string>
+    <string name="layoutitem_income_baseincome_unit">円</string>
+    <string name="layoutitem_income_baseincome_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
+
+    <string name="layoutitem_income_overtime_title">残業手当</string>
+    <string name="layoutitem_income_overtime_subtitle">
+        【入力任意】【数値のみ】1円単位で入力可能です。\n
+        （未入力の場合は0で登録されます。）
+    </string>
+    <string name="edittext_hint_income_overtime">例：50000</string>
+    <string name="layoutitem_income_overtime_unit">円</string>
+    <string name="layoutitem_income_overtime_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
+
+    <string name="layoutitem_income_other_title">その他（資格報奨金など）</string>
+    <string name="layoutitem_income_other_subtitle">
+        【入力任意】【数値のみ】1円単位で入力可能です。\n
+        （未入力の場合は0で登録されます。）
+    </string>
+    <string name="edittext_hint_income_other">例：30000</string>
+    <string name="layoutitem_income_other_unit">円</string>
+    <string name="layoutitem_income_other_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
     </string>
 
 

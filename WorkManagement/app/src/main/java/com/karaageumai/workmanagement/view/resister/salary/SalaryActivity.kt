@@ -164,7 +164,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = IncomeInputFragment.newInstance(mSalaryInfo)
+                    val fragment: SalaryInfoObservableFragment = IncomeInputFragment.newInstance(mSalaryInfo, mIsNewEntry)
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
                     // マップにフラグメントを紐付け
