@@ -31,24 +31,6 @@ abstract class SalaryInfoObservableFragment : Fragment() {
         }
     }
 
-    // アイコンとエラーメッセージの表示切り替え
-    fun showAndChangeIcon(
-            aImageView: ImageView,
-            aResId: Int,
-            aErrorMessageTextView: TextView,
-            isShowMessage: Boolean) {
-        val context: Context? = context
-        if(context != null) {
-            aImageView.setImageDrawable(ContextCompat.getDrawable(context, aResId))
-            aImageView.visibility = View.VISIBLE
-        }
-        aErrorMessageTextView.visibility = if (isShowMessage) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
-    }
-
     abstract fun getSalaryInfo(): SalaryInfo
     abstract fun refreshSalaryInfo(aSalaryInfo: SalaryInfo)
 

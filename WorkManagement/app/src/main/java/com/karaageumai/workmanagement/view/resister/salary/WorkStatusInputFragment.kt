@@ -16,6 +16,7 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
+import com.karaageumai.workmanagement.view.resister.InputCheckIconChanger
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
@@ -28,7 +29,7 @@ private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
  * Use the [WorkStatusInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkStatusInputFragment : SalaryInfoObservableFragment() {
+class WorkStatusInputFragment : SalaryInfoObservableFragment(), InputCheckIconChanger {
 
     private lateinit var mView: View
     private lateinit var mSalaryInfo: SalaryInfo
