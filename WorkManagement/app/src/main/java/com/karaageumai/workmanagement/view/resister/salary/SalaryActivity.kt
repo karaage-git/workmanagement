@@ -2,9 +2,7 @@ package com.karaageumai.workmanagement.view.resister.salary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -140,6 +138,10 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        Log.i("currentFocus:" + currentFocus.toString())
+        return super.dispatchTouchEvent(ev)
+    }
 
     // タブ生成処理
     private inner class ScreenSlidePagerAdapter(mActivity: AppCompatActivity) : FragmentStateAdapter(mActivity) {
