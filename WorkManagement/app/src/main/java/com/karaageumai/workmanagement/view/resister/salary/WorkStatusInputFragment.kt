@@ -1,6 +1,5 @@
 package com.karaageumai.workmanagement.view.resister.salary
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,12 +10,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getDrawable
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.resister.InputCheckIconChanger
+import com.karaageumai.workmanagement.view.resister.InputItemSetter
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
@@ -29,7 +27,7 @@ private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
  * Use the [WorkStatusInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WorkStatusInputFragment : SalaryInfoObservableFragment(), InputCheckIconChanger {
+class WorkStatusInputFragment : SalaryInfoObservableFragment(), InputItemSetter {
 
     private lateinit var mView: View
     private lateinit var mSalaryInfo: SalaryInfo

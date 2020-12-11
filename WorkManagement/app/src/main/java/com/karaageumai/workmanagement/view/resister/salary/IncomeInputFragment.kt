@@ -10,12 +10,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.transition.MaterialSharedAxis
-import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.resister.InputCheckIconChanger
+import com.karaageumai.workmanagement.view.resister.InputItemSetter
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
@@ -27,7 +25,7 @@ private const val MAX_INCOME = 1000000000
  * Use the [IncomeInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class IncomeInputFragment : SalaryInfoObservableFragment(), InputCheckIconChanger {
+class IncomeInputFragment : SalaryInfoObservableFragment(), InputItemSetter {
 
     private lateinit var mView: View
     private lateinit var mSalaryInfo: SalaryInfo

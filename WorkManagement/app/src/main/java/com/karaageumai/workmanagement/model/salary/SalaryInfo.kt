@@ -30,6 +30,8 @@ data class SalaryInfo(
     @ColumnInfo(name = "other_income") var otherIncome: Int = 0,
     // 健康保険料
     @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
+    // 介護保険料
+    @ColumnInfo(name = "longterm_care_insurance_fee") var longtermCareInsuranceFee: Int = 0,
     // 年金保険料
     @ColumnInfo(name = "pension_fee") var pensionFee: Int = 0,
     // 雇用保険料

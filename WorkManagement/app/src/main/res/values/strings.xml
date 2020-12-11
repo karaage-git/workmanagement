@@ -109,7 +109,7 @@
 
 
     <!--  収入情報入力フラグメント  -->
-    <string name="layoutitem_income_top">合計収入</string>
+    <string name="layoutitem_income_top">収入総額</string>
     <string name="layoutitem_income_top_unit">円</string>
 
     <string name="layoutitem_income_baseincome_title">基本給</string>
@@ -141,6 +141,46 @@
     <string name="edittext_hint_income_other">例：30000</string>
     <string name="layoutitem_income_other_unit">円</string>
     <string name="layoutitem_income_other_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
+
+    <!--  控除情報入力フラグメント  -->
+    <string name="layoutitem_deduction_top">控除総額</string>
+    <string name="layoutitem_deduction_top_unit">円</string>
+
+    <string name="layoutitem_deduction_health_title">健康保険料</string>
+    <string name="layoutitem_deduction_health_subtitle">
+        【入力任意】【数値のみ】1円単位で入力可能です。\n
+        （未入力の場合は0で登録されます。）
+    </string>
+    <string name="edittext_hint_deduction_health">例：10000</string>
+    <string name="layoutitem_deduction_health_unit">円</string>
+    <string name="layoutitem_deduction_health_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
+
+    <string name="layoutitem_deduction_pension_title">年金保険料</string>
+    <string name="layoutitem_deduction_pension_subtitle">
+        【入力任意】【数値のみ】1円単位で入力可能です。\n
+        （未入力の場合は0で登録されます。）
+    </string>
+    <string name="edittext_hint_deduction_pension">例：10000</string>
+    <string name="layoutitem_deduction_pension_unit">円</string>
+    <string name="layoutitem_deduction_pension_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
+
+    <string name="layoutitem_deduction_longterm_title">介護保険料</string>
+    <string name="layoutitem_deduction_longterm_subtitle">
+        【入力任意】【数値のみ】1円単位で入力可能です。\n
+        （未入力の場合は0で登録されます。）
+    </string>
+    <string name="edittext_hint_deduction_longterm">例：10000</string>
+    <string name="layoutitem_deduction_longterm_unit">円</string>
+    <string name="layoutitem_deduction_longterm_error">
         入力形式が正しくありません。\n
         1円単位で入力してください。
     </string>
