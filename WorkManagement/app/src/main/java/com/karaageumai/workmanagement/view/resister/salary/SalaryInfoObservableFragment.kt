@@ -1,10 +1,5 @@
 package com.karaageumai.workmanagement.view.resister.salary
 
-import android.content.Context
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 
