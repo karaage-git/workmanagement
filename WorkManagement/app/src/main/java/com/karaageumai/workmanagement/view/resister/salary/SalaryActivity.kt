@@ -15,7 +15,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.HealthInsuranceFeeViewData
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.HealthInsuranceInputViewData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.PensionDataInputViewData
 import java.lang.IllegalArgumentException
 
@@ -179,7 +179,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_DEDUCTION -> {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
-                    val inputViewArray = arrayOf(HealthInsuranceFeeViewData, PensionDataInputViewData)
+                    val inputViewArray = arrayOf(HealthInsuranceInputViewData, PensionDataInputViewData)
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(mSalaryInfo, mIsNewEntry, inputViewArray, R.layout.fragment_deduction_input)
                     // SalaryInfoのオブザーバーをセット

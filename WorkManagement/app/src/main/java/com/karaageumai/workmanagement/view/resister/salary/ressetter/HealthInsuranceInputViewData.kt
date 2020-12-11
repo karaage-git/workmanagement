@@ -3,7 +3,7 @@ package com.karaageumai.workmanagement.view.resister.salary.ressetter
 import android.text.InputType
 import com.karaageumai.workmanagement.R
 
-object HealthInsuranceFeeViewData : BaseSalaryDataInputViewData {
+object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
     override fun getTag(): SalaryInputViewTag {
         return SalaryInputViewTag.BaseSalaryDataInputViewData
     }
