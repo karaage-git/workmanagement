@@ -15,8 +15,10 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.HealthInsuranceInputViewData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.PensionDataInputViewData
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.WorkingDayInputViewData
 import java.lang.IllegalArgumentException
 
 class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
@@ -156,8 +158,17 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             when(position) {
                 PAGE_OF_WORK_STATUS -> {
                     Log.i("create WorkStatusInputFragment()")
+                    // 表示する項目を定義するArray
+                    val inputViewArray: Array<BaseSalaryDataInputViewData> = arrayOf(WorkingDayInputViewData)
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = WorkStatusInputFragment.newInstance(mSalaryInfo, mIsNewEntry)
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                            mSalaryInfo,
+                            mIsNewEntry,
+                            inputViewArray,
+                            R.drawable.layout_frame_border_work,
+                            R.string.layoutitem_workstatus_top,
+                            R.string.layoutitem_workstatus_top_unit
+                    )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
                     // マップにフラグメントを紐付け
@@ -181,7 +192,14 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     // 表示する項目を定義するArray
                     val inputViewArray = arrayOf(HealthInsuranceInputViewData, PensionDataInputViewData)
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(mSalaryInfo, mIsNewEntry, inputViewArray, R.layout.fragment_deduction_input)
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                            mSalaryInfo,
+                            mIsNewEntry,
+                            inputViewArray,
+                            R.drawable.layout_frame_border_deduction,
+                            R.string.layoutitem_deduction_top,
+                            R.string.layoutitem_deduction_top_unit
+                    )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
                     // マップにフラグメントを紐付け
@@ -190,7 +208,14 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 }
 
                 else -> {
-                    return WorkStatusInputFragment()
+                    return SalaryInfoInputBaseFragment.newInstance(
+                            mSalaryInfo,
+                            mIsNewEntry,
+                            arrayOf(),
+                            R.drawable.layout_frame_border_deduction,
+                            R.string.layoutitem_deduction_top,
+                            R.string.layoutitem_deduction_top_unit
+                    )
                 }
             }
         }

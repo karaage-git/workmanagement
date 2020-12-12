@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
@@ -22,7 +23,9 @@ import java.lang.NumberFormatException
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
 private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
 private const val KEY_DATA_LIST = "KEY_DATA_LIST"
-private const val KEY_LAYOUT_RES_ID = "KEY_LAYOUT_RES_ID"
+private const val KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID = "KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID"
+private const val KEY_SUM_TITLE_STRING_RES_ID = "KEY_SUM_TITLE_STRING_RES_ID"
+private const val KEY_SUM_UNIT_STRING_RES_ID = "KEY_SUM_UNIT_STRING_RES_ID"
 
 private const val MAX_INCOME = 1000000000
 
@@ -40,8 +43,12 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     private var mInputViewList: MutableList<BaseSalaryDataInputViewData> = mutableListOf()
     // 入力項目のViewを管理するマップ
     private var mViewMap: MutableMap<SalaryInputViewTag, View> = mutableMapOf()
-    // rootのViewになるレイアウトID
-    private var mLayoutResId: Int = 0
+    // 合計を表示するViewの背景レイアウトID
+    private var mSumViewBackgroundResId = 0
+    // 合計を表示するViewのタイトルのリソースID
+    private var mSumViewTitleResId = 0
+    // 合計を表示するViewの単位のリソースID
+    private var mSumViewUnitResId = 0
 
     companion object {
         /**
@@ -55,15 +62,19 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         fun newInstance(aSalaryInfo: SalaryInfo,
                         aIsNewEntry: Boolean,
                         aDataList: Array<BaseSalaryDataInputViewData>,
-                        aLayoutResId: Int) =
-                SalaryInfoInputBaseFragment().apply {
-                    arguments = Bundle().apply {
-                        putSerializable(KEY_SALARY_INFO, aSalaryInfo)
-                        putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
-                        putSerializable(KEY_DATA_LIST, aDataList)
-                        putInt(KEY_LAYOUT_RES_ID, aLayoutResId)
-                    }
-                }
+                        aSumViewBackgroundResId: Int,
+                        aSumTitleStringResId: Int,
+                        aSumUnitStringResId: Int
+        ) = SalaryInfoInputBaseFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(KEY_SALARY_INFO, aSalaryInfo)
+                putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
+                putSerializable(KEY_DATA_LIST, aDataList)
+                putInt(KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID, aSumViewBackgroundResId)
+                putInt(KEY_SUM_TITLE_STRING_RES_ID, aSumTitleStringResId)
+                putInt(KEY_SUM_UNIT_STRING_RES_ID, aSumUnitStringResId)
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +92,9 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
                 }
             }
-            mLayoutResId = bundle.getInt(KEY_LAYOUT_RES_ID)
+            mSumViewBackgroundResId = bundle.getInt(KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID)
+            mSumViewTitleResId = bundle.getInt(KEY_SUM_TITLE_STRING_RES_ID)
+            mSumViewUnitResId = bundle.getInt(KEY_SUM_UNIT_STRING_RES_ID)
         }
     }
 
@@ -90,16 +103,26 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(mLayoutResId, container, false)
+        return inflater.inflate(R.layout.fragment_salary_info_input_base, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 合計を表示するViewの作成
+        val sumView: LinearLayout = view.findViewById(R.id.ll_sum)
+        sumView.background = context?.let { ContextCompat.getDrawable(it, mSumViewBackgroundResId) }
+
+        val sumViewTitle: TextView = view.findViewById(R.id.tv_sum_title)
+        sumViewTitle.text = getString(mSumViewTitleResId)
+
+        val sumViewUnit: TextView = view.findViewById(R.id.tv_sum_unit)
+        sumViewUnit.text = getString(mSumViewUnitResId)
+
         // スペースの表示、非表示を切り替えるフラグ
         var isFirstView = true
         // addViewする親View
-        val parent: LinearLayout = view.findViewById(R.id.ll_root)
+        val parent: LinearLayout = view.findViewById(R.id.ll_parent)
         for(target in mInputViewList) {
             if(!isFirstView) {
                 // 先頭でない場合はスペースを追加
