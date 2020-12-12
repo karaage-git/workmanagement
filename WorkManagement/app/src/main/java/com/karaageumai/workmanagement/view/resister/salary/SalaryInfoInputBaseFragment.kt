@@ -17,6 +17,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.resister.InputItemSetter
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.SalaryInputViewTag
 import java.lang.NumberFormatException
 
@@ -134,7 +135,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         // addViewする親View
         val parent: LinearLayout = view.findViewById(R.id.ll_parent)
         for(tag in mInputViewTagList) {
-            val data = SalaryInputViewTag.getData(tag)
+            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[tag] ?: continue
             if(!isFirstView) {
                 // 先頭でない場合はスペースを追加
                 val space = layoutInflater.inflate(R.layout.layout_input_margin, parent, false)
@@ -249,8 +250,36 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                                 0.0
                             }
                         }
+                        mSalaryInfo.workingDay = value
+                        addSumList(tag, value)
+                    }
+
+                    SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
+                        val value = s.let {
+                            try {
+                                val temp: Double = it.toString().toDouble()
+                                if (NumberFormatUtil.checkNumberFormat01(s.toString())) {
+                                    if (temp > MAX_TIME_PER_MONTH) {
+                                        // 1ヶ月の最大時間を超えていたら無効
+                                        showNGIcon()
+                                        0.0
+                                    } else {
+                                        showOKIcon()
+                                        temp
+                                    }
+                                } else {
+                                    // 0.1単位でなければ無効
+                                    showNGIcon()
+                                    0.0
+                                }
+                            } catch (e: NumberFormatException) {
+                                // 数値でなければ無効
+                                showNGIcon()
+                                0.0
+                            }
+                        }
                         mSalaryInfo.workingTime = value
-                        mSumMap[tag] = value
+                        addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
@@ -278,7 +307,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                             }
                         }
                         mSalaryInfo.healthInsuranceFee = value
-                        mSumMap[tag] = value
+                        addSumList(tag, value)
                     }
                 }
 
@@ -293,6 +322,20 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
         private fun showNGIcon() {
             showAndChangeIcon(mIcon, R.drawable.ic_baseline_error_24, mErrorTextView, true)
+        }
+
+        private fun addSumList(aTag: SalaryInputViewTag.Tag, aValue: Int) {
+            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[aTag] ?: return
+            if(data.isCalcItem()) {
+                mSumMap[aTag] = aValue
+            }
+        }
+
+        private fun addSumList(aTag: SalaryInputViewTag.Tag, aValue: Double) {
+            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[aTag] ?: return
+            if(data.isCalcItem()) {
+                mSumMap[aTag] = aValue
+            }
         }
     }
 

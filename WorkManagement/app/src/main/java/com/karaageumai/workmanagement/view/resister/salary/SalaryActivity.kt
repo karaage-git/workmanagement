@@ -157,7 +157,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
                     val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
-                            SalaryInputViewTag.Tag.WorkingDayInputViewData
+                        SalaryInputViewTag.Tag.WorkingDayInputViewData,
+                        SalaryInputViewTag.Tag.WorkingTimeInputViewData
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
@@ -190,8 +191,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
                     val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
-                            SalaryInputViewTag.Tag.HealthInsuranceInputViewData,
-                            SalaryInputViewTag.Tag.PensionDataInputViewData
+                        SalaryInputViewTag.Tag.HealthInsuranceInputViewData,
+                        SalaryInputViewTag.Tag.PensionDataInputViewData
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
