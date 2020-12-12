@@ -31,4 +31,8 @@ object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
     override fun getErrorMessageResId(): Int {
         return R.string.layoutitem_deduction_health_error
     }
+
+    override fun isCalcItem(): Boolean {
+        return true
+    }
 }

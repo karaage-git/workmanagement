@@ -31,4 +31,8 @@ object WorkingDayInputViewData : BaseSalaryDataInputViewData {
     override fun getErrorMessageResId(): Int {
         return R.string.layoutitem_workstatus_workingday_error
     }
+
+    override fun isCalcItem(): Boolean {
+        return true
+    }
 }

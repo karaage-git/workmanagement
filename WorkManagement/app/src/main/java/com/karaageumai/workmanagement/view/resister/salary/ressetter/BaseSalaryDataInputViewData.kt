@@ -53,4 +53,11 @@ interface BaseSalaryDataInputViewData : Serializable {
      * @return エラーメッセージのリソースID
      */
     fun getErrorMessageResId(): Int
+
+    /**
+     * 合計値計算対象項目かを判定するフラグ
+     *
+     * @return true:対象, false:対象外
+     */
+    fun isCalcItem() :Boolean
 }

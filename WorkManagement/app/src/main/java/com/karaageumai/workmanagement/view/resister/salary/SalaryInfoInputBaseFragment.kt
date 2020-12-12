@@ -2,6 +2,7 @@ package com.karaageumai.workmanagement.view.resister.salary
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,7 +27,9 @@ private const val KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID = "KEY_SUM_VIEW_BACKGROU
 private const val KEY_SUM_TITLE_STRING_RES_ID = "KEY_SUM_TITLE_STRING_RES_ID"
 private const val KEY_SUM_UNIT_STRING_RES_ID = "KEY_SUM_UNIT_STRING_RES_ID"
 
-private const val MAX_INCOME = 1000000000
+private const val MAX_DAYS_PER_MONTH = 31.0
+private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
+private const val INPUT_MAX_VALUE = 1000000000
 
 /**
  * A simple [Fragment] subclass.
@@ -42,6 +45,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     private var mInputViewTagList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
     // 入力項目のViewを管理するマップ
     private var mViewMap: MutableMap<SalaryInputViewTag.Tag, View> = mutableMapOf()
+    // 合計値を計算の対象となる項目を管理するマップ
+    private var mSumMap: MutableMap<SalaryInputViewTag.Tag, Any> = mutableMapOf()
     // 合計を表示するViewの背景レイアウトID
     private var mSumViewBackgroundResId = 0
     // 合計を表示するViewのタイトルのリソースID
@@ -50,6 +55,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     private var mSumViewUnitResId = 0
     // 合計値を表示するView
     private lateinit var mSumViewValue: TextView
+    // 合計値がIntかDoubleを判定するフラグ
+    private var isSumInt: Boolean = true
 
     companion object {
         /**
@@ -134,6 +141,13 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 parent.addView(space)
             }
 
+            if(data.isCalcItem()) {
+                if((InputType.TYPE_NUMBER_FLAG_DECIMAL and data.getInputType()) != 0) {
+                    // InputType.TYPE_NUMBER_FLAG_DECIMALが立っている場合
+                    isSumInt = false
+                }
+            }
+
             // 入力項目用のViewを取得
             val inputItemView = createInputItemView(layoutInflater, parent, tag, data)
             // マップに登録
@@ -167,9 +181,30 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     }
 
     private fun updateSum() {
-        var sum: Int = 0
 
-
+        if(isSumInt) {
+            var sum = 0
+            for (target in mSumMap) {
+                val value = target.value
+                if (value is Int) {
+                    sum += value
+                }
+            }
+            mSumViewValue.text = sum.toString()
+        } else {
+            var sum = 0.0
+            for (target in mSumMap) {
+                val value = target.value
+                if (value is Double) {
+                    sum += value
+                }
+            }
+            if(sum == 0.0){
+                mSumViewValue.setText(R.string.zero)
+            } else {
+                mSumViewValue.text = sum.toString()
+            }
+        }
     }
 
     // カスタムTextWatcher
@@ -187,36 +222,69 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         }
 
         override fun afterTextChanged(s: Editable?) {
-            when (mEditText.tag) {
-                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+            val tag = mEditText.tag
+            if(tag is SalaryInputViewTag.Tag){
+                when (tag) {
+                    SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
+                        val value = s.let {
+                            try {
+                                val temp: Double = it.toString().toDouble()
+                                if (NumberFormatUtil.checkNumberFormat05(s.toString())) {
+                                    if (temp > MAX_DAYS_PER_MONTH) {
+                                        // 1ヶ月の最大日数超えていたら無効
+                                        showNGIcon()
+                                        0.0
+                                    } else {
+                                        showOKIcon()
+                                        temp
+                                    }
+                                } else {
+                                    // 0.5単位でなければ無効
+                                    showNGIcon()
+                                    0.0
+                                }
+                            } catch (e: NumberFormatException) {
+                                // 数値でなければ無効
+                                showNGIcon()
+                                0.0
+                            }
+                        }
+                        mSalaryInfo.workingTime = value
+                        mSumMap[tag] = value
+                    }
 
-                    val value = s.let {
-                        try {
-                            val temp: Int = it.toString().toInt()
-                            if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                if (temp > MAX_INCOME) {
-                                    // 大きな値が入ってきたら無効
+                    SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+                        val value = s.let {
+                            try {
+                                val temp: Int = it.toString().toInt()
+                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
+                                    if (temp > INPUT_MAX_VALUE) {
+                                        // 大きな値が入ってきたら無効
+                                        showNGIcon()
+                                        0
+                                    } else {
+                                        showOKIcon()
+                                        temp
+                                    }
+                                } else {
+                                    // 整数でなければ無効
                                     showNGIcon()
                                     0
-                                } else {
-                                    showOKIcon()
-                                    temp
                                 }
-                            } else {
-                                // 整数でなければ無効
+                            } catch (e: NumberFormatException) {
+                                // 数値でなければ無効
                                 showNGIcon()
                                 0
                             }
-                        } catch (e: NumberFormatException) {
-                            // 数値でなければ無効
-                            showNGIcon()
-                            0
                         }
+                        mSalaryInfo.healthInsuranceFee = value
+                        mSumMap[tag] = value
                     }
-                    mSalaryInfo.salary = value
                 }
+
+                notifyObserver()
+                updateSum()
             }
-            notifyObserver()
         }
 
         private fun showOKIcon() {

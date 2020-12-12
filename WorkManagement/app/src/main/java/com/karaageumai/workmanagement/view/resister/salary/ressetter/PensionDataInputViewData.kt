@@ -31,4 +31,8 @@ object PensionDataInputViewData : BaseSalaryDataInputViewData {
     override fun getErrorMessageResId(): Int {
         return R.string.layoutitem_deduction_pension_error
     }
+
+    override fun isCalcItem(): Boolean {
+        return true
+    }
 }
