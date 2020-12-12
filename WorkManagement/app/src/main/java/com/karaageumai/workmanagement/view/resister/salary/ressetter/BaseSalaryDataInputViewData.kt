@@ -1,7 +1,9 @@
 package com.karaageumai.workmanagement.view.resister.salary.ressetter
 
+import java.io.Serializable
+
 // データ入力用のレイアウトに埋め込むデータをまとめたクラス
-interface BaseSalaryDataInputViewData {
+interface BaseSalaryDataInputViewData : Serializable {
     /**
      * Viewを一意に識別するためのタグを取得
      * 基本的にはパッケージ名を入れる想定
