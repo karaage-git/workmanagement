@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.SalaryInputViewTag
 
 interface InputItemSetter {
 
@@ -42,6 +43,7 @@ interface InputItemSetter {
      */
     fun createInputItemView(aLayoutInflater: LayoutInflater,
                             aParent: ViewGroup,
+                            aTag: SalaryInputViewTag.Tag,
                             aViewData: BaseSalaryDataInputViewData
     ): View {
         // レイアウトファイルからViewを読み込む
@@ -65,15 +67,15 @@ interface InputItemSetter {
         val inputFilter: Array<InputFilter> = arrayOf(InputFilter.LengthFilter(aViewData.getInputMaxLength()))
         editText.filters = inputFilter
         // タグをセット
-        editText.tag = aViewData.getTag()
+        editText.tag = aTag
 
         // 単位
         val unit: TextView = inputView.findViewById(R.id.tv_data_unit)
         unit.setText(aViewData.getUnitResId())
 
         // アイコン（初期は非表示）
-        val aicon: ImageView = inputView.findViewById(R.id.iv_check_ic)
-        aicon.visibility = View.INVISIBLE
+        val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
+        icon.visibility = View.INVISIBLE
 
         // エラーメッセージ（初期は非表示）
         val error: TextView = inputView.findViewById(R.id.tv_error)

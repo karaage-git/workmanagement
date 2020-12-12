@@ -4,10 +4,6 @@ import android.text.InputType
 import com.karaageumai.workmanagement.R
 
 object WorkingDayInputViewData : BaseSalaryDataInputViewData {
-    override fun getTag(): SalaryInputViewTag {
-        return SalaryInputViewTag.WorkingDayInputViewData
-    }
-
     override fun getTitleResId(): Int {
         return R.string.layoutitem_workstatus_workingday_title
     }

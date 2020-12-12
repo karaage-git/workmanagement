@@ -16,13 +16,12 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.resister.InputItemSetter
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.SalaryInputViewTag
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
 private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
-private const val KEY_DATA_LIST = "KEY_DATA_LIST"
+private const val KEY_TAG_LIST = "KEY_TAG_LIST"
 private const val KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID = "KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID"
 private const val KEY_SUM_TITLE_STRING_RES_ID = "KEY_SUM_TITLE_STRING_RES_ID"
 private const val KEY_SUM_UNIT_STRING_RES_ID = "KEY_SUM_UNIT_STRING_RES_ID"
@@ -40,15 +39,17 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     // データ更新か否かを示すフラグ
     private var mIsNewEntry: Boolean = true
     // 表示する入力項目を管理するリスト
-    private var mInputViewList: MutableList<BaseSalaryDataInputViewData> = mutableListOf()
+    private var mInputViewTagList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
     // 入力項目のViewを管理するマップ
-    private var mViewMap: MutableMap<SalaryInputViewTag, View> = mutableMapOf()
+    private var mViewMap: MutableMap<SalaryInputViewTag.Tag, View> = mutableMapOf()
     // 合計を表示するViewの背景レイアウトID
     private var mSumViewBackgroundResId = 0
     // 合計を表示するViewのタイトルのリソースID
     private var mSumViewTitleResId = 0
     // 合計を表示するViewの単位のリソースID
     private var mSumViewUnitResId = 0
+    // 合計値を表示するView
+    private lateinit var mSumViewValue: TextView
 
     companion object {
         /**
@@ -61,7 +62,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         @JvmStatic
         fun newInstance(aSalaryInfo: SalaryInfo,
                         aIsNewEntry: Boolean,
-                        aDataList: Array<BaseSalaryDataInputViewData>,
+                        aTagList: Array<SalaryInputViewTag.Tag>,
                         aSumViewBackgroundResId: Int,
                         aSumTitleStringResId: Int,
                         aSumUnitStringResId: Int
@@ -69,7 +70,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             arguments = Bundle().apply {
                 putSerializable(KEY_SALARY_INFO, aSalaryInfo)
                 putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
-                putSerializable(KEY_DATA_LIST, aDataList)
+                putSerializable(KEY_TAG_LIST, aTagList)
                 putInt(KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID, aSumViewBackgroundResId)
                 putInt(KEY_SUM_TITLE_STRING_RES_ID, aSumTitleStringResId)
                 putInt(KEY_SUM_UNIT_STRING_RES_ID, aSumUnitStringResId)
@@ -83,11 +84,11 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             mSalaryInfo = bundle.getSerializable(KEY_SALARY_INFO) as SalaryInfo
             mIsNewEntry = bundle.getBoolean(KEY_IS_NEW_ENTRY)
             // 一応、型チェックをやっておく
-            bundle.getSerializable(KEY_DATA_LIST).let {
+            bundle.getSerializable(KEY_TAG_LIST).let {
                 if (it is Array<*>){
-                    for (item in it) {
-                        if(item is BaseSalaryDataInputViewData){
-                            mInputViewList.add(item)
+                    for (element in it) {
+                        if(element is SalaryInputViewTag.Tag){
+                            mInputViewTagList.add(element)
                         }
                     }
                 }
@@ -119,11 +120,14 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         val sumViewUnit: TextView = view.findViewById(R.id.tv_sum_unit)
         sumViewUnit.text = getString(mSumViewUnitResId)
 
+        mSumViewValue = view.findViewById(R.id.tv_sum_value)
+
         // スペースの表示、非表示を切り替えるフラグ
         var isFirstView = true
         // addViewする親View
         val parent: LinearLayout = view.findViewById(R.id.ll_parent)
-        for(target in mInputViewList) {
+        for(tag in mInputViewTagList) {
+            val data = SalaryInputViewTag.getData(tag)
             if(!isFirstView) {
                 // 先頭でない場合はスペースを追加
                 val space = layoutInflater.inflate(R.layout.layout_input_margin, parent, false)
@@ -131,9 +135,9 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             }
 
             // 入力項目用のViewを取得
-            val inputItemView = createInputItemView(layoutInflater, parent, target)
+            val inputItemView = createInputItemView(layoutInflater, parent, tag, data)
             // マップに登録
-            mViewMap[target.getTag()] = inputItemView
+            mViewMap[tag] = inputItemView
             // 表示
             parent.addView(inputItemView)
             // 初回フラグを更新
@@ -162,6 +166,13 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         }
     }
 
+    private fun updateSum() {
+        var sum: Int = 0
+
+
+    }
+
+    // カスタムTextWatcher
     inner class SalaryInfoTextWatcher(aView: View) : TextWatcher {
         private val mEditText: EditText = aView.findViewById(R.id.et_data)
         private val mIcon: ImageView = aView.findViewById(R.id.iv_check_ic)
@@ -177,7 +188,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
         override fun afterTextChanged(s: Editable?) {
             when (mEditText.tag) {
-                SalaryInputViewTag.HealthInsuranceInputViewData -> {
+                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
 
                     val value = s.let {
                         try {

@@ -15,10 +15,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.HealthInsuranceInputViewData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.PensionDataInputViewData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.WorkingDayInputViewData
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.*
 import java.lang.IllegalArgumentException
 
 class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
@@ -159,7 +156,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_WORK_STATUS -> {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
-                    val inputViewArray: Array<BaseSalaryDataInputViewData> = arrayOf(WorkingDayInputViewData)
+                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
+                            SalaryInputViewTag.Tag.WorkingDayInputViewData
+                    )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
                             mSalaryInfo,
@@ -190,7 +189,10 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_DEDUCTION -> {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
-                    val inputViewArray = arrayOf(HealthInsuranceInputViewData, PensionDataInputViewData)
+                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
+                            SalaryInputViewTag.Tag.HealthInsuranceInputViewData,
+                            SalaryInputViewTag.Tag.PensionDataInputViewData
+                    )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
                             mSalaryInfo,

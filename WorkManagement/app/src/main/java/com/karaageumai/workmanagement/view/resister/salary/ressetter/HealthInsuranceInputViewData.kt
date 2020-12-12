@@ -4,10 +4,6 @@ import android.text.InputType
 import com.karaageumai.workmanagement.R
 
 object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
-    override fun getTag(): SalaryInputViewTag {
-        return SalaryInputViewTag.HealthInsuranceInputViewData
-    }
-
     override fun getTitleResId(): Int {
         return R.string.layoutitem_deduction_health_title
     }

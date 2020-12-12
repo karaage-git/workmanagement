@@ -5,14 +5,6 @@ import java.io.Serializable
 // データ入力用のレイアウトに埋め込むデータをまとめたクラス
 interface BaseSalaryDataInputViewData : Serializable {
     /**
-     * Viewを一意に識別するためのタグを取得
-     * 基本的にはパッケージ名を入れる想定
-     *
-     * @return Viewを一意に識別するためのタグ
-     */
-    fun getTag(): SalaryInputViewTag
-
-    /**
      * タイトルのリソースID取得
      *
      * @return タイトルのリソースID
