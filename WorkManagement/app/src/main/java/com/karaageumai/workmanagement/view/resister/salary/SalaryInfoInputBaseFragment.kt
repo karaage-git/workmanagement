@@ -282,6 +282,34 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                         addSumList(tag, value)
                     }
 
+                    SalaryInputViewTag.Tag.OverTimeInputViewData -> {
+                        val value = s.let {
+                            try {
+                                val temp: Double = it.toString().toDouble()
+                                if (NumberFormatUtil.checkNumberFormat01(s.toString())) {
+                                    if (temp > MAX_TIME_PER_MONTH) {
+                                        // 1ヶ月の最大時間を超えていたら無効
+                                        showNGIcon()
+                                        0.0
+                                    } else {
+                                        showOKIcon()
+                                        temp
+                                    }
+                                } else {
+                                    // 0.1単位でなければ無効
+                                    showNGIcon()
+                                    0.0
+                                }
+                            } catch (e: NumberFormatException) {
+                                // 数値でなければ無効
+                                showNGIcon()
+                                0.0
+                            }
+                        }
+                        mSalaryInfo.overtime = value
+                        addSumList(tag, value)
+                    }
+
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
                         val value = s.let {
                             try {

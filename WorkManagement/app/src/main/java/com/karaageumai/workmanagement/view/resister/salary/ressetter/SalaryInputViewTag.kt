@@ -7,6 +7,7 @@ object SalaryInputViewTag {
     enum class Tag :Serializable {
         WorkingDayInputViewData,
         WorkingTimeInputViewData,
+        OverTimeInputViewData,
         HealthInsuranceInputViewData,
         PensionDataInputViewData
     }
@@ -15,6 +16,7 @@ object SalaryInputViewTag {
     val tagDataMap: Map<Tag, BaseSalaryDataInputViewData> = mapOf(
         Pair(Tag.WorkingDayInputViewData, WorkingDayInputViewData),
         Pair(Tag.WorkingTimeInputViewData, WorkingTimeInputViewData),
+        Pair(Tag.OverTimeInputViewData, OverTimeInputViewData),
         Pair(Tag.HealthInsuranceInputViewData, HealthInsuranceInputViewData),
         Pair(Tag.PensionDataInputViewData, PensionDataInputViewData)
     )

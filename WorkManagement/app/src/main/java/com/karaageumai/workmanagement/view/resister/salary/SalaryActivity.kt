@@ -158,7 +158,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     // 表示する項目を定義するArray
                     val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
                         SalaryInputViewTag.Tag.WorkingDayInputViewData,
-                        SalaryInputViewTag.Tag.WorkingTimeInputViewData
+                        SalaryInputViewTag.Tag.WorkingTimeInputViewData,
+                        SalaryInputViewTag.Tag.OverTimeInputViewData
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
