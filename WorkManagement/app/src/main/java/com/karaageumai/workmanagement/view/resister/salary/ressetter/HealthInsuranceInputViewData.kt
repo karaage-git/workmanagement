@@ -5,7 +5,7 @@ import com.karaageumai.workmanagement.R
 
 object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
     override fun getTag(): SalaryInputViewTag {
-        return SalaryInputViewTag.BaseSalaryDataInputViewData
+        return SalaryInputViewTag.HealthInsuranceInputViewData
     }
 
     override fun getTitleResId(): Int {

@@ -154,7 +154,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
         override fun afterTextChanged(s: Editable?) {
             when (mEditText.tag) {
-                SalaryInputViewTag.BaseSalaryDataInputViewData -> {
+                SalaryInputViewTag.HealthInsuranceInputViewData -> {
 
                     val value = s.let {
                         try {
