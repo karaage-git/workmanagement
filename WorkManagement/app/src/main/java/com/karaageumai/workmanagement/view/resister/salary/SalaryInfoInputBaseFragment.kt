@@ -227,7 +227,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             if(tag is SalaryInputViewTag.Tag){
                 when (tag) {
                     SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
-                        val value: Double = if(checkInputFormat(mView)){
+                        val value: Double = if(checkAndShowIcon(mView)){
                             str.toDouble()
                         } else {
                             0.0
@@ -237,7 +237,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
-                        val value: Double = if(checkInputFormat(mView)){
+                        val value: Double = if(checkAndShowIcon(mView)){
                             str.toDouble()
                         } else {
                             0.0
@@ -247,7 +247,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.OverTimeInputViewData -> {
-                        val value: Double = if(checkInputFormat(mView)){
+                        val value: Double = if(checkAndShowIcon(mView)){
                             str.toDouble()
                         } else {
                             0.0
@@ -257,7 +257,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
-                        val value: Int = if(checkInputFormat(mView)){
+                        val value: Int = if(checkAndShowIcon(mView)){
                             str.toInt()
                         } else {
                             0
@@ -267,7 +267,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
-                        val value: Int = if(checkInputFormat(mView)){
+                        val value: Int = if(checkAndShowIcon(mView)){
                             str.toInt()
                         } else {
                             0
@@ -277,7 +277,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
-                        val value: Int = if(checkInputFormat(mView)){
+                        val value: Int = if(checkAndShowIcon(mView)){
                             str.toInt()
                         } else {
                             0
@@ -287,7 +287,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     }
 
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
-                        val value: Int = if(checkInputFormat(mView)){
+                        val value: Int = if(checkAndShowIcon(mView)){
                             str.toInt()
                         } else {
                             0
@@ -325,8 +325,31 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
      */
     private fun checkInputFormat(aView: View) :Boolean {
         val et: EditText = aView.findViewById(R.id.et_data)
-        val str: String = et.text.toString()
-        return checkInputFormat(aView, str)
+        val value: String = et.text.toString()
+        return checkInputFormat(aView, value)
+    }
+
+    /**
+     * 入力チェック及びアイコン・エラーメッセージの切り替えを行う
+     *
+     * @param aView チェック対象のEditTextが含まれるView
+     * @return true:チェックOK ,false:チェックNG
+     */
+    private fun checkAndShowIcon(aView: View) :Boolean {
+        val et: EditText = aView.findViewById(R.id.et_data)
+        val value: String = et.text.toString()
+        val icon: ImageView = aView.findViewById(R.id.iv_check_ic)
+        val error: TextView = aView.findViewById(R.id.tv_error)
+        val ret: Boolean = checkInputFormat(aView, value)
+
+        // アイコン、エラーメッセージの切り替えを行う
+        if(ret) {
+            showOKIcon(icon, error)
+        } else {
+            showNGIcon(icon, error)
+        }
+
+        return ret
     }
 
     /**
@@ -338,8 +361,6 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
      */
     private fun checkInputFormat(aView: View, aValue: String): Boolean {
         val mEditText: EditText = aView.findViewById(R.id.et_data)
-        val mIcon: ImageView = aView.findViewById(R.id.iv_check_ic)
-        val mErrorTextView: TextView = aView.findViewById(R.id.tv_error)
 
         val tag = mEditText.tag
         if(tag is SalaryInputViewTag.Tag) {
@@ -349,22 +370,13 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     try {
                         val temp: Double = aValue.toDouble()
                         return if (NumberFormatUtil.checkNumberFormat05(aValue)) {
-                            if (temp > MAX_DAYS_PER_MONTH) {
-                                // 1ヶ月の最大日数超えていたら無効
-                                showNGIcon(mIcon, mErrorTextView)
-                                false
-                            } else {
-                                showOKIcon(mIcon, mErrorTextView)
-                                true
-                            }
+                            temp <= MAX_DAYS_PER_MONTH
                         } else {
                             // 0.5単位でなければ無効
-                            showNGIcon(mIcon, mErrorTextView)
                             false
                         }
                     } catch (e: NumberFormatException) {
                         // 数値でなければ無効
-                        showNGIcon(mIcon, mErrorTextView)
                         return false
                     }
                 }
@@ -375,22 +387,13 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     try {
                         val temp: Double = aValue.toDouble()
                         return if (NumberFormatUtil.checkNumberFormat01(aValue)) {
-                            if (temp > MAX_TIME_PER_MONTH) {
-                                // 1ヶ月の最大時間を超えていたら無効
-                                showNGIcon(mIcon, mErrorTextView)
-                                false
-                            } else {
-                                showOKIcon(mIcon, mErrorTextView)
-                                true
-                            }
+                            temp <= MAX_TIME_PER_MONTH
                         } else {
                             // 0.1単位でなければ無効
-                            showNGIcon(mIcon, mErrorTextView)
                             false
                         }
                     } catch (e: NumberFormatException) {
                         // 数値でなければ無効
-                        showNGIcon(mIcon, mErrorTextView)
                         return false
                     }
                 }
@@ -400,22 +403,13 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     try {
                         val temp: Int = aValue.toInt()
                         return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
-                            if (temp > INPUT_MAX_VALUE) {
-                                // 入力可能最大数を超えていたら無効
-                                showNGIcon(mIcon, mErrorTextView)
-                                false
-                            } else {
-                                showOKIcon(mIcon, mErrorTextView)
-                                true
-                            }
+                            temp <= INPUT_MAX_VALUE
                         } else {
                             // 整数でなければ無効
-                            showNGIcon(mIcon, mErrorTextView)
                             false
                         }
                     } catch (e: NumberFormatException) {
                         // 数値でなければ無効
-                        showNGIcon(mIcon, mErrorTextView)
                         return false
                     }
                 }
@@ -426,28 +420,18 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
-                        showOKIcon(mIcon, mErrorTextView)
                         return true
                     } else {
                         try {
                             val temp: Int = aValue.toInt()
                             return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
-                                if (temp > INPUT_MAX_VALUE) {
-                                    // 入力可能最大数を超えていたら無効
-                                    showNGIcon(mIcon, mErrorTextView)
-                                    false
-                                } else {
-                                    showOKIcon(mIcon, mErrorTextView)
-                                    true
-                                }
+                                temp <= INPUT_MAX_VALUE
                             } else {
                                 // 整数でなければ無効
-                                showNGIcon(mIcon, mErrorTextView)
                                 false
                             }
                         } catch (e: NumberFormatException) {
                             // 数値でなければ無効
-                            showNGIcon(mIcon, mErrorTextView)
                             return false
                         }
                     }
