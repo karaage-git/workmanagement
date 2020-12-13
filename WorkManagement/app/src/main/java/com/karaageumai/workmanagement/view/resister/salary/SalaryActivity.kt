@@ -1,8 +1,10 @@
 package com.karaageumai.workmanagement.view.resister.salary
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -41,6 +43,10 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     // DBに登録するデータ
     lateinit var mSalaryInfo: SalaryInfo
+
+    lateinit var mTabLayout: TabLayout
+
+    //Todo フラグがダブっているため見直しが必要
     // 新規作成かどうかを判定するフラグ
     private var mIsNewEntry: Boolean = true
 
@@ -116,8 +122,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         mViewPager.adapter = pagerAdapter
 
         // タブレイアウトの読み込み
-        val tabLayout: TabLayout = findViewById(R.id.tab_layout)
-        TabLayoutMediator(tabLayout, mViewPager) { tab, position ->
+        mTabLayout = findViewById(R.id.tab_layout)
+        TabLayoutMediator(mTabLayout, mViewPager) { tab, position ->
             when(position) {
                 PAGE_OF_WORK_STATUS -> {
                     tab.text = getString(R.string.tab_title_workstatus)
@@ -134,8 +140,11 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             }
         }.attach()
 
-
-
+        // タッチされないタブは中身がロードされず入力チェックが動かないため、最初に全タブロードする
+        // onCreate()で触るのは危険な感じがするが、今のところ問題無し。
+        for (i in 0..NUM_PAGES ) mTabLayout.getTabAt(i)?.select()
+        // 初期タブの選択
+        mTabLayout.getTabAt(0)?.select()
 
     }
 
@@ -263,9 +272,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         Log.i("mSalaryInfo is update")
         mSalaryInfo = aSalaryInfoObservable.getSalaryInfo()
 
-        // Todo : ここで入力完了フラグのチェックを行う
-        updateIsComplete()
-
         // 他のタブに変更を反映させる
         for ((_, value) in mChildFragmentMap){
             if(aSalaryInfoObservable != value) {
@@ -275,27 +281,48 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     }
 
     private fun saveData() {
-        if(!mSalaryInfo.isComplete) {
+
+        val notEnteredItemList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
+
+        for(element in mChildFragmentMap) {
+            val fragment = element.value
+            notEnteredItemList.addAll(fragment.getNotEnteredInputItemList())
+        }
+
+        if(notEnteredItemList.isEmpty()){
+            mSalaryInfo.isComplete = true
+            when (mCheckResult) {
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
+                    mModelFacade.insertSalaryInfo(mSalaryInfo)
+                }
+
+                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
+                    mModelFacade.updateSalaryInfo(mSalaryInfo)
+                }
+
+                else -> return
+            }
+        } else {
             Log.i("this data is not complete. app can not save this data.")
+            val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+            alertDialog.setTitle(R.string.dialog_title)
+
+            val message: StringBuilder = StringBuilder()
+            for (tag in notEnteredItemList) {
+                if(message.isNotEmpty()) {
+                    message.append("\n")
+                }
+                SalaryInputViewTag.tagDataMap[tag]?.let {
+                    message.append("・")
+                    message.append(getString(it.getTitleResId()))
+                }
+            }
+            alertDialog.setMessage(message)
+            alertDialog.setPositiveButton(R.string.ok, DialogInterface.OnClickListener{ dialog, _ ->
+                dialog.dismiss()
+            })
+            alertDialog.show()
             return
         }
-        when (mCheckResult) {
-            CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
-                mModelFacade.insertSalaryInfo(mSalaryInfo)
-            }
-
-            CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
-                mModelFacade.updateSalaryInfo(mSalaryInfo)
-            }
-
-            else -> return
-        }
-    }
-
-    private fun updateIsComplete() {
-
-        // Todo：入力状態に応じて、mSalaryInfo.isCompleteを更新する
-
-
     }
 }

@@ -158,6 +158,9 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             // 初回フラグを更新
             isFirstView = false
         }
+
+        // Todo 新規ではない場合に、ここでEditTextにデータをセットする
+
         setTextWatcher()
     }
 
@@ -168,6 +171,16 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
     override fun refreshSalaryInfo(aSalaryInfo: SalaryInfo) {
         mSalaryInfo = aSalaryInfo
+    }
+
+    override fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag.Tag> {
+        val retList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
+        for (element in mViewMap) {
+            if(!checkAndShowIcon(element.value)) {
+                retList.add(element.key)
+            }
+        }
+        return retList
     }
 
     /**
