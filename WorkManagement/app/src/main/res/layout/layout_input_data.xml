@@ -6,14 +6,28 @@
     android:orientation="vertical">
 
     <!--  何も無いと見辛いので、基本給をプレースホルダとして入れておく  -->
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/InputItemTitle"
-        android:text="@string/layoutitem_income_baseincome_title"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/InputItemTitle"
+            android:text="@string/layoutitem_income_baseincome_title"/>
+        <ImageView
+            android:id="@+id/iv_check_ic"
+            android:src="@drawable/ic_baseline_check_circle_24"
+            style="@style/InputFieldIcon" />
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/tv_subtitle"
         style="@style/InputItemSubTitle"
         android:text="@string/layoutitem_income_baseincome_subtitle"/>
+
     <LinearLayout
         style="@style/InputFieldLinearLayout" >
 
@@ -25,16 +39,13 @@
         <TextView
             android:id="@+id/tv_data_unit"
             android:text="@string/layoutitem_income_baseincome_unit"
-            style="@style/InputFieldUnit" />
-        <ImageView
-            android:id="@+id/iv_check_ic"
-            android:src="@drawable/ic_baseline_check_circle_24"
-            style="@style/InputFieldIcon" />
-    </LinearLayout>
+            style="@style/InputFieldUnit"
+            android:layout_gravity="bottom" />
+        <TextView
+            android:id="@+id/tv_error"
+            style="@style/InputItemErrorText"
+            android:text="@string/layoutitem_income_baseincome_error" />
 
-    <TextView
-        android:id="@+id/tv_error"
-        style="@style/InputItemErrorText"
-        android:text="@string/layoutitem_income_baseincome_error" />
+    </LinearLayout>
 
 </LinearLayout>
