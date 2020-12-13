@@ -181,6 +181,19 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         }
     }
 
+    /**
+     * 合計値を算出する
+     * 各タブで扱う値がIntとDoubleで混在しているため、場合分けを行っている。
+     * 現状は下記2パターンしか存在しない。
+     * パターン1：合計値算出対象項目がすべてInt
+     * パターン2：合計値算出対象項目がすべてDouble
+     * （上記パターンは、EditTextのInputTypeで判定）
+     *
+     * ■現在の実装
+     * 入力チェックを行ったタイミングで、MutableMap<SalaryInputViewTag.Tag, Any>に値をマッピングし、
+     * 読み込む場合に前述のパターンに応じて型チェックを行い、合計値を算出している。
+     * IntとDoubleが混在した場合は、Doubleとして処理が進む。
+     */
     private fun updateSum() {
 
         if(isSumInt) {
