@@ -366,6 +366,34 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                         addSumList(tag, value)
                     }
 
+                    SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
+                        val value = s.let {
+                            try {
+                                val temp: Int = it.toString().toInt()
+                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
+                                    if (temp > INPUT_MAX_VALUE) {
+                                        // 入力可能最大数を超えていたら無効
+                                        showNGIcon()
+                                        0
+                                    } else {
+                                        showOKIcon()
+                                        temp
+                                    }
+                                } else {
+                                    // 整数でなければ無効
+                                    showNGIcon()
+                                    0
+                                }
+                            } catch (e: NumberFormatException) {
+                                // 数値でなければ無効
+                                showNGIcon()
+                                0
+                            }
+                        }
+                        mSalaryInfo.otherIncome = value
+                        addSumList(tag, value)
+                    }
+
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
                         val value = s.let {
                             try {

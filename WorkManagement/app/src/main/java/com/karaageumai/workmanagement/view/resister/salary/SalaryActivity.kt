@@ -181,7 +181,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create IncomeInputFragment()")
                     val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
                         SalaryInputViewTag.Tag.BaseIncomeInputViewData,
-                        SalaryInputViewTag.Tag.OverTimeIncomeInputViewData
+                        SalaryInputViewTag.Tag.OverTimeIncomeInputViewData,
+                        SalaryInputViewTag.Tag.OtherIncomeInputViewData
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(

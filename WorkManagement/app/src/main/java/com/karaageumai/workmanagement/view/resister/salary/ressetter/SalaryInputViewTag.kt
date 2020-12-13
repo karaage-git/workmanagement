@@ -10,6 +10,7 @@ object SalaryInputViewTag {
         OverTimeInputViewData,
         BaseIncomeInputViewData,
         OverTimeIncomeInputViewData,
+        OtherIncomeInputViewData,
         HealthInsuranceInputViewData,
         PensionDataInputViewData
     }
@@ -21,6 +22,7 @@ object SalaryInputViewTag {
         Pair(Tag.OverTimeInputViewData, OverTimeInputViewData),
         Pair(Tag.BaseIncomeInputViewData, BaseIncomeInputViewData),
         Pair(Tag.OverTimeIncomeInputViewData, OverTimeIncomeInputViewData),
+        Pair(Tag.OtherIncomeInputViewData, OtherIncomeInputViewData),
         Pair(Tag.HealthInsuranceInputViewData, HealthInsuranceInputViewData),
         Pair(Tag.PensionDataInputViewData, PensionDataInputViewData)
     )
