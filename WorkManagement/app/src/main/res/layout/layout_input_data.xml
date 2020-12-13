@@ -28,6 +28,11 @@
         style="@style/InputItemSubTitle"
         android:text="@string/layoutitem_income_baseincome_subtitle"/>
 
+    <TextView
+        android:id="@+id/tv_error"
+        style="@style/InputItemErrorText"
+        android:text="@string/layoutitem_income_baseincome_error" />
+
     <LinearLayout
         style="@style/InputFieldLinearLayout" >
 
@@ -41,10 +46,7 @@
             android:text="@string/layoutitem_income_baseincome_unit"
             style="@style/InputFieldUnit"
             android:layout_gravity="bottom" />
-        <TextView
-            android:id="@+id/tv_error"
-            style="@style/InputItemErrorText"
-            android:text="@string/layoutitem_income_baseincome_error" />
+
 
     </LinearLayout>
 

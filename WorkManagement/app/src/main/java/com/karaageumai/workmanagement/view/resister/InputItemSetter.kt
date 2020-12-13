@@ -29,7 +29,7 @@ interface InputItemSetter {
         aErrorMessageTextView.visibility = if (isShowMessage) {
             View.VISIBLE
         } else {
-            View.INVISIBLE
+            View.GONE
         }
     }
 
@@ -77,10 +77,10 @@ interface InputItemSetter {
         val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
         icon.visibility = View.INVISIBLE
 
-        // エラーメッセージ（初期は非表示）
+        // エラーメッセージ（初期は非表示、表示スペースも消す）
         val error: TextView = inputView.findViewById(R.id.tv_error)
         error.setText(aViewData.getErrorMessageResId())
-        error.visibility = View.INVISIBLE
+        error.visibility = View.GONE
 
         return inputView
     }
