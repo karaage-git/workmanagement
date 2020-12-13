@@ -163,12 +163,12 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
-                            mSalaryInfo,
-                            mIsNewEntry,
-                            inputViewArray,
-                            R.drawable.layout_frame_border_work,
-                            R.string.layoutitem_workstatus_top,
-                            R.string.layoutitem_workstatus_top_unit
+                        mSalaryInfo,
+                        mIsNewEntry,
+                        inputViewArray,
+                        R.drawable.layout_frame_border_work,
+                        R.string.layoutitem_workstatus_top,
+                        R.string.layoutitem_workstatus_top_unit
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -179,8 +179,18 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
+                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
+                        SalaryInputViewTag.Tag.BaseIncomeInputViewData
+                    )
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = IncomeInputFragment.newInstance(mSalaryInfo, mIsNewEntry)
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                        mSalaryInfo,
+                        mIsNewEntry,
+                        inputViewArray,
+                        R.drawable.layout_frame_border_income,
+                        R.string.layoutitem_income_top,
+                        R.string.layoutitem_income_top_unit
+                    )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
                     // マップにフラグメントを紐付け
@@ -197,12 +207,12 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
-                            mSalaryInfo,
-                            mIsNewEntry,
-                            inputViewArray,
-                            R.drawable.layout_frame_border_deduction,
-                            R.string.layoutitem_deduction_top,
-                            R.string.layoutitem_deduction_top_unit
+                        mSalaryInfo,
+                        mIsNewEntry,
+                        inputViewArray,
+                        R.drawable.layout_frame_border_deduction,
+                        R.string.layoutitem_deduction_top,
+                        R.string.layoutitem_deduction_top_unit
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -213,12 +223,12 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 else -> {
                     return SalaryInfoInputBaseFragment.newInstance(
-                            mSalaryInfo,
-                            mIsNewEntry,
-                            arrayOf(),
-                            R.drawable.layout_frame_border_deduction,
-                            R.string.layoutitem_deduction_top,
-                            R.string.layoutitem_deduction_top_unit
+                        mSalaryInfo,
+                        mIsNewEntry,
+                        arrayOf(),
+                        R.drawable.layout_frame_border_deduction,
+                        R.string.layoutitem_deduction_top,
+                        R.string.layoutitem_deduction_top_unit
                     )
                 }
             }
