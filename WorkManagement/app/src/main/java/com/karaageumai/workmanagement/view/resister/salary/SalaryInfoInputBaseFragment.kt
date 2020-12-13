@@ -210,9 +210,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
     // カスタムTextWatcher
     inner class SalaryInfoTextWatcher(aView: View) : TextWatcher {
+        private val mView: View = aView
         private val mEditText: EditText = aView.findViewById(R.id.et_data)
-        private val mIcon: ImageView = aView.findViewById(R.id.iv_check_ic)
-        private val mErrorTextView: TextView = aView.findViewById(R.id.tv_error)
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             // 何もしない
@@ -222,220 +221,76 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             // 何もしない
         }
 
-        // Todo : SalaryActivityの保存前チェックでも使いたいので、どこか別クラスに置くかも
         override fun afterTextChanged(s: Editable?) {
             val tag = mEditText.tag
+            val str: String = s.toString()
             if(tag is SalaryInputViewTag.Tag){
                 when (tag) {
                     SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
-                        val value = s.let {
-                            try {
-                                val temp: Double = it.toString().toDouble()
-                                if (NumberFormatUtil.checkNumberFormat05(s.toString())) {
-                                    if (temp > MAX_DAYS_PER_MONTH) {
-                                        // 1ヶ月の最大日数超えていたら無効
-                                        showNGIcon()
-                                        0.0
-                                    } else {
-                                        showOKIcon()
-                                        temp
-                                    }
-                                } else {
-                                    // 0.5単位でなければ無効
-                                    showNGIcon()
-                                    0.0
-                                }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0.0
-                            }
+                        val value: Double = if(checkInputFormat(mView)){
+                            str.toDouble()
+                        } else {
+                            0.0
                         }
                         mSalaryInfo.workingDay = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
-                        val value = s.let {
-                            try {
-                                val temp: Double = it.toString().toDouble()
-                                if (NumberFormatUtil.checkNumberFormat01(s.toString())) {
-                                    if (temp > MAX_TIME_PER_MONTH) {
-                                        // 1ヶ月の最大時間を超えていたら無効
-                                        showNGIcon()
-                                        0.0
-                                    } else {
-                                        showOKIcon()
-                                        temp
-                                    }
-                                } else {
-                                    // 0.1単位でなければ無効
-                                    showNGIcon()
-                                    0.0
-                                }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0.0
-                            }
+                        val value: Double = if(checkInputFormat(mView)){
+                            str.toDouble()
+                        } else {
+                            0.0
                         }
                         mSalaryInfo.workingTime = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.OverTimeInputViewData -> {
-                        val value = s.let {
-                            try {
-                                val temp: Double = it.toString().toDouble()
-                                if (NumberFormatUtil.checkNumberFormat01(s.toString())) {
-                                    if (temp > MAX_TIME_PER_MONTH) {
-                                        // 1ヶ月の最大時間を超えていたら無効
-                                        showNGIcon()
-                                        0.0
-                                    } else {
-                                        showOKIcon()
-                                        temp
-                                    }
-                                } else {
-                                    // 0.1単位でなければ無効
-                                    showNGIcon()
-                                    0.0
-                                }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0.0
-                            }
+                        val value: Double = if(checkInputFormat(mView)){
+                            str.toDouble()
+                        } else {
+                            0.0
                         }
                         mSalaryInfo.overtime = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
-                        val value = s.let {
-                            try {
-                                val temp: Int = it.toString().toInt()
-                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                    if (temp > INPUT_MAX_VALUE) {
-                                        // 入力可能最大数を超えていたら無効
-                                        showNGIcon()
-                                        0
-                                    } else {
-                                        showOKIcon()
-                                        temp
-                                    }
-                                } else {
-                                    // 整数でなければ無効
-                                    showNGIcon()
-                                    0
-                                }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0
-                            }
+                        val value: Int = if(checkInputFormat(mView)){
+                            str.toInt()
+                        } else {
+                            0
                         }
                         mSalaryInfo.salary = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
-                        val value = s.let {
-                            // 未入力も許可
-                            if (s?.length == 0) {
-                                showOKIcon()
-                                0
-                            } else {
-                                try {
-                                    val temp: Int = it.toString().toInt()
-                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                        if (temp > INPUT_MAX_VALUE) {
-                                            // 入力可能最大数を超えていたら無効
-                                            showNGIcon()
-                                            0
-                                        } else {
-                                            showOKIcon()
-                                            temp
-                                        }
-                                    } else {
-                                        // 整数でなければ無効
-                                        showNGIcon()
-                                        0
-                                    }
-                                } catch (e: NumberFormatException) {
-                                    // 数値でなければ無効
-                                    showNGIcon()
-                                    0
-                                }
-                            }
+                        val value: Int = if(checkInputFormat(mView)){
+                            str.toInt()
+                        } else {
+                            0
                         }
                         mSalaryInfo.overtimeSalary = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
-                        val value = s.let {
-                            // 未入力も許可
-                            if (s?.length == 0) {
-                                showOKIcon()
-                                0
-                            } else {
-                                try {
-                                    val temp: Int = it.toString().toInt()
-                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                        if (temp > INPUT_MAX_VALUE) {
-                                            // 入力可能最大数を超えていたら無効
-                                            showNGIcon()
-                                            0
-                                        } else {
-                                            showOKIcon()
-                                            temp
-                                        }
-                                    } else {
-                                        // 整数でなければ無効
-                                        showNGIcon()
-                                        0
-                                    }
-                                } catch (e: NumberFormatException) {
-                                    // 数値でなければ無効
-                                    showNGIcon()
-                                    0
-                                }
-                            }
+                        val value: Int = if(checkInputFormat(mView)){
+                            str.toInt()
+                        } else {
+                            0
                         }
                         mSalaryInfo.otherIncome = value
                         addSumList(tag, value)
                     }
 
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
-                        val value = s.let {
-                            // 未入力も許可
-                            if (s?.length == 0) {
-                                showOKIcon()
-                                0
-                            } else {
-                                try {
-                                    val temp: Int = it.toString().toInt()
-                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                        if (temp > INPUT_MAX_VALUE) {
-                                            // 大きな値が入ってきたら無効
-                                            showNGIcon()
-                                            0
-                                        } else {
-                                            showOKIcon()
-                                            temp
-                                        }
-                                    } else {
-                                        // 整数でなければ無効
-                                        showNGIcon()
-                                        0
-                                    }
-                                } catch (e: NumberFormatException) {
-                                    // 数値でなければ無効
-                                    showNGIcon()
-                                    0
-                                }
-                            }
+                        val value: Int = if(checkInputFormat(mView)){
+                            str.toInt()
+                        } else {
+                            0
                         }
                         mSalaryInfo.healthInsuranceFee = value
                         addSumList(tag, value)
@@ -445,14 +300,6 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 notifyObserver()
                 updateSum()
             }
-        }
-
-        private fun showOKIcon() {
-            showAndChangeIcon(mIcon, R.drawable.ic_baseline_check_circle_24, mErrorTextView, false)
-        }
-
-        private fun showNGIcon() {
-            showAndChangeIcon(mIcon, R.drawable.ic_baseline_error_24, mErrorTextView, true)
         }
 
         private fun addSumList(aTag: SalaryInputViewTag.Tag, aValue: Int) {
@@ -470,4 +317,157 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         }
     }
 
+    /**
+     * 入力項目のチェックを行う
+     *
+     * @param aView チェック対象のEditTextが含まれるView
+     * @return true:チェックOK ,false:チェックNG
+     */
+    private fun checkInputFormat(aView: View) :Boolean {
+        val et: EditText = aView.findViewById(R.id.et_data)
+        val str: String = et.text.toString()
+        return checkInputFormat(aView, str)
+    }
+
+    /**
+     * 入力項目のチェックを行う(入力値を指定して判定)
+     *
+     * @param aView チェック対象のEditTextが含まれるView
+     * @param aValue チェック対象の値
+     * @return true:チェックOK ,false:チェックNG
+     */
+    private fun checkInputFormat(aView: View, aValue: String): Boolean {
+        val mEditText: EditText = aView.findViewById(R.id.et_data)
+        val mIcon: ImageView = aView.findViewById(R.id.iv_check_ic)
+        val mErrorTextView: TextView = aView.findViewById(R.id.tv_error)
+
+        val tag = mEditText.tag
+        if(tag is SalaryInputViewTag.Tag) {
+            when (tag) {
+                // 0.5単位、最大値は1ヶ月、未入力不可
+                SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
+                    try {
+                        val temp: Double = aValue.toDouble()
+                        return if (NumberFormatUtil.checkNumberFormat05(aValue)) {
+                            if (temp > MAX_DAYS_PER_MONTH) {
+                                // 1ヶ月の最大日数超えていたら無効
+                                showNGIcon(mIcon, mErrorTextView)
+                                false
+                            } else {
+                                showOKIcon(mIcon, mErrorTextView)
+                                true
+                            }
+                        } else {
+                            // 0.5単位でなければ無効
+                            showNGIcon(mIcon, mErrorTextView)
+                            false
+                        }
+                    } catch (e: NumberFormatException) {
+                        // 数値でなければ無効
+                        showNGIcon(mIcon, mErrorTextView)
+                        return false
+                    }
+                }
+
+                // 0.1単位、最大値は1ヶ月の時間、未入力不可
+                SalaryInputViewTag.Tag.WorkingTimeInputViewData,
+                SalaryInputViewTag.Tag.OverTimeInputViewData -> {
+                    try {
+                        val temp: Double = aValue.toDouble()
+                        return if (NumberFormatUtil.checkNumberFormat01(aValue)) {
+                            if (temp > MAX_TIME_PER_MONTH) {
+                                // 1ヶ月の最大時間を超えていたら無効
+                                showNGIcon(mIcon, mErrorTextView)
+                                false
+                            } else {
+                                showOKIcon(mIcon, mErrorTextView)
+                                true
+                            }
+                        } else {
+                            // 0.1単位でなければ無効
+                            showNGIcon(mIcon, mErrorTextView)
+                            false
+                        }
+                    } catch (e: NumberFormatException) {
+                        // 数値でなければ無効
+                        showNGIcon(mIcon, mErrorTextView)
+                        return false
+                    }
+                }
+
+                // 整数、最大値あり、未入力不可
+                SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
+                    try {
+                        val temp: Int = aValue.toInt()
+                        return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
+                            if (temp > INPUT_MAX_VALUE) {
+                                // 入力可能最大数を超えていたら無効
+                                showNGIcon(mIcon, mErrorTextView)
+                                false
+                            } else {
+                                showOKIcon(mIcon, mErrorTextView)
+                                true
+                            }
+                        } else {
+                            // 整数でなければ無効
+                            showNGIcon(mIcon, mErrorTextView)
+                            false
+                        }
+                    } catch (e: NumberFormatException) {
+                        // 数値でなければ無効
+                        showNGIcon(mIcon, mErrorTextView)
+                        return false
+                    }
+                }
+
+                // 整数、最大値あり、未入力可
+                SalaryInputViewTag.Tag.OverTimeIncomeInputViewData,
+                SalaryInputViewTag.Tag.OtherIncomeInputViewData,
+                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+                    // 未入力も許可
+                    if (aValue.isEmpty()) {
+                        showOKIcon(mIcon, mErrorTextView)
+                        return true
+                    } else {
+                        try {
+                            val temp: Int = aValue.toInt()
+                            return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
+                                if (temp > INPUT_MAX_VALUE) {
+                                    // 入力可能最大数を超えていたら無効
+                                    showNGIcon(mIcon, mErrorTextView)
+                                    false
+                                } else {
+                                    showOKIcon(mIcon, mErrorTextView)
+                                    true
+                                }
+                            } else {
+                                // 整数でなければ無効
+                                showNGIcon(mIcon, mErrorTextView)
+                                false
+                            }
+                        } catch (e: NumberFormatException) {
+                            // 数値でなければ無効
+                            showNGIcon(mIcon, mErrorTextView)
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * OKアイコン表示
+     */
+    private fun showOKIcon(aIcon: ImageView, aTextView: TextView) {
+        showAndChangeIcon(aIcon, R.drawable.ic_baseline_check_circle_24, aTextView, false)
+    }
+
+    /**
+     * NGアイコン表示
+     */
+    private fun showNGIcon(aIcon: ImageView, aTextView: TextView) {
+        showAndChangeIcon(aIcon, R.drawable.ic_baseline_error_24, aTextView, true)
+    }
 }
