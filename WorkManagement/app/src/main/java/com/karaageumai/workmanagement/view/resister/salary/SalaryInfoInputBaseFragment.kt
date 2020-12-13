@@ -222,6 +222,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             // 何もしない
         }
 
+        // Todo : SalaryActivityの保存前チェックでも使いたいので、どこか別クラスに置くかも
         override fun afterTextChanged(s: Editable?) {
             val tag = mEditText.tag
             if(tag is SalaryInputViewTag.Tag){
@@ -340,26 +341,32 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
                     SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
                         val value = s.let {
-                            try {
-                                val temp: Int = it.toString().toInt()
-                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                    if (temp > INPUT_MAX_VALUE) {
-                                        // 入力可能最大数を超えていたら無効
+                            // 未入力も許可
+                            if (s?.length == 0) {
+                                showOKIcon()
+                                0
+                            } else {
+                                try {
+                                    val temp: Int = it.toString().toInt()
+                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
+                                        if (temp > INPUT_MAX_VALUE) {
+                                            // 入力可能最大数を超えていたら無効
+                                            showNGIcon()
+                                            0
+                                        } else {
+                                            showOKIcon()
+                                            temp
+                                        }
+                                    } else {
+                                        // 整数でなければ無効
                                         showNGIcon()
                                         0
-                                    } else {
-                                        showOKIcon()
-                                        temp
                                     }
-                                } else {
-                                    // 整数でなければ無効
+                                } catch (e: NumberFormatException) {
+                                    // 数値でなければ無効
                                     showNGIcon()
                                     0
                                 }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0
                             }
                         }
                         mSalaryInfo.overtimeSalary = value
@@ -368,26 +375,32 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
                     SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
                         val value = s.let {
-                            try {
-                                val temp: Int = it.toString().toInt()
-                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                    if (temp > INPUT_MAX_VALUE) {
-                                        // 入力可能最大数を超えていたら無効
+                            // 未入力も許可
+                            if (s?.length == 0) {
+                                showOKIcon()
+                                0
+                            } else {
+                                try {
+                                    val temp: Int = it.toString().toInt()
+                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
+                                        if (temp > INPUT_MAX_VALUE) {
+                                            // 入力可能最大数を超えていたら無効
+                                            showNGIcon()
+                                            0
+                                        } else {
+                                            showOKIcon()
+                                            temp
+                                        }
+                                    } else {
+                                        // 整数でなければ無効
                                         showNGIcon()
                                         0
-                                    } else {
-                                        showOKIcon()
-                                        temp
                                     }
-                                } else {
-                                    // 整数でなければ無効
+                                } catch (e: NumberFormatException) {
+                                    // 数値でなければ無効
                                     showNGIcon()
                                     0
                                 }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0
                             }
                         }
                         mSalaryInfo.otherIncome = value
@@ -396,26 +409,32 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
                     SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
                         val value = s.let {
-                            try {
-                                val temp: Int = it.toString().toInt()
-                                if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
-                                    if (temp > INPUT_MAX_VALUE) {
-                                        // 大きな値が入ってきたら無効
+                            // 未入力も許可
+                            if (s?.length == 0) {
+                                showOKIcon()
+                                0
+                            } else {
+                                try {
+                                    val temp: Int = it.toString().toInt()
+                                    if (NumberFormatUtil.checkNaturalNumberFormat(s.toString())) {
+                                        if (temp > INPUT_MAX_VALUE) {
+                                            // 大きな値が入ってきたら無効
+                                            showNGIcon()
+                                            0
+                                        } else {
+                                            showOKIcon()
+                                            temp
+                                        }
+                                    } else {
+                                        // 整数でなければ無効
                                         showNGIcon()
                                         0
-                                    } else {
-                                        showOKIcon()
-                                        temp
                                     }
-                                } else {
-                                    // 整数でなければ無効
+                                } catch (e: NumberFormatException) {
+                                    // 数値でなければ無効
                                     showNGIcon()
                                     0
                                 }
-                            } catch (e: NumberFormatException) {
-                                // 数値でなければ無効
-                                showNGIcon()
-                                0
                             }
                         }
                         mSalaryInfo.healthInsuranceFee = value
