@@ -435,9 +435,9 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                     if (aValue.isEmpty()) {
                         return true
                     } else {
-                        try {
+                        return try {
                             val temp: Int = aValue.toInt()
-                            return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
+                            if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
                                 temp <= INPUT_MAX_VALUE
                             } else {
                                 // 整数でなければ無効
@@ -445,7 +445,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                             }
                         } catch (e: NumberFormatException) {
                             // 数値でなければ無効
-                            return false
+                            false
                         }
                     }
                 }
