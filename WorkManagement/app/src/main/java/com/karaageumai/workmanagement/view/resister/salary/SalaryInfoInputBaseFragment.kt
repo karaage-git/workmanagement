@@ -4,15 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
@@ -111,12 +110,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_salary_info_input_base, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_salary_info_input_base, container, false)
 
         // 合計を表示するViewの作成
         val sumView: LinearLayout = view.findViewById(R.id.ll_sum)
@@ -162,6 +156,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         // Todo 新規ではない場合に、ここでEditTextにデータをセットする
 
         setTextWatcher()
+
+        return view
     }
 
     override fun getSalaryInfo(): SalaryInfo {
