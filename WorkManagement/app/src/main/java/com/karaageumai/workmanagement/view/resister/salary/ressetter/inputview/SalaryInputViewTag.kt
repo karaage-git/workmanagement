@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter
+package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
 
 import java.io.Serializable
 

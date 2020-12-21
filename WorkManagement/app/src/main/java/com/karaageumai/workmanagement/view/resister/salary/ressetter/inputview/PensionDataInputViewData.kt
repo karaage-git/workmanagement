@@ -1,19 +1,19 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter
+package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
 
 import android.text.InputType
 import com.karaageumai.workmanagement.R
 
-object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
+object PensionDataInputViewData : BaseSalaryDataInputViewData {
     override fun getTitleResId(): Int {
-        return R.string.layoutitem_deduction_health_title
+        return R.string.layoutitem_deduction_pension_title
     }
 
     override fun getSubtitleResId(): Int {
-        return R.string.layoutitem_deduction_health_subtitle
+        return R.string.layoutitem_deduction_pension_subtitle
     }
 
     override fun getInputHintResId(): Int {
-        return R.string.edittext_hint_deduction_health
+        return R.string.edittext_hint_deduction_pension
     }
 
     override fun getInputType(): Int {
@@ -25,11 +25,11 @@ object HealthInsuranceInputViewData : BaseSalaryDataInputViewData {
     }
 
     override fun getUnitResId(): Int {
-        return R.string.layoutitem_deduction_health_unit
+        return R.string.layoutitem_deduction_pension_unit
     }
 
     override fun getErrorMessageResId(): Int {
-        return R.string.layoutitem_deduction_health_error
+        return R.string.layoutitem_deduction_pension_error
     }
 
     override fun isCalcItem(): Boolean {

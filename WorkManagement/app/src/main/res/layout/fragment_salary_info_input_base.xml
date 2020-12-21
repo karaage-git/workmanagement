@@ -8,58 +8,9 @@
     tools:context=".view.resister.salary.SalaryInfoInputBaseFragment"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_sum"
+    <ListView
+        android:id="@+id/lv_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@drawable/layout_frame_border_deduction"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        >
-
-        <TextView
-            android:id="@+id/tv_sum_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/layoutitem_income_top"
-            android:textSize="20sp"
-            android:paddingHorizontal="10dp"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/tv_sum_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/zero"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:gravity="end"/>
-
-        <TextView
-            android:id="@+id/tv_sum_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/layoutitem_income_top_unit"
-            android:textColor="@color/black"
-            android:paddingHorizontal="10dp"
-            android:textSize="20sp"/>
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/ll_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-    </ScrollView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -1,19 +1,19 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter
+package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
 
 import android.text.InputType
 import com.karaageumai.workmanagement.R
 
-object WorkingTimeInputViewData : BaseSalaryDataInputViewData {
+object OverTimeInputViewData : BaseSalaryDataInputViewData {
     override fun getTitleResId(): Int {
-        return R.string.layoutitem_workstatus_workingtime_title
+        return R.string.layoutitem_workstatus_overtime_title
     }
 
     override fun getSubtitleResId(): Int {
-        return R.string.layoutitem_workstatus_workingtime_subtitle
+        return R.string.layoutitem_workstatus_overtime_subtitle
     }
 
     override fun getInputHintResId(): Int {
-        return R.string.edittext_hint_workstatus_workingtime
+        return R.string.edittext_hint_workstatus_overtime
     }
 
     override fun getInputType(): Int {
@@ -25,11 +25,11 @@ object WorkingTimeInputViewData : BaseSalaryDataInputViewData {
     }
 
     override fun getUnitResId(): Int {
-        return R.string.layoutitem_workstatus_workingtime_unit
+        return R.string.layoutitem_workstatus_overtime_unit
     }
 
     override fun getErrorMessageResId(): Int {
-        return R.string.layoutitem_workstatus_workingtime_error
+        return R.string.layoutitem_workstatus_overtime_error
     }
 
     override fun isCalcItem(): Boolean {

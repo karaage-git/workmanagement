@@ -4,6 +4,8 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -18,7 +20,11 @@ import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.*
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview.BaseSalaryDataSumViewData
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview.SalarySumViewTag
 import java.lang.IllegalArgumentException
+import java.lang.NumberFormatException
 
 class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
@@ -49,6 +55,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     //Todo フラグがダブっているため見直しが必要
     // 新規作成かどうかを判定するフラグ
     private var mIsNewEntry: Boolean = true
+
+    private var mSumTextViewMap: MutableMap<SalarySumViewTag.Tag, TextView> = mutableMapOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +123,32 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             }
         }
 
+        // 合計値を出すためのViewを初期化
+        val sumLinearLayout: LinearLayout = findViewById(R.id.ll_sum)
+        for (target in SalarySumViewTag.tagMap) {
+            val tag: SalarySumViewTag.Tag = target.key
+            val data: BaseSalaryDataSumViewData = target.value
+            val view: View = layoutInflater.inflate(R.layout.layout_input_sum, sumLinearLayout, false)
+            // 背景設定
+            val root: LinearLayout = view.findViewById(R.id.ll_sum_root)
+            root.setBackgroundResource(data.getBackgroundResId())
+
+            // タイトル設定
+            val title: TextView = view.findViewById(R.id.tv_sum_title)
+            title.setText(data.getTitleResId())
+
+            // 単位設定
+            val unit: TextView = view.findViewById(R.id.tv_sum_unit)
+            unit.setText(data.getUnitResId())
+
+            // 値部分をマップに登録
+            val value: TextView = view.findViewById(R.id.tv_sum_value)
+            mSumTextViewMap[tag] = value
+
+            // 作成したViewを追加
+            sumLinearLayout.addView(view)
+        }
+
 
         // タブ関連の処理
         mViewPager = findViewById(R.id.view_pager)
@@ -165,19 +199,16 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_WORK_STATUS -> {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
-                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
-                        SalaryInputViewTag.Tag.WorkingDayInputViewData,
-                        SalaryInputViewTag.Tag.WorkingTimeInputViewData,
-                        SalaryInputViewTag.Tag.OverTimeInputViewData
+                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.OverTimeInputViewData, mSalaryInfo.overtime.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
-                        mSalaryInfo,
+                        salaryInfoParcelArrayList,
                         mIsNewEntry,
-                        inputViewArray,
-                        R.drawable.layout_frame_border_work,
-                        R.string.layoutitem_workstatus_top,
-                        R.string.layoutitem_workstatus_top_unit
+                        R.color.work_status_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -188,19 +219,16 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
-                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
-                        SalaryInputViewTag.Tag.BaseIncomeInputViewData,
-                        SalaryInputViewTag.Tag.OverTimeIncomeInputViewData,
-                        SalaryInputViewTag.Tag.OtherIncomeInputViewData
+                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.BaseIncomeInputViewData, mSalaryInfo.salary.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
-                        mSalaryInfo,
+                        salaryInfoParcelArrayList,
                         mIsNewEntry,
-                        inputViewArray,
-                        R.drawable.layout_frame_border_income,
-                        R.string.layoutitem_income_top,
-                        R.string.layoutitem_income_top_unit
+                        R.color.income_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -212,18 +240,15 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_DEDUCTION -> {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
-                    val inputViewArray: Array<SalaryInputViewTag.Tag> = arrayOf(
-                        SalaryInputViewTag.Tag.HealthInsuranceInputViewData,
-                        SalaryInputViewTag.Tag.PensionDataInputViewData
+                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.Tag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
-                        mSalaryInfo,
+                        salaryInfoParcelArrayList,
                         mIsNewEntry,
-                        inputViewArray,
-                        R.drawable.layout_frame_border_deduction,
-                        R.string.layoutitem_deduction_top,
-                        R.string.layoutitem_deduction_top_unit
+                        R.color.deduction_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -233,13 +258,11 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 }
 
                 else -> {
+                    // 通常はありえない
                     return SalaryInfoInputBaseFragment.newInstance(
-                        mSalaryInfo,
+                        arrayListOf(),
                         mIsNewEntry,
-                        arrayOf(),
-                        R.drawable.layout_frame_border_deduction,
-                        R.string.layoutitem_deduction_top,
-                        R.string.layoutitem_deduction_top_unit
+                        R.color.work_status_basic
                     )
                 }
             }
@@ -268,22 +291,28 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     // mSalaryInfo
     override fun update(aSalaryInfoObservable: SalaryInfoObservableFragment) {
-        // SalaryInfoを更新
-        Log.i("mSalaryInfo is update")
-        mSalaryInfo = aSalaryInfoObservable.getSalaryInfo()
+        Log.i("update()")
+        val receiveParcels = aSalaryInfoObservable.getSalaryInfoParcelList()
 
-        // 他のタブに変更を反映させる
-        for ((_, value) in mChildFragmentMap){
-            if(aSalaryInfoObservable != value) {
-                value.refreshSalaryInfo(mSalaryInfo)
-            }
+        refreshSalaryInfo(receiveParcels)
+
+        // 合計値を更新
+        mSumTextViewMap[SalarySumViewTag.Tag.WorkStatusSumViewData]?.let {
+            val sum = mSalaryInfo.workingTime + mSalaryInfo.overtime
+            it.text = sum.toString()
+        }
+        mSumTextViewMap[SalarySumViewTag.Tag.IncomeSumViewData]?.let {
+            val sum = mSalaryInfo.salary + mSalaryInfo.overtimeSalary + mSalaryInfo.otherIncome
+            it.text = sum.toString()
+        }
+        mSumTextViewMap[SalarySumViewTag.Tag.DeductionSumViewData]?.let {
+            val sum = mSalaryInfo.healthInsuranceFee + mSalaryInfo.pensionFee
+            it.text = sum.toString()
         }
     }
 
     private fun saveData() {
-
         val notEnteredItemList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
-
         for(element in mChildFragmentMap) {
             val fragment = element.value
             notEnteredItemList.addAll(fragment.getNotEnteredInputItemList())
@@ -325,4 +354,76 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             return
         }
     }
+
+    private fun refreshSalaryInfo(aList: List<SalaryInfoParcel>) {
+        for (parcel in aList){
+            when(parcel.mTag){
+                SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
+                    mSalaryInfo.workingDay = try {
+                        parcel.mStrValue.toDouble()
+                    } catch (e: NumberFormatException) {
+                        0.0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
+                    mSalaryInfo.workingTime = try {
+                        parcel.mStrValue.toDouble()
+                    } catch (e: NumberFormatException) {
+                        0.0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.OverTimeInputViewData -> {
+                    mSalaryInfo.overtime = try {
+                        parcel.mStrValue.toDouble()
+                    } catch (e: NumberFormatException) {
+                        0.0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
+                    mSalaryInfo.salary = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
+                    mSalaryInfo.overtimeSalary = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
+                    mSalaryInfo.otherIncome = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+                    mSalaryInfo.healthInsuranceFee = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.Tag.PensionDataInputViewData -> {
+                    mSalaryInfo.pensionFee = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+            }
+        }
+    }
+
 }

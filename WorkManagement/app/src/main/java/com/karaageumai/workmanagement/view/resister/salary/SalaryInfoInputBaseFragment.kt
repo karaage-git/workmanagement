@@ -2,30 +2,22 @@ package com.karaageumai.workmanagement.view.resister.salary
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.*
+import android.widget.*
 import androidx.fragment.app.Fragment
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.resister.InputItemSetter
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.BaseSalaryDataInputViewData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
 import java.lang.NumberFormatException
 
-private const val KEY_SALARY_INFO = "KEY_SALARY_INFO"
+private const val KEY_SALARY_INFO_PARCEL_LIST = "KEY_SALARY_INFO_PARCEL_LIST"
 private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
-private const val KEY_TAG_LIST = "KEY_TAG_LIST"
-private const val KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID = "KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID"
-private const val KEY_SUM_TITLE_STRING_RES_ID = "KEY_SUM_TITLE_STRING_RES_ID"
-private const val KEY_SUM_UNIT_STRING_RES_ID = "KEY_SUM_UNIT_STRING_RES_ID"
+private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
 
 private const val MAX_DAYS_PER_MONTH = 31.0
 private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
@@ -38,25 +30,15 @@ private const val INPUT_MAX_VALUE = 1000000000
  */
 class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSetter {
     // 給与情報
-    private lateinit var mSalaryInfo: SalaryInfo
+    private var mSalaryInfoParcelList: MutableList<SalaryInfoParcel> = mutableListOf()
     // データ更新か否かを示すフラグ
     private var mIsNewEntry: Boolean = true
-    // 表示する入力項目を管理するリスト
-    private var mInputViewTagList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
     // 入力項目のViewを管理するマップ
     private var mViewMap: MutableMap<SalaryInputViewTag.Tag, View> = mutableMapOf()
-    // 合計値を計算の対象となる項目を管理するマップ
-    private var mSumMap: MutableMap<SalaryInputViewTag.Tag, Any> = mutableMapOf()
-    // 合計を表示するViewの背景レイアウトID
-    private var mSumViewBackgroundResId = 0
-    // 合計を表示するViewのタイトルのリソースID
-    private var mSumViewTitleResId = 0
-    // 合計を表示するViewの単位のリソースID
-    private var mSumViewUnitResId = 0
-    // 合計値を表示するView
-    private lateinit var mSumViewValue: TextView
-    // 合計値がIntかDoubleを判定するフラグ
-    private var isSumInt: Boolean = true
+    // 背景色ID
+    private var mBackgroundResId = 0
+
+    private var mAlertDialog: AlertDialog? = null
 
     companion object {
         /**
@@ -67,20 +49,14 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
          * @return A new instance of fragment DeductionInputFragment.
          */
         @JvmStatic
-        fun newInstance(aSalaryInfo: SalaryInfo,
+        fun newInstance(aSalaryInfoParcelList: ArrayList<SalaryInfoParcel>,
                         aIsNewEntry: Boolean,
-                        aTagList: Array<SalaryInputViewTag.Tag>,
-                        aSumViewBackgroundResId: Int,
-                        aSumTitleStringResId: Int,
-                        aSumUnitStringResId: Int
+                        aBackgroundResId: Int
         ) = SalaryInfoInputBaseFragment().apply {
             arguments = Bundle().apply {
-                putSerializable(KEY_SALARY_INFO, aSalaryInfo)
+                putParcelableArrayList(KEY_SALARY_INFO_PARCEL_LIST, aSalaryInfoParcelList)
                 putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
-                putSerializable(KEY_TAG_LIST, aTagList)
-                putInt(KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID, aSumViewBackgroundResId)
-                putInt(KEY_SUM_TITLE_STRING_RES_ID, aSumTitleStringResId)
-                putInt(KEY_SUM_UNIT_STRING_RES_ID, aSumUnitStringResId)
+                putInt(KEY_BACKGROUND_LAYOUT_RES_ID, aBackgroundResId)
             }
         }
     }
@@ -88,21 +64,11 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            mSalaryInfo = bundle.getSerializable(KEY_SALARY_INFO) as SalaryInfo
-            mIsNewEntry = bundle.getBoolean(KEY_IS_NEW_ENTRY)
-            // 一応、型チェックをやっておく
-            bundle.getSerializable(KEY_TAG_LIST).let {
-                if (it is Array<*>){
-                    for (element in it) {
-                        if(element is SalaryInputViewTag.Tag){
-                            mInputViewTagList.add(element)
-                        }
-                    }
-                }
+            bundle.getParcelableArrayList<SalaryInfoParcel>(KEY_SALARY_INFO_PARCEL_LIST)?.let {
+                mSalaryInfoParcelList = it
             }
-            mSumViewBackgroundResId = bundle.getInt(KEY_SUM_VIEW_BACKGROUND_LAYOUT_RES_ID)
-            mSumViewTitleResId = bundle.getInt(KEY_SUM_TITLE_STRING_RES_ID)
-            mSumViewUnitResId = bundle.getInt(KEY_SUM_UNIT_STRING_RES_ID)
+            mIsNewEntry = bundle.getBoolean(KEY_IS_NEW_ENTRY)
+            mBackgroundResId = bundle.getInt(KEY_BACKGROUND_LAYOUT_RES_ID)
         }
     }
 
@@ -112,61 +78,78 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     ): View? {
         val view = inflater.inflate(R.layout.fragment_salary_info_input_base, container, false)
 
-        // 合計を表示するViewの作成
-        val sumView: LinearLayout = view.findViewById(R.id.ll_sum)
-        sumView.background = context?.let { ContextCompat.getDrawable(it, mSumViewBackgroundResId) }
-
-        val sumViewTitle: TextView = view.findViewById(R.id.tv_sum_title)
-        sumViewTitle.text = getString(mSumViewTitleResId)
-
-        val sumViewUnit: TextView = view.findViewById(R.id.tv_sum_unit)
-        sumViewUnit.text = getString(mSumViewUnitResId)
-
-        mSumViewValue = view.findViewById(R.id.tv_sum_value)
-
-        // スペースの表示、非表示を切り替えるフラグ
-        var isFirstView = true
-        // addViewする親View
-        val parent: LinearLayout = view.findViewById(R.id.ll_parent)
-        for(tag in mInputViewTagList) {
-            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[tag] ?: continue
-            if(!isFirstView) {
-                // 先頭でない場合はスペースを追加
-                val space = layoutInflater.inflate(R.layout.layout_input_margin, parent, false)
-                parent.addView(space)
-            }
-
-            if(data.isCalcItem()) {
-                if((InputType.TYPE_NUMBER_FLAG_DECIMAL and data.getInputType()) != 0) {
-                    // InputType.TYPE_NUMBER_FLAG_DECIMALが立っている場合
-                    isSumInt = false
-                }
-            }
-
-            // 入力項目用のViewを取得
-            val inputItemView = createInputItemView(layoutInflater, parent, tag, data)
-            // マップに登録
-            mViewMap[tag] = inputItemView
-            // 表示
-            parent.addView(inputItemView)
-            // 初回フラグを更新
-            isFirstView = false
-        }
+        val rootView: LinearLayout = view.findViewById(R.id.ll_root)
+        rootView.setBackgroundResource(mBackgroundResId)
 
         // Todo 新規ではない場合に、ここでEditTextにデータをセットする
 
-        setTextWatcher()
+        val listView: ListView = view.findViewById(R.id.lv_item)
+        val activity = activity
+        if(activity != null) {
+            // リストは参照渡しなので、要注意。（SalaryInfoListAdapter内でのリスト操作がここに影響します。）
+            val adapter = SalaryInfoListAdapter(activity, mSalaryInfoParcelList)
+            listView.adapter = adapter
+            listView.setOnItemClickListener { parent, itemView, position, id ->
+                Log.i("item is clicked")
+                val tag = adapter.getItem(position)
+                Log.i(tag.toString())
+                if(tag is SalaryInputViewTag.Tag){
+                    val dialogView = createInputItemView(tag)?.let {
+                        val targetParcel: SalaryInfoParcel? = mSalaryInfoParcelList.let{ list ->
+                            var ret: SalaryInfoParcel? = null
+                            for(element in list){
+                                if(element.mTag == tag) {
+                                    ret = element
+                                    break
+                                }
+                            }
+                            ret
+                        }
+
+                        if(targetParcel != null){
+                            val editText: EditText = it.findViewById(R.id.et_data)
+                            val alertDialog: AlertDialog.Builder = AlertDialog.Builder(activity)
+                            val textWatcher = SalaryInfoTextWatcher(it)
+
+                            if(targetParcel.mIsComplete){
+                                editText.setText(targetParcel.mStrValue)
+                            }
+
+                            editText.addTextChangedListener(textWatcher)
+                            mAlertDialog = alertDialog
+                                .setView(it)
+                                .setPositiveButton(R.string.ok) { dialog, which ->
+                                    // Todo 末尾が「.」の場合は、ここで除去する
+                                    editText.removeTextChangedListener(textWatcher)
+                                    val strValue = editText.text.toString()
+                                    Log.i(strValue)
+
+                                    dialog.dismiss()
+
+                                    targetParcel.mStrValue = strValue
+                                    targetParcel.mIsComplete = true
+
+                                    notifyObserver()
+                                }
+                                .setNegativeButton(R.string.cancel) { dialog, which ->
+                                    editText.removeTextChangedListener(textWatcher)
+                                    dialog.dismiss()
+                                }
+                                .setCancelable(false)
+                                .show()
+                        }
+
+                    }
+                }
+            }
+        }
+
 
         return view
     }
 
-    override fun getSalaryInfo(): SalaryInfo {
-        return mSalaryInfo
-    }
-
-
-    override fun refreshSalaryInfo(aSalaryInfo: SalaryInfo) {
-        mSalaryInfo = aSalaryInfo
+    override fun getSalaryInfoParcelList(): MutableList<SalaryInfoParcel> {
+        return mSalaryInfoParcelList
     }
 
     override fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag.Tag> {
@@ -179,61 +162,12 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         return retList
     }
 
-    /**
-     * カスタムTextWatcherをセットする
-     */
-    private fun setTextWatcher() {
-        for (element in mViewMap){
-            val view: View = element.value
-            val et: EditText = view.findViewById(R.id.et_data)
-            et.addTextChangedListener(SalaryInfoTextWatcher(view))
-        }
-    }
-
-    /**
-     * 合計値を算出する
-     * 各タブで扱う値がIntとDoubleで混在しているため、場合分けを行っている。
-     * 現状は下記2パターンしか存在しない。
-     * パターン1：合計値算出対象項目がすべてInt
-     * パターン2：合計値算出対象項目がすべてDouble
-     * （上記パターンは、EditTextのInputTypeで判定）
-     *
-     * ■現在の実装
-     * 入力チェックを行ったタイミングで、MutableMap<SalaryInputViewTag.Tag, Any>に値をマッピングし、
-     * 読み込む場合に前述のパターンに応じて型チェックを行い、合計値を算出している。
-     * IntとDoubleが混在した場合は、Doubleとして処理が進む。
-     */
-    private fun updateSum() {
-
-        if(isSumInt) {
-            var sum = 0
-            for (target in mSumMap) {
-                val value = target.value
-                if (value is Int) {
-                    sum += value
-                }
-            }
-            mSumViewValue.text = sum.toString()
-        } else {
-            var sum = 0.0
-            for (target in mSumMap) {
-                val value = target.value
-                if (value is Double) {
-                    sum += value
-                }
-            }
-            if(sum == 0.0){
-                mSumViewValue.setText(R.string.zero)
-            } else {
-                mSumViewValue.text = sum.toString()
-            }
-        }
-    }
+    //private fun updateSalaryInfo()
 
     // カスタムTextWatcher
-    inner class SalaryInfoTextWatcher(aView: View) : TextWatcher {
-        private val mView: View = aView
-        private val mEditText: EditText = aView.findViewById(R.id.et_data)
+    inner class SalaryInfoTextWatcher(private val mView: View) : TextWatcher {
+
+        private val mEditText: EditText = mView.findViewById(R.id.et_data)
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             // 何もしない
@@ -244,98 +178,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         }
 
         override fun afterTextChanged(s: Editable?) {
-            val tag = mEditText.tag
-            val str: String = s.toString()
-            if(tag is SalaryInputViewTag.Tag){
-                when (tag) {
-                    SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
-                        val value: Double = if(checkAndShowIcon(mView)){
-                            str.toDouble()
-                        } else {
-                            0.0
-                        }
-                        mSalaryInfo.workingDay = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
-                        val value: Double = if(checkAndShowIcon(mView)){
-                            str.toDouble()
-                        } else {
-                            0.0
-                        }
-                        mSalaryInfo.workingTime = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.OverTimeInputViewData -> {
-                        val value: Double = if(checkAndShowIcon(mView)){
-                            str.toDouble()
-                        } else {
-                            0.0
-                        }
-                        mSalaryInfo.overtime = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
-                        val value: Int = if(checkAndShowIcon(mView)){
-                            str.toInt()
-                        } else {
-                            0
-                        }
-                        mSalaryInfo.salary = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
-                        val value: Int = if(checkAndShowIcon(mView)){
-                            str.toInt()
-                        } else {
-                            0
-                        }
-                        mSalaryInfo.overtimeSalary = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
-                        val value: Int = if(checkAndShowIcon(mView)){
-                            str.toInt()
-                        } else {
-                            0
-                        }
-                        mSalaryInfo.otherIncome = value
-                        addSumList(tag, value)
-                    }
-
-                    SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
-                        val value: Int = if(checkAndShowIcon(mView)){
-                            str.toInt()
-                        } else {
-                            0
-                        }
-                        mSalaryInfo.healthInsuranceFee = value
-                        addSumList(tag, value)
-                    }
-                }
-
-                notifyObserver()
-                updateSum()
-            }
-        }
-
-        private fun addSumList(aTag: SalaryInputViewTag.Tag, aValue: Int) {
-            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[aTag] ?: return
-            if(data.isCalcItem()) {
-                mSumMap[aTag] = aValue
-            }
-        }
-
-        private fun addSumList(aTag: SalaryInputViewTag.Tag, aValue: Double) {
-            val data: BaseSalaryDataInputViewData = SalaryInputViewTag.tagDataMap[aTag] ?: return
-            if(data.isCalcItem()) {
-                mSumMap[aTag] = aValue
-            }
+            // 入力値のチェック及びダイアログのOKボタンの活性状態を制御
+            mAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = checkAndShowIcon(mView)
         }
     }
 
@@ -475,5 +319,57 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
      */
     private fun showNGIcon(aIcon: ImageView, aTextView: TextView) {
         showAndChangeIcon(aIcon, R.drawable.ic_baseline_error_24, aTextView, true)
+    }
+
+    /**
+     * リソースを入力レイアウトにセットする
+     *
+     * @param aTag SalaryInputViewTag.Tag
+     * @return 作成されたView
+     */
+    private fun createInputItemView(aTag: SalaryInputViewTag.Tag): View? {
+        // レイアウトファイルからViewを読み込む
+        val inputView: View = View.inflate(context, R.layout.layout_input_data, null)
+
+        val viewData = SalaryInputViewTag.tagDataMap[aTag]
+
+        if(viewData != null){
+            // タイトル
+            val title: TextView = inputView.findViewById(R.id.tv_title)
+            title.setText(viewData.getTitleResId())
+
+            // サブタイトル
+            val subtitle: TextView = inputView.findViewById(R.id.tv_subtitle)
+            subtitle.setText(viewData.getSubtitleResId())
+
+            // 入力欄
+            val editText: EditText = inputView.findViewById(R.id.et_data)
+            // 入力ヒント
+            editText.setHint(viewData.getInputHintResId())
+            // 入力形式
+            editText.inputType = viewData.getInputType()
+            // 最大入力文字数
+            val inputFilter: Array<InputFilter> = arrayOf(InputFilter.LengthFilter(viewData.getInputMaxLength()))
+            editText.filters = inputFilter
+            // タグをセット
+            editText.tag = aTag
+
+            // 単位
+            val unit: TextView = inputView.findViewById(R.id.tv_data_unit)
+            unit.setText(viewData.getUnitResId())
+
+            // アイコン（初期は非表示）
+            val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
+            icon.visibility = View.INVISIBLE
+
+            // エラーメッセージ（初期は非表示、表示スペースも消す）
+            val error: TextView = inputView.findViewById(R.id.tv_error)
+            error.setText(viewData.getErrorMessageResId())
+            error.visibility = View.INVISIBLE
+
+            return inputView
+        } else {
+            return null
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter
+package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
 
 import java.io.Serializable
 
@@ -44,7 +44,6 @@ interface BaseSalaryDataInputViewData : Serializable {
      *
      * @return 単位のリソースID
      */
-    //
     fun getUnitResId(): Int
 
     /**

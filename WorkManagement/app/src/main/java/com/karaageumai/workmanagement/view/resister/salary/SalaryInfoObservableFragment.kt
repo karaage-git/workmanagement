@@ -2,7 +2,7 @@ package com.karaageumai.workmanagement.view.resister.salary
 
 import androidx.fragment.app.Fragment
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
 
 abstract class SalaryInfoObservableFragment : Fragment() {
     private var observers: ArrayList<SalaryInfoObserverInterface> = ArrayList()
@@ -27,7 +27,6 @@ abstract class SalaryInfoObservableFragment : Fragment() {
         }
     }
 
-    abstract fun getSalaryInfo(): SalaryInfo
-    abstract fun refreshSalaryInfo(aSalaryInfo: SalaryInfo)
+    abstract fun getSalaryInfoParcelList(): MutableList<SalaryInfoParcel>
     abstract fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag.Tag>
 }

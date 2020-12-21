@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dimgray">#696969</color>
     <color name="red">#FF0000</color>
-    <color name="work_status_basic">#FFFACD</color>
+    <color name="work_status_basic">#E6FFE9</color>
     <color name="income_basic">#FFEFD5</color>
     <color name="deduction_basic">#E6E6FA</color>
 </resources>

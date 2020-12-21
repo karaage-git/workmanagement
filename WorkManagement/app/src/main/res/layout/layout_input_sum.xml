@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_sum_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/layout_frame_border_work"
+    android:layout_marginHorizontal="5dp">
+
+    <!--  何も無いと見辛いので、勤務状態をプレースホルダにしておく  -->
+
+    <TextView
+        android:id="@+id/tv_sum_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/layoutitem_workstatus_top"
+        android:textSize="20sp"
+        android:paddingHorizontal="10dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_sum_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/zero"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:gravity="end"/>
+
+    <TextView
+        android:id="@+id/tv_sum_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/layoutitem_workstatus_top_unit"
+        android:textColor="@color/black"
+        android:paddingHorizontal="10dp"
+        android:textSize="20sp"
+        android:ems="3"/>
+
+</LinearLayout>

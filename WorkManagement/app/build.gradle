@@ -64,6 +64,12 @@ static String getVersionName(int aMajor, int aMinor, int aPatch) {
 }
 
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+androidExtensions {
+    experimental = true
+    features = ["parcelize"]
+}
 
 
 dependencies {
