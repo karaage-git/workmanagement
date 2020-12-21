@@ -2,7 +2,7 @@ package com.karaageumai.workmanagement.view.resister.salary
 
 import android.os.Parcelable
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SalaryInfoParcel(

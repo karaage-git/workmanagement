@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
 }
 
 /*
@@ -64,13 +65,6 @@ static String getVersionName(int aMajor, int aMinor, int aPatch) {
 }
 
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-
-androidExtensions {
-    experimental = true
-    features = ["parcelize"]
-}
-
 
 dependencies {
 
@@ -84,7 +78,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Room
-    def room_version = "2.2.5"
+    def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
