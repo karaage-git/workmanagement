@@ -89,12 +89,12 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
             // リストは参照渡しなので、要注意。（SalaryInfoListAdapter内でのリスト操作がここに影響します。）
             val adapter = SalaryInfoListAdapter(activity, mSalaryInfoParcelList)
             listView.adapter = adapter
-            listView.setOnItemClickListener { parent, itemView, position, id ->
+            listView.setOnItemClickListener { _, _, position, _ ->
                 Log.i("item is clicked")
                 val tag = adapter.getItem(position)
                 Log.i(tag.toString())
                 if(tag is SalaryInputViewTag.Tag){
-                    val dialogView = createInputItemView(tag)?.let {
+                    createInputItemView(tag)?.let {
                         val targetParcel: SalaryInfoParcel? = mSalaryInfoParcelList.let{ list ->
                             var ret: SalaryInfoParcel? = null
                             for(element in list){
@@ -118,7 +118,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                             editText.addTextChangedListener(textWatcher)
                             mAlertDialog = alertDialog
                                 .setView(it)
-                                .setPositiveButton(R.string.ok) { dialog, which ->
+                                .setPositiveButton(R.string.ok) { dialog, _ ->
                                     // Todo 末尾が「.」の場合は、ここで除去する
                                     editText.removeTextChangedListener(textWatcher)
                                     val strValue = editText.text.toString()
@@ -131,7 +131,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
 
                                     notifyObserver()
                                 }
-                                .setNegativeButton(R.string.cancel) { dialog, which ->
+                                .setNegativeButton(R.string.cancel) { dialog, _ ->
                                     editText.removeTextChangedListener(textWatcher)
                                     dialog.dismiss()
                                 }
