@@ -26,10 +26,10 @@ private const val INPUT_MAX_VALUE = 1000000000
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SalaryInfoInputBaseFragment.newInstance] factory method to
+ * Use the [SalaryInfoInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSetter {
+class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter {
     // 給与情報
     private var mSalaryInfoParcelList: MutableList<SalaryInfoParcel> = mutableListOf()
     // データ更新か否かを示すフラグ
@@ -53,7 +53,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         fun newInstance(aSalaryInfoParcelList: ArrayList<SalaryInfoParcel>,
                         aIsNewEntry: Boolean,
                         aBackgroundResId: Int
-        ) = SalaryInfoInputBaseFragment().apply {
+        ) = SalaryInfoInputFragment().apply {
             arguments = Bundle().apply {
                 putParcelableArrayList(KEY_SALARY_INFO_PARCEL_LIST, aSalaryInfoParcelList)
                 putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
@@ -77,7 +77,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_salary_info_input_base, container, false)
+        val view = inflater.inflate(R.layout.fragment_salary_info_input, container, false)
 
         val rootView: LinearLayout = view.findViewById(R.id.ll_root)
         rootView.setBackgroundResource(mBackgroundResId)

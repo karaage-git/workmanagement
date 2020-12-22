@@ -205,7 +205,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                         SalaryInfoParcel(SalaryInputViewTag.OverTimeInputViewData, mSalaryInfo.overtime.toString())
                     )
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
                         mIsNewEntry,
                         R.color.work_status_basic
@@ -225,7 +225,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                         SalaryInfoParcel(SalaryInputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString())
                     )
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
                         mIsNewEntry,
                         R.color.income_basic
@@ -245,7 +245,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                         SalaryInfoParcel(SalaryInputViewTag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
                     )
                     // フラグメント生成
-                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
+                    val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
                         mIsNewEntry,
                         R.color.deduction_basic
@@ -259,7 +259,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 else -> {
                     // 通常はありえない
-                    return SalaryInfoInputBaseFragment.newInstance(
+                    return SalaryInfoInputFragment.newInstance(
                         arrayListOf(),
                         mIsNewEntry,
                         R.color.work_status_basic
