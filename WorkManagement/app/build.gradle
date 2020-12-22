@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
 }
 
 /*
@@ -63,8 +64,6 @@ static String getVersionName(int aMajor, int aMinor, int aPatch) {
     return "${aMajor}.${aMinor}.${aPatch}"
 
 }
-
-apply plugin: 'kotlin-kapt'
 
 dependencies {
 
