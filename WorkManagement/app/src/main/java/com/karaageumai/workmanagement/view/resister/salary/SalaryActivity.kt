@@ -200,9 +200,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.OverTimeInputViewData, mSalaryInfo.overtime.toString())
+                        SalaryInfoParcel(SalaryInputViewTag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.OverTimeInputViewData, mSalaryInfo.overtime.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
@@ -220,9 +220,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.BaseIncomeInputViewData, mSalaryInfo.salary.toString()),
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString())
+                        SalaryInfoParcel(SalaryInputViewTag.BaseIncomeInputViewData, mSalaryInfo.salary.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
@@ -241,8 +241,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
-                        SalaryInfoParcel(SalaryInputViewTag.Tag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
+                        SalaryInfoParcel(SalaryInputViewTag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
+                        SalaryInfoParcel(SalaryInputViewTag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputBaseFragment.newInstance(
@@ -312,7 +312,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     }
 
     private fun saveData() {
-        val notEnteredItemList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
+        val notEnteredItemList: MutableList<SalaryInputViewTag> = mutableListOf()
         for(element in mChildFragmentMap) {
             val fragment = element.value
             notEnteredItemList.addAll(fragment.getNotEnteredInputItemList())
@@ -341,10 +341,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 if(message.isNotEmpty()) {
                     message.append("\n")
                 }
-                SalaryInputViewTag.tagDataMap[tag]?.let {
-                    message.append("・")
-                    message.append(getString(it.getTitleResId()))
-                }
+
             }
             alertDialog.setMessage(message)
             alertDialog.setPositiveButton(R.string.ok, DialogInterface.OnClickListener{ dialog, _ ->
@@ -358,7 +355,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     private fun refreshSalaryInfo(aList: List<SalaryInfoParcel>) {
         for (parcel in aList){
             when(parcel.mTag){
-                SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
+                SalaryInputViewTag.WorkingDayInputViewData -> {
                     mSalaryInfo.workingDay = try {
                         parcel.mStrValue.toDouble()
                     } catch (e: NumberFormatException) {
@@ -366,7 +363,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.WorkingTimeInputViewData -> {
+                SalaryInputViewTag.WorkingTimeInputViewData -> {
                     mSalaryInfo.workingTime = try {
                         parcel.mStrValue.toDouble()
                     } catch (e: NumberFormatException) {
@@ -374,7 +371,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.OverTimeInputViewData -> {
+                SalaryInputViewTag.OverTimeInputViewData -> {
                     mSalaryInfo.overtime = try {
                         parcel.mStrValue.toDouble()
                     } catch (e: NumberFormatException) {
@@ -382,7 +379,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
+                SalaryInputViewTag.BaseIncomeInputViewData -> {
                     mSalaryInfo.salary = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
@@ -390,7 +387,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.OverTimeIncomeInputViewData -> {
+                SalaryInputViewTag.OverTimeIncomeInputViewData -> {
                     mSalaryInfo.overtimeSalary = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
@@ -398,7 +395,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.OtherIncomeInputViewData -> {
+                SalaryInputViewTag.OtherIncomeInputViewData -> {
                     mSalaryInfo.otherIncome = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
@@ -406,7 +403,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+                SalaryInputViewTag.HealthInsuranceInputViewData -> {
                     mSalaryInfo.healthInsuranceFee = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
@@ -414,7 +411,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     }
                 }
 
-                SalaryInputViewTag.Tag.PensionDataInputViewData -> {
+                SalaryInputViewTag.PensionDataInputViewData -> {
                     mSalaryInfo.pensionFee = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {

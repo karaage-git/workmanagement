@@ -28,5 +28,5 @@ abstract class SalaryInfoObservableFragment : Fragment() {
     }
 
     abstract fun getSalaryInfoParcelList(): MutableList<SalaryInfoParcel>
-    abstract fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag.Tag>
+    abstract fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag>
 }

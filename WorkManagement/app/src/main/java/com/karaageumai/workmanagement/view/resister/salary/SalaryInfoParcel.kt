@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SalaryInfoParcel(
-    val mTag: SalaryInputViewTag.Tag,
+    val mTag: SalaryInputViewTag,
     var mStrValue: String,
     var mIsComplete: Boolean = false
 ) : Parcelable

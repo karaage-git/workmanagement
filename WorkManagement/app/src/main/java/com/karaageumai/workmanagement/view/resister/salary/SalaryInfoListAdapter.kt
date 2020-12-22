@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewResData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
 
 class SalaryInfoListAdapter(
@@ -45,10 +46,10 @@ class SalaryInfoListAdapter(
             convertView.tag as ViewHolder to convertView
         }
         val parcel: SalaryInfoParcel = mSalaryInfoParcelList[position]
-        SalaryInputViewTag.tagDataMap[parcel.mTag]?.let {
-            viewHolder.titleText.setText(it.getTitleResId())
-            viewHolder.valueText.setText(parcel.mStrValue)
-            viewHolder.unitText.setText(it.getUnitResId())
+        SalaryInputViewResData(parcel.mTag).let {
+            viewHolder.titleText.setText(it.mTitleResId)
+            viewHolder.valueText.text = parcel.mStrValue
+            viewHolder.unitText.setText(it.mUnitResId)
         }
 
 

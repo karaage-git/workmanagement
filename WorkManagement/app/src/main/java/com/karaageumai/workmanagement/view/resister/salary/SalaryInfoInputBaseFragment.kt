@@ -12,6 +12,7 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.resister.InputItemSetter
+import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewResData
 import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
 import java.lang.NumberFormatException
 
@@ -34,7 +35,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
     // データ更新か否かを示すフラグ
     private var mIsNewEntry: Boolean = true
     // 入力項目のViewを管理するマップ
-    private var mViewMap: MutableMap<SalaryInputViewTag.Tag, View> = mutableMapOf()
+    private var mViewMap: MutableMap<SalaryInputViewTag, View> = mutableMapOf()
     // 背景色ID
     private var mBackgroundResId = 0
 
@@ -93,8 +94,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 Log.i("item is clicked")
                 val tag = adapter.getItem(position)
                 Log.i(tag.toString())
-                if(tag is SalaryInputViewTag.Tag){
-                    createInputItemView(tag)?.let {
+                if(tag is SalaryInputViewTag){
+                    createInputItemView(tag).let {
                         val targetParcel: SalaryInfoParcel? = mSalaryInfoParcelList.let{ list ->
                             var ret: SalaryInfoParcel? = null
                             for(element in list){
@@ -152,8 +153,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         return mSalaryInfoParcelList
     }
 
-    override fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag.Tag> {
-        val retList: MutableList<SalaryInputViewTag.Tag> = mutableListOf()
+    override fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag> {
+        val retList: MutableList<SalaryInputViewTag> = mutableListOf()
         for (element in mViewMap) {
             if(!checkAndShowIcon(element.value)) {
                 retList.add(element.key)
@@ -229,10 +230,10 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
         val mEditText: EditText = aView.findViewById(R.id.et_data)
 
         val tag = mEditText.tag
-        if(tag is SalaryInputViewTag.Tag) {
+        if(tag is SalaryInputViewTag) {
             when (tag) {
                 // 0.5単位、最大値は1ヶ月、未入力不可
-                SalaryInputViewTag.Tag.WorkingDayInputViewData -> {
+                SalaryInputViewTag.WorkingDayInputViewData -> {
                     try {
                         val temp: Double = aValue.toDouble()
                         return if (NumberFormatUtil.checkNumberFormat05(aValue)) {
@@ -248,8 +249,8 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 }
 
                 // 0.1単位、最大値は1ヶ月の時間、未入力不可
-                SalaryInputViewTag.Tag.WorkingTimeInputViewData,
-                SalaryInputViewTag.Tag.OverTimeInputViewData -> {
+                SalaryInputViewTag.WorkingTimeInputViewData,
+                SalaryInputViewTag.OverTimeInputViewData -> {
                     try {
                         val temp: Double = aValue.toDouble()
                         return if (NumberFormatUtil.checkNumberFormat01(aValue)) {
@@ -265,7 +266,7 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 }
 
                 // 整数、最大値あり、未入力不可
-                SalaryInputViewTag.Tag.BaseIncomeInputViewData -> {
+                SalaryInputViewTag.BaseIncomeInputViewData -> {
                     try {
                         val temp: Int = aValue.toInt()
                         return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
@@ -281,9 +282,9 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
                 }
 
                 // 整数、最大値あり、未入力可
-                SalaryInputViewTag.Tag.OverTimeIncomeInputViewData,
-                SalaryInputViewTag.Tag.OtherIncomeInputViewData,
-                SalaryInputViewTag.Tag.HealthInsuranceInputViewData -> {
+                SalaryInputViewTag.OverTimeIncomeInputViewData,
+                SalaryInputViewTag.OtherIncomeInputViewData,
+                SalaryInputViewTag.HealthInsuranceInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
                         return true
@@ -327,49 +328,46 @@ class SalaryInfoInputBaseFragment : SalaryInfoObservableFragment(), InputItemSet
      * @param aTag SalaryInputViewTag.Tag
      * @return 作成されたView
      */
-    private fun createInputItemView(aTag: SalaryInputViewTag.Tag): View? {
+    private fun createInputItemView(aTag: SalaryInputViewTag): View {
         // レイアウトファイルからViewを読み込む
         val inputView: View = View.inflate(context, R.layout.layout_input_data, null)
 
-        val viewData = SalaryInputViewTag.tagDataMap[aTag]
+        val viewData = SalaryInputViewResData(aTag)
 
-        if(viewData != null){
-            // タイトル
-            val title: TextView = inputView.findViewById(R.id.tv_title)
-            title.setText(viewData.getTitleResId())
+        // タイトル
+        val title: TextView = inputView.findViewById(R.id.tv_title)
+        title.setText(viewData.mTitleResId)
 
-            // サブタイトル
-            val subtitle: TextView = inputView.findViewById(R.id.tv_subtitle)
-            subtitle.setText(viewData.getSubtitleResId())
+        // サブタイトル
+        val subtitle: TextView = inputView.findViewById(R.id.tv_subtitle)
+        subtitle.setText(viewData.mSubTitleResId)
 
-            // 入力欄
-            val editText: EditText = inputView.findViewById(R.id.et_data)
-            // 入力ヒント
-            editText.setHint(viewData.getInputHintResId())
-            // 入力形式
-            editText.inputType = viewData.getInputType()
-            // 最大入力文字数
-            val inputFilter: Array<InputFilter> = arrayOf(InputFilter.LengthFilter(viewData.getInputMaxLength()))
-            editText.filters = inputFilter
-            // タグをセット
-            editText.tag = aTag
+        // 入力欄
+        val editText: EditText = inputView.findViewById(R.id.et_data)
+        // 入力ヒント
+        editText.setHint(viewData.mInputHintResId)
+        // 入力形式
+        editText.inputType = viewData.mInputType
+        // 最大入力文字数
+        val inputFilter: Array<InputFilter> = arrayOf(InputFilter.LengthFilter(viewData.mInputMaxLength))
+        editText.filters = inputFilter
+        // タグをセット
+        editText.tag = aTag
 
-            // 単位
-            val unit: TextView = inputView.findViewById(R.id.tv_data_unit)
-            unit.setText(viewData.getUnitResId())
+        // 単位
+        val unit: TextView = inputView.findViewById(R.id.tv_data_unit)
+        unit.setText(viewData.mUnitResId)
 
-            // アイコン（初期は非表示）
-            val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
-            icon.visibility = View.INVISIBLE
+        // アイコン（初期は非表示）
+        val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
+        icon.visibility = View.INVISIBLE
 
-            // エラーメッセージ（初期は非表示、表示スペースも消す）
-            val error: TextView = inputView.findViewById(R.id.tv_error)
-            error.setText(viewData.getErrorMessageResId())
-            error.visibility = View.INVISIBLE
+        // エラーメッセージ（初期は非表示、表示スペースも消す）
+        val error: TextView = inputView.findViewById(R.id.tv_error)
+        error.setText(viewData.mErrorMessageResId)
+        error.visibility = View.INVISIBLE
 
-            return inputView
-        } else {
-            return null
-        }
+        return inputView
+
     }
 }
