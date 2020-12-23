@@ -1,8 +1,8 @@
-package com.karaageumai.workmanagement.view.resister.salary
+package com.karaageumai.workmanagement.view.salary
 
 import androidx.fragment.app.Fragment
-import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 
 abstract class SalaryInfoObservableFragment : Fragment() {
     private var observers: ArrayList<SalaryInfoObserverInterface> = ArrayList()

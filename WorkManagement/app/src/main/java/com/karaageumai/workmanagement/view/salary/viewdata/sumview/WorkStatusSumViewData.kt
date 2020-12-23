@@ -1,8 +1,8 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview
+package com.karaageumai.workmanagement.view.salary.viewdata.sumview
 
 import com.karaageumai.workmanagement.R
 
-object WorkStatusSumViewData : BaseSalaryDataSumViewData{
+object WorkStatusSumViewData : BaseSalaryDataSumViewData {
     override fun getTitleResId(): Int {
         return R.string.layoutitem_workstatus_top
     }

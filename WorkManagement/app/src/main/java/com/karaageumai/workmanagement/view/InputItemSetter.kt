@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister
+package com.karaageumai.workmanagement.view
 
 import android.content.Context
 import android.view.View

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview
+package com.karaageumai.workmanagement.view.salary.viewdata.sumview
 
 import java.io.Serializable
 

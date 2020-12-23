@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary
+package com.karaageumai.workmanagement.view.salary
 
 
 interface SalaryInfoObserverInterface {

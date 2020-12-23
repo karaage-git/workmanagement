@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary
+package com.karaageumai.workmanagement.view.salary
 
 import android.content.Context
 import android.view.View
@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewResData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResData
 
 class SalaryInfoListAdapter(
-    private val mContext: Context,
-    private val mSalaryInfoParcelList: List<SalaryInfoParcel>,
+        private val mContext: Context,
+        private val mSalaryInfoParcelList: List<SalaryInfoParcel>,
 ) : BaseAdapter() {
 
     data class ViewHolder(

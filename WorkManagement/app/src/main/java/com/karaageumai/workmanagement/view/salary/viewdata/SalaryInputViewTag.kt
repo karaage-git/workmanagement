@@ -1,6 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
-
-import java.io.Serializable
+package com.karaageumai.workmanagement.view.salary.viewdata
 
 enum class SalaryInputViewTag {
     WorkingDayInputViewData,

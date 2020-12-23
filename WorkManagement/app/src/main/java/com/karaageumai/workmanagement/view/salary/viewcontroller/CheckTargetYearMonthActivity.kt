@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary
+package com.karaageumai.workmanagement.view.salary.viewcontroller
 
 import android.content.Context
 import android.content.Intent

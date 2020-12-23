@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary
+package com.karaageumai.workmanagement.view.salary.viewcontroller
 
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
@@ -19,10 +19,11 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.*
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview.SalaryInputViewTag
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview.BaseSalaryDataSumViewData
-import com.karaageumai.workmanagement.view.resister.salary.ressetter.sumview.SalarySumViewTag
+import com.karaageumai.workmanagement.view.salary.*
+import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.salary.viewdata.sumview.BaseSalaryDataSumViewData
+import com.karaageumai.workmanagement.view.salary.viewdata.sumview.SalarySumViewTag
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
@@ -206,9 +207,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
-                        salaryInfoParcelArrayList,
-                        mIsNewEntry,
-                        R.color.work_status_basic
+                            salaryInfoParcelArrayList,
+                            mIsNewEntry,
+                            R.color.work_status_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -226,9 +227,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
-                        salaryInfoParcelArrayList,
-                        mIsNewEntry,
-                        R.color.income_basic
+                            salaryInfoParcelArrayList,
+                            mIsNewEntry,
+                            R.color.income_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -246,9 +247,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
-                        salaryInfoParcelArrayList,
-                        mIsNewEntry,
-                        R.color.deduction_basic
+                            salaryInfoParcelArrayList,
+                            mIsNewEntry,
+                            R.color.deduction_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -260,9 +261,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 else -> {
                     // 通常はありえない
                     return SalaryInfoInputFragment.newInstance(
-                        arrayListOf(),
-                        mIsNewEntry,
-                        R.color.work_status_basic
+                            arrayListOf(),
+                            mIsNewEntry,
+                            R.color.work_status_basic
                     )
                 }
             }

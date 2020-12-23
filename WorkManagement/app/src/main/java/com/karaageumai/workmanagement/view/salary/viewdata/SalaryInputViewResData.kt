@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.resister.salary.ressetter.inputview
+package com.karaageumai.workmanagement.view.salary.viewdata
 
 import android.text.InputType
 import com.karaageumai.workmanagement.R
