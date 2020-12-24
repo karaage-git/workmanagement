@@ -1,7 +1,7 @@
 package com.karaageumai.workmanagement.view.salary
 
 import androidx.fragment.app.Fragment
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 
 abstract class SalaryInfoObservableFragment : Fragment() {

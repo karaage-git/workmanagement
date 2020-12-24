@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResData
 
 class SalaryInfoListAdapter(

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary.modelutil
+package com.karaageumai.workmanagement.view.salary.util
 
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag

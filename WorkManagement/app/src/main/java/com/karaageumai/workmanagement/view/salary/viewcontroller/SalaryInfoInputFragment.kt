@@ -14,7 +14,7 @@ import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.InputItemSetter
 import com.karaageumai.workmanagement.view.salary.SalaryInfoListAdapter
 import com.karaageumai.workmanagement.view.salary.SalaryInfoObservableFragment
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResData
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import java.lang.NumberFormatException

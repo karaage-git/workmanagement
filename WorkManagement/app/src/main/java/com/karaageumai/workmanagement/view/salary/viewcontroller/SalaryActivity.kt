@@ -20,8 +20,8 @@ import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.salary.*
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoHelper
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.salary.util.SalaryInfoHelper
+import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import com.karaageumai.workmanagement.view.salary.viewdata.sumview.BaseSalaryDataSumViewData
 import com.karaageumai.workmanagement.view.salary.viewdata.sumview.SalarySumViewTag
