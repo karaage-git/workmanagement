@@ -20,7 +20,7 @@ import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.salary.*
-import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoManager
+import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoHelper
 import com.karaageumai.workmanagement.view.salary.modelutil.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import com.karaageumai.workmanagement.view.salary.viewdata.sumview.BaseSalaryDataSumViewData
@@ -59,7 +59,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     private var mSumTextViewMap: MutableMap<SalarySumViewTag.Tag, TextView> = mutableMapOf()
 
-    private lateinit var mSalaryInfoManager: SalaryInfoManager
+    private lateinit var mSalaryInfoHelper: SalaryInfoHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +126,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             }
         }
 
-        mSalaryInfoManager = SalaryInfoManager(mSalaryInfo)
+        mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo)
 
         // 合計値を出すためのViewを初期化
         val sumLinearLayout: LinearLayout = findViewById(R.id.ll_sum)
@@ -205,9 +205,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.WorkingDayInputViewData),
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.WorkingTimeInputViewData),
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.OverTimeInputViewData)
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.WorkingDayInputViewData),
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.WorkingTimeInputViewData),
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OverTimeInputViewData)
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
@@ -225,9 +225,9 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.BaseIncomeInputViewData),
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.OverTimeIncomeInputViewData),
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.OtherIncomeInputViewData)
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.BaseIncomeInputViewData),
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OverTimeIncomeInputViewData),
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OtherIncomeInputViewData)
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
@@ -246,8 +246,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
                     val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.HealthInsuranceInputViewData),
-                        mSalaryInfoManager.createParcel(SalaryInputViewTag.PensionDataInputViewData)
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.HealthInsuranceInputViewData),
+                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.PensionDataInputViewData)
                     )
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
@@ -299,7 +299,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         Log.i("update()")
         val receiveParcels = aSalaryInfoObservable.getSalaryInfoParcelList()
 
-        mSalaryInfoManager.updateSalaryInfo(receiveParcels)
+        mSalaryInfoHelper.updateSalaryInfo(receiveParcels)
 
         // 合計値を更新
         mSumTextViewMap[SalarySumViewTag.Tag.WorkStatusSumViewData]?.let {

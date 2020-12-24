@@ -4,7 +4,7 @@ import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import java.lang.NumberFormatException
 
-class SalaryInfoManager(private val mSalaryInfo: SalaryInfo) {
+class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
 
     // SalaryInfoParcelを作成するメソッド
     fun createParcel(aTag: SalaryInputViewTag): SalaryInfoParcel {
