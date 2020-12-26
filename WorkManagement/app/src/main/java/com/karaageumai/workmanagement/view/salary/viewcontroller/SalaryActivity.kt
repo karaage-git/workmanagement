@@ -182,6 +182,12 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        displaySumView()
+
+    }
+
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         Log.i("currentFocus:" + currentFocus.toString())
         return super.dispatchTouchEvent(ev)
@@ -300,6 +306,10 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
         mSalaryInfoHelper.updateSalaryInfo(receiveParcels)
 
+        displaySumView()
+    }
+
+    private fun displaySumView() {
         // 合計値を更新
         mSumTextViewMap[SalarySumViewTag.Tag.WorkStatusSumViewData]?.let {
             it.text = mSalaryInfoHelper.getSumWorkTime().toString()
