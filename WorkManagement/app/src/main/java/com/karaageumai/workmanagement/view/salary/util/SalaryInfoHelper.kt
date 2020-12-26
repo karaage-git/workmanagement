@@ -16,7 +16,11 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
             SalaryInfoParcel(SalaryInputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
             SalaryInfoParcel(SalaryInputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString()),
             SalaryInfoParcel(SalaryInputViewTag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
-            SalaryInfoParcel(SalaryInputViewTag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
+            SalaryInfoParcel(SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData, mSalaryInfo.longtermCareInsuranceFee.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.PensionInsuranceInputViewData, mSalaryInfo.pensionFee.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.EmploymentInsuranceInputViewData, mSalaryInfo.employmentInsuranceFee.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.IncomeTaxInputViewData, mSalaryInfo.incomeTax.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.ResidentTaxInputViewData, mSalaryInfo.residentTax.toString())
     )
 
     init {
@@ -113,8 +117,40 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
                     }
                 }
 
-                SalaryInputViewTag.PensionDataInputViewData -> {
+                SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData -> {
+                    mSalaryInfo.longtermCareInsuranceFee = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.PensionInsuranceInputViewData -> {
                     mSalaryInfo.pensionFee = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.EmploymentInsuranceInputViewData -> {
+                    mSalaryInfo.employmentInsuranceFee = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.IncomeTaxInputViewData -> {
+                    mSalaryInfo.incomeTax = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
+
+                SalaryInputViewTag.ResidentTaxInputViewData -> {
+                    mSalaryInfo.residentTax = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
                         0
@@ -148,7 +184,12 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
      * @return 控除の合計値
      */
     fun getSumDeduction(): Int {
-        return mSalaryInfo.healthInsuranceFee + mSalaryInfo.pensionFee
+        return mSalaryInfo.healthInsuranceFee +
+                mSalaryInfo.longtermCareInsuranceFee +
+                mSalaryInfo.pensionFee +
+                mSalaryInfo.employmentInsuranceFee +
+                mSalaryInfo.incomeTax +
+                mSalaryInfo.residentTax
     }
 
     /**

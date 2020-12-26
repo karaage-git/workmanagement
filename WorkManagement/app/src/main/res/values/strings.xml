@@ -85,12 +85,28 @@
     </string>
 
 
-    <!--  勤怠情報入力フラグメント  -->
+    <!--  合計  -->
     <string name="layoutitem_workstatus_top">合計労働時間</string>
     <string name="layoutitem_workstatus_top_unit">時間</string>
 
+    <string name="layoutitem_income_top">収入総額</string>
+    <string name="layoutitem_income_top_unit">円</string>
+
+    <string name="layoutitem_deduction_top">控除総額</string>
+    <string name="layoutitem_deduction_top_unit">円</string>
+
+
+    <!--  勤怠情報入力フラグメント  -->
+    <!--  共通  -->
+    <string name="layoutitem_workstatus_workingtime_common_subtitle">0.1時間単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_workingtime_common_unit">時間</string>
+    <string name="layoutitem_workstatus_workingtime_common_error">
+        入力形式が正しくありません。\n
+        0.1時間単位で入力してください。(最大は744です。)
+    </string>
+
     <string name="layoutitem_workstatus_workingday_title">勤務日数</string>
-    <string name="layoutitem_workstatus_workingday_subtitle">【入力必須】【数値のみ】0.5日単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_workingday_subtitle">0.5日単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_workingday">例：18.5</string>
     <string name="layoutitem_workstatus_workingday_unit">日</string>
     <string name="layoutitem_workstatus_workingday_error">
@@ -99,100 +115,55 @@
     </string>
 
     <string name="layoutitem_workstatus_workingtime_title">所定労働時間</string>
-    <string name="layoutitem_workstatus_workingtime_subtitle">【入力必須】【数値のみ】0.1時間単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_workingtime">例：150</string>
-    <string name="layoutitem_workstatus_workingtime_unit">時間</string>
-    <string name="layoutitem_workstatus_workingtime_error">
-        入力形式が正しくありません。\n
-        0.1時間単位で入力してください。(最大は744です。)
-    </string>
 
     <string name="layoutitem_workstatus_overtime_title">残業時間</string>
-    <string name="layoutitem_workstatus_overtime_subtitle">【入力必須】【数値のみ】0.1時間単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_overtime">例：19.3</string>
-    <string name="layoutitem_workstatus_overtime_unit">時間</string>
-    <string name="layoutitem_workstatus_overtime_error">
-        入力形式が正しくありません。\n
-        0.1時間単位で入力してください。(最大は744です。)
-    </string>
 
 
     <!--  収入情報入力フラグメント  -->
-    <string name="layoutitem_income_top">収入総額</string>
-    <string name="layoutitem_income_top_unit">円</string>
+    <!--  共通  -->
+    <string name="layoutitem_income_baseincome_common_subtitle">1円単位で入力可能です。</string>
+    <string name="layoutitem_income_baseincome_common_unit">円</string>
+    <string name="layoutitem_income_baseincome_common_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
 
     <string name="layoutitem_income_baseincome_title">基本給</string>
-    <string name="layoutitem_income_baseincome_subtitle">【入力必須】【数値のみ】1円単位で入力可能です。</string>
     <string name="edittext_hint_income_baseincome">例：250000</string>
-    <string name="layoutitem_income_baseincome_unit">円</string>
-    <string name="layoutitem_income_baseincome_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
     <string name="layoutitem_income_overtime_title">残業手当</string>
-    <string name="layoutitem_income_overtime_subtitle">
-        【入力任意】【数値のみ】1円単位で入力可能です。\n
-        （未入力の場合は0で登録されます。）
-    </string>
     <string name="edittext_hint_income_overtime">例：50000</string>
-    <string name="layoutitem_income_overtime_unit">円</string>
-    <string name="layoutitem_income_overtime_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
     <string name="layoutitem_income_other_title">その他（資格報奨金など）</string>
-    <string name="layoutitem_income_other_subtitle">
-        【入力任意】【数値のみ】1円単位で入力可能です。\n
-        （未入力の場合は0で登録されます。）
-    </string>
     <string name="edittext_hint_income_other">例：30000</string>
-    <string name="layoutitem_income_other_unit">円</string>
-    <string name="layoutitem_income_other_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
     <!--  控除情報入力フラグメント  -->
-    <string name="layoutitem_deduction_top">控除総額</string>
-    <string name="layoutitem_deduction_top_unit">円</string>
+    <!--  共通  -->
+    <string name="layoutitem_deduction_health_common_subtitle">1円単位で入力可能です。</string>
+    <string name="layoutitem_deduction_health_common_unit">円</string>
+    <string name="layoutitem_deduction_health_common_error">
+        入力形式が正しくありません。\n
+        1円単位で入力してください。
+    </string>
 
     <string name="layoutitem_deduction_health_title">健康保険料</string>
-    <string name="layoutitem_deduction_health_subtitle">
-        【入力任意】【数値のみ】1円単位で入力可能です。\n
-        （未入力の場合は0で登録されます。）
-    </string>
     <string name="edittext_hint_deduction_health">例：10000</string>
-    <string name="layoutitem_deduction_health_unit">円</string>
-    <string name="layoutitem_deduction_health_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
     <string name="layoutitem_deduction_pension_title">年金保険料</string>
-    <string name="layoutitem_deduction_pension_subtitle">
-        【入力任意】【数値のみ】1円単位で入力可能です。\n
-        （未入力の場合は0で登録されます。）
-    </string>
     <string name="edittext_hint_deduction_pension">例：10000</string>
-    <string name="layoutitem_deduction_pension_unit">円</string>
-    <string name="layoutitem_deduction_pension_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
     <string name="layoutitem_deduction_longterm_title">介護保険料</string>
-    <string name="layoutitem_deduction_longterm_subtitle">
-        【入力任意】【数値のみ】1円単位で入力可能です。\n
-        （未入力の場合は0で登録されます。）
-    </string>
     <string name="edittext_hint_deduction_longterm">例：10000</string>
-    <string name="layoutitem_deduction_longterm_unit">円</string>
-    <string name="layoutitem_deduction_longterm_error">
-        入力形式が正しくありません。\n
-        1円単位で入力してください。
-    </string>
 
+    <string name="layoutitem_deduction_employment_title">雇用保険</string>
+    <string name="edittext_hint_deduction_employment">例：10000</string>
+
+    <string name="layoutitem_deduction_income_title">所得税</string>
+    <string name="edittext_hint_deduction_income">例：10000</string>
+
+    <string name="layoutitem_deduction_resident_title">所得税</string>
+    <string name="edittext_hint_deduction_resident">例：10000</string>
 
 </resources>

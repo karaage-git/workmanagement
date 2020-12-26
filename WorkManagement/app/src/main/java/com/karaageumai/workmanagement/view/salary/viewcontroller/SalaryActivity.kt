@@ -1,6 +1,5 @@
 package com.karaageumai.workmanagement.view.salary.viewcontroller
 
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
@@ -255,7 +254,11 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                         mSalaryInfoHelper.getSalaryInfoParcelList(
                             listOf(
                                 SalaryInputViewTag.HealthInsuranceInputViewData,
-                                SalaryInputViewTag.PensionDataInputViewData
+                                SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData,
+                                SalaryInputViewTag.PensionInsuranceInputViewData,
+                                SalaryInputViewTag.EmploymentInsuranceInputViewData,
+                                SalaryInputViewTag.IncomeTaxInputViewData,
+                                SalaryInputViewTag.ResidentTaxInputViewData
                             )
                         ).toTypedArray()
                     // フラグメント生成

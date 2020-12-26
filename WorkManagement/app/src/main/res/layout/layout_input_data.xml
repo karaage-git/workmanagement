@@ -26,12 +26,12 @@
     <TextView
         android:id="@+id/tv_subtitle"
         style="@style/InputItemSubTitle"
-        android:text="@string/layoutitem_income_baseincome_subtitle"/>
+        android:text="@string/layoutitem_income_baseincome_common_subtitle"/>
 
     <TextView
         android:id="@+id/tv_error"
         style="@style/InputItemErrorText"
-        android:text="@string/layoutitem_income_baseincome_error" />
+        android:text="@string/layoutitem_income_baseincome_common_error" />
 
     <LinearLayout
         style="@style/InputFieldLinearLayout" >
@@ -43,7 +43,7 @@
             android:autofillHints="no" />
         <TextView
             android:id="@+id/tv_data_unit"
-            android:text="@string/layoutitem_income_baseincome_unit"
+            android:text="@string/layoutitem_income_baseincome_common_unit"
             style="@style/InputFieldUnit"
             android:layout_gravity="bottom" />
 

@@ -28,78 +28,122 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
 
             SalaryInputViewTag.WorkingTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_workingtime_title
-                mSubTitleResId = R.string.layoutitem_workstatus_workingtime_subtitle
+                mSubTitleResId = R.string.layoutitem_workstatus_workingtime_common_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_workingtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 5
-                mUnitResId = R.string.layoutitem_workstatus_workingtime_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_workingtime_error
+                mUnitResId = R.string.layoutitem_workstatus_workingtime_common_unit
+                mErrorMessageResId = R.string.layoutitem_workstatus_workingtime_common_error
                 mIsCalcItem = true
             }
 
             SalaryInputViewTag.OverTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_overtime_title
-                mSubTitleResId = R.string.layoutitem_workstatus_overtime_subtitle
+                mSubTitleResId = R.string.layoutitem_workstatus_workingtime_common_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_overtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 5
-                mUnitResId = R.string.layoutitem_workstatus_overtime_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_overtime_error
+                mUnitResId = R.string.layoutitem_workstatus_workingtime_common_unit
+                mErrorMessageResId = R.string.layoutitem_workstatus_workingtime_common_error
                 mIsCalcItem = true
             }
 
             SalaryInputViewTag.BaseIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_baseincome_title
-                mSubTitleResId = R.string.layoutitem_income_baseincome_subtitle
+                mSubTitleResId = R.string.layoutitem_income_baseincome_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_baseincome
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 9
-                mUnitResId = R.string.layoutitem_income_baseincome_unit
-                mErrorMessageResId = R.string.layoutitem_income_baseincome_error
+                mUnitResId = R.string.layoutitem_income_baseincome_common_unit
+                mErrorMessageResId = R.string.layoutitem_income_baseincome_common_error
                 mIsCalcItem = true
             }
 
             SalaryInputViewTag.OverTimeIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_overtime_title
-                mSubTitleResId = R.string.layoutitem_income_overtime_subtitle
+                mSubTitleResId = R.string.layoutitem_income_baseincome_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_overtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 9
-                mUnitResId = R.string.layoutitem_income_overtime_unit
-                mErrorMessageResId = R.string.layoutitem_income_overtime_error
+                mUnitResId = R.string.layoutitem_income_baseincome_common_unit
+                mErrorMessageResId = R.string.layoutitem_income_baseincome_common_error
                 mIsCalcItem = true
             }
 
             SalaryInputViewTag.OtherIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_other_title
-                mSubTitleResId = R.string.layoutitem_income_other_subtitle
+                mSubTitleResId = R.string.layoutitem_income_baseincome_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_other
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 9
-                mUnitResId = R.string.layoutitem_income_other_unit
-                mErrorMessageResId = R.string.layoutitem_income_other_error
+                mUnitResId = R.string.layoutitem_income_baseincome_common_unit
+                mErrorMessageResId = R.string.layoutitem_income_baseincome_common_error
                 mIsCalcItem = true
             }
 
             SalaryInputViewTag.HealthInsuranceInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_health_title
-                mSubTitleResId = R.string.layoutitem_deduction_health_subtitle
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_health
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 9
-                mUnitResId = R.string.layoutitem_deduction_health_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_health_error
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
                 mIsCalcItem = true
             }
 
-            SalaryInputViewTag.PensionDataInputViewData -> {
+            SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData -> {
+                mTitleResId = R.string.layoutitem_deduction_longterm_title
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
+                mInputHintResId = R.string.edittext_hint_deduction_longterm
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
+                mInputMaxLength = 9
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
+                mIsCalcItem = true
+            }
+
+            SalaryInputViewTag.PensionInsuranceInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_pension_title
-                mSubTitleResId = R.string.layoutitem_deduction_pension_subtitle
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_pension
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 9
-                mUnitResId = R.string.layoutitem_deduction_pension_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_pension_error
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
+                mIsCalcItem = true
+            }
+
+            SalaryInputViewTag.EmploymentInsuranceInputViewData -> {
+                mTitleResId = R.string.layoutitem_deduction_employment_title
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
+                mInputHintResId = R.string.edittext_hint_deduction_employment
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
+                mInputMaxLength = 9
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
+                mIsCalcItem = true
+            }
+
+            SalaryInputViewTag.IncomeTaxInputViewData -> {
+                mTitleResId = R.string.layoutitem_deduction_income_title
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
+                mInputHintResId = R.string.edittext_hint_deduction_income
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
+                mInputMaxLength = 9
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
+                mIsCalcItem = true
+            }
+
+            SalaryInputViewTag.ResidentTaxInputViewData -> {
+                mTitleResId = R.string.layoutitem_deduction_resident_title
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
+                mInputHintResId = R.string.edittext_hint_deduction_resident
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
+                mInputMaxLength = 9
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
                 mIsCalcItem = true
             }
         }
