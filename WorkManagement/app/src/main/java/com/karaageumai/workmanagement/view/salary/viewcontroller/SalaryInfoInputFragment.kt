@@ -19,7 +19,7 @@ import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResDat
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import java.lang.NumberFormatException
 
-private const val KEY_SALARY_INFO_PARCEL_LIST = "KEY_SALARY_INFO_PARCEL_LIST"
+private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
 private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
 private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
 
@@ -53,12 +53,12 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
          * @return A new instance of fragment DeductionInputFragment.
          */
         @JvmStatic
-        fun newInstance(aSalaryInfoParcelList: ArrayList<SalaryInfoParcel>,
+        fun newInstance(aSalaryInfoParcelArray: Array<SalaryInfoParcel>,
                         aIsNewEntry: Boolean,
                         aBackgroundResId: Int
         ) = SalaryInfoInputFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArrayList(KEY_SALARY_INFO_PARCEL_LIST, aSalaryInfoParcelList)
+                putParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY, aSalaryInfoParcelArray)
                 putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
                 putInt(KEY_BACKGROUND_LAYOUT_RES_ID, aBackgroundResId)
             }
@@ -68,8 +68,13 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            bundle.getParcelableArrayList<SalaryInfoParcel>(KEY_SALARY_INFO_PARCEL_LIST)?.let {
-                mSalaryInfoParcelList = it
+            bundle.getParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY)?.let {
+                // ダイレクトにキャストできないので、型チェックしてリストに追加する
+                for(parcel in it){
+                    if(parcel is SalaryInfoParcel){
+                        mSalaryInfoParcelList.add(parcel)
+                    }
+                }
             }
             mIsNewEntry = bundle.getBoolean(KEY_IS_NEW_ENTRY)
             mBackgroundResId = bundle.getInt(KEY_BACKGROUND_LAYOUT_RES_ID)
@@ -84,9 +89,6 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
 
         val rootView: LinearLayout = view.findViewById(R.id.ll_root)
         rootView.setBackgroundResource(mBackgroundResId)
-
-        // Todo 新規ではない場合に、ここでEditTextにデータをセットする
-
         val listView: ListView = view.findViewById(R.id.lv_item)
         val activity = activity
         if(activity != null) {

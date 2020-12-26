@@ -204,11 +204,15 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_WORK_STATUS -> {
                     Log.i("create WorkStatusInputFragment()")
                     // 表示する項目を定義するArray
-                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.WorkingDayInputViewData),
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.WorkingTimeInputViewData),
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OverTimeInputViewData)
-                    )
+
+                    val salaryInfoParcelArrayList: Array<SalaryInfoParcel> =
+                        mSalaryInfoHelper.getSalaryInfoParcelList(
+                            listOf(SalaryInputViewTag.WorkingDayInputViewData,
+                                SalaryInputViewTag.WorkingTimeInputViewData,
+                                SalaryInputViewTag.OverTimeInputViewData
+                            )
+                        ).toTypedArray()
+
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
@@ -224,11 +228,14 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 PAGE_OF_INCOME -> {
                     Log.i("create IncomeInputFragment()")
-                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.BaseIncomeInputViewData),
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OverTimeIncomeInputViewData),
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.OtherIncomeInputViewData)
-                    )
+                    val salaryInfoParcelArrayList: Array<SalaryInfoParcel> =
+                        mSalaryInfoHelper.getSalaryInfoParcelList(
+                            listOf(
+                                SalaryInputViewTag.BaseIncomeInputViewData,
+                                SalaryInputViewTag.OverTimeIncomeInputViewData,
+                                SalaryInputViewTag.OtherIncomeInputViewData
+                            )
+                        ).toTypedArray()
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
@@ -245,10 +252,13 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 PAGE_OF_DEDUCTION -> {
                     Log.i("create DeductionInputFragment()")
                     // 表示する項目を定義するArray
-                    val salaryInfoParcelArrayList: ArrayList<SalaryInfoParcel> = arrayListOf(
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.HealthInsuranceInputViewData),
-                        mSalaryInfoHelper.createParcel(SalaryInputViewTag.PensionDataInputViewData)
-                    )
+                    val salaryInfoParcelArrayList: Array<SalaryInfoParcel> =
+                        mSalaryInfoHelper.getSalaryInfoParcelList(
+                            listOf(
+                                SalaryInputViewTag.HealthInsuranceInputViewData,
+                                SalaryInputViewTag.PensionDataInputViewData
+                            )
+                        ).toTypedArray()
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                             salaryInfoParcelArrayList,
@@ -264,11 +274,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                 else -> {
                     // 通常はありえない
-                    return SalaryInfoInputFragment.newInstance(
-                            arrayListOf(),
-                            mIsNewEntry,
-                            R.color.work_status_basic
-                    )
+                    throw RuntimeException("$position is illegal page number")
                 }
             }
         }
@@ -303,16 +309,13 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
         // 合計値を更新
         mSumTextViewMap[SalarySumViewTag.Tag.WorkStatusSumViewData]?.let {
-            val sum = mSalaryInfo.workingTime + mSalaryInfo.overtime
-            it.text = sum.toString()
+            it.text = mSalaryInfoHelper.getSumWorkTime().toString()
         }
         mSumTextViewMap[SalarySumViewTag.Tag.IncomeSumViewData]?.let {
-            val sum = mSalaryInfo.salary + mSalaryInfo.overtimeSalary + mSalaryInfo.otherIncome
-            it.text = sum.toString()
+            it.text = mSalaryInfoHelper.getSumIncome().toString()
         }
         mSumTextViewMap[SalarySumViewTag.Tag.DeductionSumViewData]?.let {
-            val sum = mSalaryInfo.healthInsuranceFee + mSalaryInfo.pensionFee
-            it.text = sum.toString()
+            it.text = mSalaryInfoHelper.getSumDeduction().toString()
         }
     }
 

@@ -1,48 +1,36 @@
 package com.karaageumai.workmanagement.view.salary.util
 
+import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
-import java.lang.NumberFormatException
+import kotlin.NumberFormatException
 
 class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
 
-    // SalaryInfoParcelを作成するメソッド
-    fun createParcel(aTag: SalaryInputViewTag): SalaryInfoParcel {
+    private val mSalaryInfoParcelList: List<SalaryInfoParcel> = listOf(
+            SalaryInfoParcel(SalaryInputViewTag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.OverTimeInputViewData, mSalaryInfo.overtime.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.BaseIncomeInputViewData, mSalaryInfo.salary.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
+    )
 
-        when (aTag) {
-            SalaryInputViewTag.WorkingDayInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.workingDay.toString())
-            }
-
-            SalaryInputViewTag.WorkingTimeInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.workingTime.toString())
-            }
-
-            SalaryInputViewTag.OverTimeInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.overtime.toString())
-            }
-
-            SalaryInputViewTag.BaseIncomeInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.salary.toString())
-            }
-
-            SalaryInputViewTag.OverTimeIncomeInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.overtimeSalary.toString())
-            }
-
-            SalaryInputViewTag.OtherIncomeInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.otherIncome.toString())
-            }
-
-            SalaryInputViewTag.HealthInsuranceInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.healthInsuranceFee.toString())
-            }
-
-            SalaryInputViewTag.PensionDataInputViewData -> {
-                return SalaryInfoParcel(aTag, mSalaryInfo.pensionFee.toString())
+    /**
+     * タグを指定してSalaryInfoParcelを取得する
+     *
+     * @param aTag 取得対象のparcelのタグ
+     * @throws SalaryInfoTagNotFoundException mSalaryInfoParcelListのどの要素とも一致しなかった場合
+     */
+    private fun getSalaryInfoParcel(aTag: SalaryInputViewTag): SalaryInfoParcel {
+        for (parcel in mSalaryInfoParcelList) {
+            if(parcel.mTag == aTag){
+                return parcel
             }
         }
-
+        throw SalaryInfoTagNotFoundException("")
     }
 
 
@@ -117,4 +105,28 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
         }
     }
 
+    fun getSumWorkTime(): Double {
+        return mSalaryInfo.workingTime + mSalaryInfo.overtime
+    }
+
+    fun getSumIncome(): Int {
+        return mSalaryInfo.salary + mSalaryInfo.overtimeSalary + mSalaryInfo.otherIncome
+    }
+
+    fun getSumDeduction(): Int {
+        return mSalaryInfo.healthInsuranceFee + mSalaryInfo.pensionFee
+    }
+
+    fun getSalaryInfoParcelList(aTagList: List<SalaryInputViewTag>): List<SalaryInfoParcel> {
+        val retList: MutableList<SalaryInfoParcel> = mutableListOf()
+
+        for(tag in aTagList) {
+            try {
+                retList.add(getSalaryInfoParcel(tag))
+            } catch (e: SalaryInfoTagNotFoundException) {
+                continue
+            }
+        }
+        return retList
+    }
 }
