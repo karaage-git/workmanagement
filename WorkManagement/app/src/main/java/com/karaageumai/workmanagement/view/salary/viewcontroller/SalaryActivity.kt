@@ -53,10 +53,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     lateinit var mTabLayout: TabLayout
 
-    //Todo フラグがダブっているため見直しが必要
-    // 新規作成かどうかを判定するフラグ
-    private var mIsNewEntry: Boolean = true
-
     private var mSumTextViewMap: MutableMap<SalarySumViewTag.Tag, TextView> = mutableMapOf()
 
     private lateinit var mSalaryInfoHelper: SalaryInfoHelper
@@ -109,7 +105,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 // 新規データ
                 Log.i("create new SalaryInfo")
                 mSalaryInfo = SalaryInfo(0, year, month)
-                mIsNewEntry = true
             }
 
             CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
@@ -118,7 +113,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                 mModelFacade.selectSalaryInfo(year, month)?.let {
                     mSalaryInfo = it
                 }
-                mIsNewEntry = false
             }
 
             else -> {
@@ -216,7 +210,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
-                        mIsNewEntry,
                         R.color.work_status_basic
                     )
                     // SalaryInfoのオブザーバーをセット
@@ -239,7 +232,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                         salaryInfoParcelArrayList,
-                        mIsNewEntry,
                         R.color.income_basic
                     )
                     // SalaryInfoのオブザーバーをセット
@@ -262,7 +254,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
                             salaryInfoParcelArrayList,
-                            mIsNewEntry,
                             R.color.deduction_basic
                     )
                     // SalaryInfoのオブザーバーをセット

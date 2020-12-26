@@ -20,7 +20,6 @@ import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
-private const val KEY_IS_NEW_ENTRY = "KEY_IS_NEW_ENTRY"
 private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
 
 private const val MAX_DAYS_PER_MONTH = 31.0
@@ -35,8 +34,6 @@ private const val INPUT_MAX_VALUE = 1000000000
 class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter {
     // 給与情報
     private var mSalaryInfoParcelList: MutableList<SalaryInfoParcel> = mutableListOf()
-    // データ更新か否かを示すフラグ
-    private var mIsNewEntry: Boolean = true
     // 入力項目のViewを管理するマップ
     private var mViewMap: MutableMap<SalaryInputViewTag, View> = mutableMapOf()
     // 背景色ID
@@ -54,12 +51,10 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
          */
         @JvmStatic
         fun newInstance(aSalaryInfoParcelArray: Array<SalaryInfoParcel>,
-                        aIsNewEntry: Boolean,
                         aBackgroundResId: Int
         ) = SalaryInfoInputFragment().apply {
             arguments = Bundle().apply {
                 putParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY, aSalaryInfoParcelArray)
-                putBoolean(KEY_IS_NEW_ENTRY, aIsNewEntry)
                 putInt(KEY_BACKGROUND_LAYOUT_RES_ID, aBackgroundResId)
             }
         }
@@ -76,7 +71,6 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
                     }
                 }
             }
-            mIsNewEntry = bundle.getBoolean(KEY_IS_NEW_ENTRY)
             mBackgroundResId = bundle.getInt(KEY_BACKGROUND_LAYOUT_RES_ID)
         }
     }
