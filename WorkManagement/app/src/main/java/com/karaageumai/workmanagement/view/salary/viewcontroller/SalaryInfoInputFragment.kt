@@ -233,54 +233,49 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
             when (tag) {
                 // 0.5単位、最大値は1ヶ月、未入力不可
                 SalaryInputViewTag.WorkingDayInputViewData -> {
-                    try {
-                        val temp: Double = aValue.toDouble()
-                        return if (NumberFormatUtil.checkNumberFormat05(aValue)) {
-                            temp <= MAX_DAYS_PER_MONTH
-                        } else {
-                            // 0.5単位でなければ無効
+                    // 未入力も許可
+                    if (aValue.isEmpty()) {
+                        return true
+                    } else {
+                        return try {
+                            val temp: Double = aValue.toDouble()
+                            if (NumberFormatUtil.checkNumberFormat05(aValue)) {
+                                temp <= MAX_DAYS_PER_MONTH
+                            } else {
+                                // 0.5単位でなければ無効
+                                false
+                            }
+                        } catch (e: NumberFormatException) {
+                            // 数値でなければ無効
                             false
                         }
-                    } catch (e: NumberFormatException) {
-                        // 数値でなければ無効
-                        return false
                     }
                 }
 
                 // 0.1単位、最大値は1ヶ月の時間、未入力不可
                 SalaryInputViewTag.WorkingTimeInputViewData,
                 SalaryInputViewTag.OverTimeInputViewData -> {
-                    try {
-                        val temp: Double = aValue.toDouble()
-                        return if (NumberFormatUtil.checkNumberFormat01(aValue)) {
-                            temp <= MAX_TIME_PER_MONTH
-                        } else {
-                            // 0.1単位でなければ無効
+                    // 未入力も許可
+                    if (aValue.isEmpty()) {
+                        return true
+                    } else {
+                        return try {
+                            val temp: Double = aValue.toDouble()
+                            if (NumberFormatUtil.checkNumberFormat01(aValue)) {
+                                temp <= MAX_TIME_PER_MONTH
+                            } else {
+                                // 0.1単位でなければ無効
+                                false
+                            }
+                        } catch (e: NumberFormatException) {
+                            // 数値でなければ無効
                             false
                         }
-                    } catch (e: NumberFormatException) {
-                        // 数値でなければ無効
-                        return false
-                    }
-                }
-
-                // 整数、最大値あり、未入力不可
-                SalaryInputViewTag.BaseIncomeInputViewData -> {
-                    try {
-                        val temp: Int = aValue.toInt()
-                        return if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
-                            temp <= INPUT_MAX_VALUE
-                        } else {
-                            // 整数でなければ無効
-                            false
-                        }
-                    } catch (e: NumberFormatException) {
-                        // 数値でなければ無効
-                        return false
                     }
                 }
 
                 // 整数、最大値あり、未入力可
+                SalaryInputViewTag.BaseIncomeInputViewData,
                 SalaryInputViewTag.OverTimeIncomeInputViewData,
                 SalaryInputViewTag.OtherIncomeInputViewData,
                 SalaryInputViewTag.HealthInsuranceInputViewData -> {
