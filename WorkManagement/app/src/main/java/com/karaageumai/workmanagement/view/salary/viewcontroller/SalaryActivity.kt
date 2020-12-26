@@ -46,7 +46,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     var mChildFragmentMap: MutableMap<Int, SalaryInfoObservableFragment> = mutableMapOf()
 
     // 新規 or 更新を判定する情報
-    private lateinit var mCheckResult: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE
+    private lateinit var mCheckResult: CalendarUtil.Companion.CheckFormatResultCode
 
     // DBに登録するデータ
     lateinit var mSalaryInfo: SalaryInfo
@@ -67,11 +67,11 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
         // intentからリザルトコードを取り出し、nullチェック、型チェックを行った上で変数に格納する
         mCheckResult =
-                (intent.extras?.getSerializable(CheckTargetYearMonthActivity.KEY_CHECK_RESULT) ?: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.ERROR).let { it ->
-                    if(it is CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE) {
+                (intent.extras?.getSerializable(CheckTargetYearMonthActivity.KEY_CHECK_RESULT) ?: CalendarUtil.Companion.CheckFormatResultCode.ERROR).let { it ->
+                    if(it is CalendarUtil.Companion.CheckFormatResultCode) {
                         it
                     } else {
-                        CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.ERROR
+                        CalendarUtil.Companion.CheckFormatResultCode.ERROR
                     }
                 }
 
@@ -101,17 +101,19 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
         // データを作成
         when (mCheckResult) {
-            CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
+            CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
                 // 新規データ
                 Log.i("create new SalaryInfo")
                 mSalaryInfo = SalaryInfo(0, year, month)
+                mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo, true)
             }
 
-            CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
+            CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
                 // 既存データを取得
                 Log.i("get SalaryInfo from DB")
                 mModelFacade.selectSalaryInfo(year, month)?.let {
                     mSalaryInfo = it
+                    mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo, false)
                 }
             }
 
@@ -120,7 +122,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             }
         }
 
-        mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo)
 
         // 合計値を出すためのViewを初期化
         val sumLinearLayout: LinearLayout = findViewById(R.id.ll_sum)
@@ -283,6 +284,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         return when(item.itemId) {
             R.id.btn_save_data -> {
                 saveData()
+                finish()
                 true
             }
 
@@ -311,44 +313,41 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     }
 
     private fun saveData() {
-        val notEnteredItemList: MutableList<SalaryInputViewTag> = mutableListOf()
-        for(element in mChildFragmentMap) {
-            val fragment = element.value
-            notEnteredItemList.addAll(fragment.getNotEnteredInputItemList())
-        }
-
-        if(notEnteredItemList.isEmpty()){
+        if(mSalaryInfoHelper.checkUserInputFinished()){
             mSalaryInfo.isComplete = true
             when (mCheckResult) {
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
                     mModelFacade.insertSalaryInfo(mSalaryInfo)
                 }
 
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
                     mModelFacade.updateSalaryInfo(mSalaryInfo)
                 }
-
                 else -> return
             }
         } else {
-            Log.i("this data is not complete. app can not save this data.")
             val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this)
             alertDialog.setTitle(R.string.dialog_title)
+                .setMessage(R.string.dialog_message)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    when (mCheckResult) {
+                        CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
+                            mModelFacade.insertSalaryInfo(mSalaryInfo)
+                        }
 
-            val message: StringBuilder = StringBuilder()
-            for (tag in notEnteredItemList) {
-                if(message.isNotEmpty()) {
-                    message.append("\n")
+                        CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
+                            mModelFacade.updateSalaryInfo(mSalaryInfo)
+                        }
+
+                        else -> {}
+                    }
+                    dialog.dismiss()
                 }
-
-            }
-            alertDialog.setMessage(message)
-            alertDialog.setPositiveButton(R.string.ok, DialogInterface.OnClickListener{ dialog, _ ->
-                dialog.dismiss()
-            })
-            alertDialog.show()
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
             return
         }
     }
-
 }

@@ -14,7 +14,7 @@ object ModelFacade {
     private val mDao = mDb.salaryInfoDao()
 
     // 有効なYYYYMMかチェックする
-    fun checkYearMonth(aYYYYmm: String): CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE {
+    fun checkYearMonth(aYYYYmm: String): CalendarUtil.Companion.CheckFormatResultCode {
         return CalendarUtil.checkFormat(aYYYYmm)
     }
 

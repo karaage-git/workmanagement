@@ -5,8 +5,9 @@ import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
 import kotlin.NumberFormatException
 
-class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
+class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEntry: Boolean) {
 
+    // mSalaryInfoから生成されるSalaryInfoParcelのリスト
     private val mSalaryInfoParcelList: List<SalaryInfoParcel> = listOf(
             SalaryInfoParcel(SalaryInputViewTag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
             SalaryInfoParcel(SalaryInputViewTag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
@@ -18,10 +19,23 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
             SalaryInfoParcel(SalaryInputViewTag.PensionDataInputViewData, mSalaryInfo.pensionFee.toString())
     )
 
+    init {
+        if(mIsNewEntry){
+            for (parcel in mSalaryInfoParcelList) {
+                parcel.mIsComplete = false
+            }
+        } else {
+            for (parcel in mSalaryInfoParcelList) {
+                parcel.mIsComplete = true
+            }
+        }
+    }
+
     /**
      * タグを指定してSalaryInfoParcelを取得する
      *
      * @param aTag 取得対象のparcelのタグ
+     * @return aTagに一致するタグをもつmSalaryInfoParcelListの要素
      * @throws SalaryInfoTagNotFoundException mSalaryInfoParcelListのどの要素とも一致しなかった場合
      */
     private fun getSalaryInfoParcel(aTag: SalaryInputViewTag): SalaryInfoParcel {
@@ -30,11 +44,16 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
                 return parcel
             }
         }
-        throw SalaryInfoTagNotFoundException("")
+        throw SalaryInfoTagNotFoundException("$aTag is UNKNOWN tag.")
     }
 
 
-    // タグとバリューから、メンバーのSalaryInfoのプロパティを更新するメソッド
+    /**
+     * タグとバリューから、mSalaryInfoを更新する
+     *
+     * @param aParcelList 更新対象のSalaryInfoParcel
+     */
+    //
     fun updateSalaryInfo(aParcelList: List<SalaryInfoParcel>) {
         for (parcel in aParcelList){
             when(parcel.mTag){
@@ -105,21 +124,42 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
         }
     }
 
+    /**
+     * 労働時間の合計値を算出する
+     *
+     * @return 労働時間の合計値
+     */
     fun getSumWorkTime(): Double {
         return mSalaryInfo.workingTime + mSalaryInfo.overtime
     }
 
+    /**
+     * 収入の合計値を算出する
+     *
+     * @return 収入の合計値
+     */
     fun getSumIncome(): Int {
         return mSalaryInfo.salary + mSalaryInfo.overtimeSalary + mSalaryInfo.otherIncome
     }
 
+    /**
+     * 控除の合計額を算出する
+     *
+     * @return 控除の合計値
+     */
     fun getSumDeduction(): Int {
         return mSalaryInfo.healthInsuranceFee + mSalaryInfo.pensionFee
     }
 
+    /**
+     * SalaryInputViewTagのリストから、SalaryInfoParcelのリストを返す
+     * mSalaryInfoParcelListに登録されていないタグが引数にあった場合は、リターンのリストにaddしない。
+     *
+     * @param aTagList
+     * @return
+     */
     fun getSalaryInfoParcelList(aTagList: List<SalaryInputViewTag>): List<SalaryInfoParcel> {
         val retList: MutableList<SalaryInfoParcel> = mutableListOf()
-
         for(tag in aTagList) {
             try {
                 retList.add(getSalaryInfoParcel(tag))
@@ -129,4 +169,16 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo) {
         }
         return retList
     }
+
+    /**
+     * ユーザの入力が完了しているかチェックする
+     */
+    fun checkUserInputFinished(): Boolean {
+        var ret = true
+        for(parcel in mSalaryInfoParcelList) {
+            ret = ret and parcel.mIsComplete
+        }
+        return ret
+    }
+
 }

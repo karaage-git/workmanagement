@@ -38,7 +38,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
     private val mModelFacade: ModelFacade = ModelFacade
 
     private lateinit var mYearMonth: String
-    private lateinit var mResultStatus: CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE
+    private lateinit var mResultStatus: CalendarUtil.Companion.CheckFormatResultCode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,22 +117,22 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
             // 入力文字が6桁のみのときに判定を行う
             when(mResultStatus) {
                 // 新しいエントリー
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
                     mResultTextView.text = getString(R.string.message_yyyymm_result_ok_new)
                     mStartButton.visibility = View.VISIBLE
                 }
                 // すでに存在する場合
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
                     mResultTextView.text = getString(R.string.message_yyyymm_result_ok_already)
                     mStartButton.visibility = View.VISIBLE
                 }
                 // 形式が異なる場合
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT -> {
                     mResultTextView.text = getString(R.string.message_yyyymm_illegal)
                     mStartButton.visibility = View.INVISIBLE
                 }
                 // 範囲外の数値が来た場合
-                CalendarUtil.Companion.CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE -> {
+                CalendarUtil.Companion.CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE -> {
                     mResultTextView.text = getString(R.string.message_yyyymm_out_range)
                     mStartButton.visibility = View.INVISIBLE
                 }

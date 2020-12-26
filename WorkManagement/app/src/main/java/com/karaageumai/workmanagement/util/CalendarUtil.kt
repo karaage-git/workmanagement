@@ -2,7 +2,6 @@ package com.karaageumai.workmanagement.util
 
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
-import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import java.lang.IllegalArgumentException
 import java.lang.NumberFormatException
 
@@ -12,7 +11,7 @@ class CalendarUtil {
 
         private val modelFacade: ModelFacade = ModelFacade
 
-        enum class CHECK_FORMAT_RESULT_CODE {
+        enum class CheckFormatResultCode {
             RESULT_OK_NEW_ENTRY,
             RESULT_OK_ALREADY_EXIST,
             RESULT_NG_ILLEGAL_FORMAT,
@@ -22,18 +21,18 @@ class CalendarUtil {
         /**
          * 入力されたYYYYMMが有効な値かチェックする
          */
-        fun checkFormat(aYYYYMM: String) : CHECK_FORMAT_RESULT_CODE {
+        fun checkFormat(aYYYYMM: String) : CheckFormatResultCode {
 
             if(aYYYYMM.length != 6) {
                 // 6桁以外の場合は即終了
                 Log.i("argument is not 6 digit")
-                return CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT
+                return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
             }
 
             val yearMonthPair = try {
                 splitYearMonth(aYYYYMM)
             } catch (e: IllegalArgumentException) {
-                return CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT
+                return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
             }
 
             val year: Int = yearMonthPair.first
@@ -42,23 +41,23 @@ class CalendarUtil {
             if((month < 1) || (month > 12)) {
                 // 月が1未満 または 12より大きい場合はNG
                 Log.i("Format of Month is wrong")
-                return CHECK_FORMAT_RESULT_CODE.RESULT_NG_ILLEGAL_FORMAT
+                return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
             }
 
             if((year < 2000) || (year > 2050)) {
                 // 2000〜2050年までを有効とみなす
                 Log.i("Out of range")
-                return CHECK_FORMAT_RESULT_CODE.RESULT_NG_OUT_OF_RANGE
+                return CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE
             }
 
             // 既存データが存在するかチェック
             if(modelFacade.isExistSalaryInfo(year, month)) {
                 Log.i("OK_ALREADY_EXIST")
-                return CHECK_FORMAT_RESULT_CODE.RESULT_OK_ALREADY_EXIST
+                return CheckFormatResultCode.RESULT_OK_ALREADY_EXIST
             }
 
             Log.i("OK_NEW_ENTRY")
-            return CHECK_FORMAT_RESULT_CODE.RESULT_OK_NEW_ENTRY
+            return CheckFormatResultCode.RESULT_OK_NEW_ENTRY
 
         }
 

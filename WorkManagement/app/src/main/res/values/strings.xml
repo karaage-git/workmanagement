@@ -79,6 +79,10 @@
     <string name="tab_title_deduction">控除</string>
 
     <string name="dialog_title">下記の項目を確認してください</string>
+    <string name="dialog_message">
+        未入力の項目があります。\n
+        未入力項目は値が0で登録されますが、よろしいですか？
+    </string>
 
 
     <!--  勤怠情報入力フラグメント  -->
