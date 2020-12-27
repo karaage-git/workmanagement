@@ -11,7 +11,8 @@ object ModelFacade {
 
     // DBの取得
     private val mDb = Room.databaseBuilder(MainApplication.getContext(), WorkManagementDB::class.java, WorkManagementDB.DB_NAME).build()
-    private val mDao = mDb.salaryInfoDao()
+    private val mSalaryInfoDao = mDb.salaryInfoDao()
+    private val mBonusInfoDao = mDb.bonusInfoDao()
 
     // 有効なYYYYMMかチェックする
     fun checkYearMonth(aYYYYmm: String): CalendarUtil.Companion.CheckFormatResultCode {
@@ -27,7 +28,7 @@ object ModelFacade {
      */
     fun isExistSalaryInfo(aYear: Int, aMonth: Int): Boolean {
         val salaryInfoList = runBlocking {
-            mDao.getSalaryWithYearMonth(aYear, aMonth)
+            mSalaryInfoDao.getSalaryWithYearMonth(aYear, aMonth)
         }
 
         return salaryInfoList.isNotEmpty()
@@ -41,7 +42,7 @@ object ModelFacade {
      */
     fun insertSalaryInfo(aSalaryInfo: SalaryInfo) {
         runBlocking {
-            mDao.insert(aSalaryInfo)
+            mSalaryInfoDao.insert(aSalaryInfo)
         }
         return
     }
@@ -56,7 +57,7 @@ object ModelFacade {
     fun selectSalaryInfo(aYear: Int, aMonth: Int): SalaryInfo? {
         // 基本的にはゼロ件か1件しか取得できない想定
         val salaryInfoList = runBlocking {
-            mDao.getSalaryWithYearMonth(aYear, aMonth)
+            mSalaryInfoDao.getSalaryWithYearMonth(aYear, aMonth)
         }
         
         // ゼロ件だった場合はnullを返す
@@ -70,7 +71,7 @@ object ModelFacade {
 
     fun updateSalaryInfo(aSalaryInfo: SalaryInfo) {
         return runBlocking {
-            mDao.update(aSalaryInfo)
+            mSalaryInfoDao.update(aSalaryInfo)
         }
     }
 
