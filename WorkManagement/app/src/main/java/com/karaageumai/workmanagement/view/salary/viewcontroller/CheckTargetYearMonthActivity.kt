@@ -126,14 +126,14 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
                     mResultTextView.text = getString(R.string.message_yyyymm_result_ok_already)
                     mStartButton.visibility = View.VISIBLE
                 }
-                // 形式が異なる場合
-                CalendarUtil.Companion.CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT -> {
-                    mResultTextView.text = getString(R.string.message_yyyymm_illegal)
-                    mStartButton.visibility = View.INVISIBLE
-                }
                 // 範囲外の数値が来た場合
                 CalendarUtil.Companion.CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE -> {
                     mResultTextView.text = getString(R.string.message_yyyymm_out_range)
+                    mStartButton.visibility = View.INVISIBLE
+                }
+                // 形式が異なる場合
+                else -> {
+                    mResultTextView.text = getString(R.string.message_yyyymm_illegal)
                     mStartButton.visibility = View.INVISIBLE
                 }
             }
