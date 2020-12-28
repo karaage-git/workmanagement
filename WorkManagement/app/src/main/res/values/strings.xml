@@ -98,9 +98,9 @@
 
     <!--  勤怠情報入力フラグメント  -->
     <!--  共通  -->
-    <string name="layoutitem_workstatus_workingtime_common_subtitle">0.1時間単位で入力可能です。</string>
-    <string name="layoutitem_workstatus_workingtime_common_unit">時間</string>
-    <string name="layoutitem_workstatus_workingtime_common_error">
+    <string name="layoutitem_workstatus_common_subtitle">0.1時間単位で入力可能です。</string>
+    <string name="layoutitem_workstatus_common_unit">時間</string>
+    <string name="layoutitem_workstatus_common_error">
         入力形式が正しくありません。\n
         0.1時間単位で入力してください。(最大は744です。)
     </string>
@@ -123,9 +123,9 @@
 
     <!--  収入情報入力フラグメント  -->
     <!--  共通  -->
-    <string name="layoutitem_income_baseincome_common_subtitle">1円単位で入力可能です。</string>
-    <string name="layoutitem_income_baseincome_common_unit">円</string>
-    <string name="layoutitem_income_baseincome_common_error">
+    <string name="layoutitem_income_common_subtitle">1円単位で入力可能です。</string>
+    <string name="layoutitem_income_common_unit">円</string>
+    <string name="layoutitem_income_common_error">
         入力形式が正しくありません。\n
         1円単位で入力してください。
     </string>
@@ -141,9 +141,9 @@
 
     <!--  控除情報入力フラグメント  -->
     <!--  共通  -->
-    <string name="layoutitem_deduction_health_common_subtitle">1円単位で入力可能です。</string>
-    <string name="layoutitem_deduction_health_common_unit">円</string>
-    <string name="layoutitem_deduction_health_common_error">
+    <string name="layoutitem_deduction_common_subtitle">1円単位で入力可能です。</string>
+    <string name="layoutitem_deduction_common_unit">円</string>
+    <string name="layoutitem_deduction_common_error">
         入力形式が正しくありません。\n
         1円単位で入力してください。
     </string>
