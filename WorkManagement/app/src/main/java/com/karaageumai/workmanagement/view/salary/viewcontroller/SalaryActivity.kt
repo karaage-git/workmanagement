@@ -22,8 +22,8 @@ import com.karaageumai.workmanagement.view.salary.*
 import com.karaageumai.workmanagement.view.salary.util.SalaryInfoHelper
 import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
-import com.karaageumai.workmanagement.view.salary.viewdata.sumview.BaseSalaryDataSumViewData
-import com.karaageumai.workmanagement.view.salary.viewdata.sumview.SalarySumViewTag
+import com.karaageumai.workmanagement.view.salary.viewdata.SalarySumViewResData
+import com.karaageumai.workmanagement.view.salary.viewdata.SalarySumViewTag
 import java.lang.IllegalArgumentException
 
 class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
@@ -52,7 +52,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     lateinit var mTabLayout: TabLayout
 
-    private var mSumTextViewMap: MutableMap<SalarySumViewTag.Tag, TextView> = mutableMapOf()
+    private var mSumTextViewMap: MutableMap<SalarySumViewTag, TextView> = mutableMapOf()
 
     private lateinit var mSalaryInfoHelper: SalaryInfoHelper
 
@@ -121,24 +121,28 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
             }
         }
 
-
+        // 表示する合計値Viewのタグリスト
+        val sumViewTagList: List<SalarySumViewTag> = listOf(
+                SalarySumViewTag.WorkStatusSumViewData,
+                SalarySumViewTag.IncomeSumViewData,
+                SalarySumViewTag.DeductionSumViewData
+        )
         // 合計値を出すためのViewを初期化
         val sumLinearLayout: LinearLayout = findViewById(R.id.ll_sum)
-        for (target in SalarySumViewTag.tagMap) {
-            val tag: SalarySumViewTag.Tag = target.key
-            val data: BaseSalaryDataSumViewData = target.value
+        for (tag in sumViewTagList) {
+            val data = SalarySumViewResData(tag)
             val view: View = layoutInflater.inflate(R.layout.layout_input_sum, sumLinearLayout, false)
             // 背景設定
             val root: LinearLayout = view.findViewById(R.id.ll_sum_root)
-            root.setBackgroundResource(data.getBackgroundResId())
+            root.setBackgroundResource(data.mBackgroundResId)
 
             // タイトル設定
             val title: TextView = view.findViewById(R.id.tv_sum_title)
-            title.setText(data.getTitleResId())
+            title.setText(data.mTitleResId)
 
             // 単位設定
             val unit: TextView = view.findViewById(R.id.tv_sum_unit)
-            unit.setText(data.getUnitResId())
+            unit.setText(data.mUnitResId)
 
             // 値部分をマップに登録
             val value: TextView = view.findViewById(R.id.tv_sum_value)
@@ -315,13 +319,13 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
     private fun displaySumView() {
         // 合計値を更新
-        mSumTextViewMap[SalarySumViewTag.Tag.WorkStatusSumViewData]?.let {
+        mSumTextViewMap[SalarySumViewTag.WorkStatusSumViewData]?.let {
             it.text = mSalaryInfoHelper.getSumWorkTime().toString()
         }
-        mSumTextViewMap[SalarySumViewTag.Tag.IncomeSumViewData]?.let {
+        mSumTextViewMap[SalarySumViewTag.IncomeSumViewData]?.let {
             it.text = mSalaryInfoHelper.getSumIncome().toString()
         }
-        mSumTextViewMap[SalarySumViewTag.Tag.DeductionSumViewData]?.let {
+        mSumTextViewMap[SalarySumViewTag.DeductionSumViewData]?.let {
             it.text = mSalaryInfoHelper.getSumDeduction().toString()
         }
     }
