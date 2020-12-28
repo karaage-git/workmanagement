@@ -20,7 +20,8 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
             SalaryInfoParcel(SalaryInputViewTag.PensionInsuranceInputViewData, mSalaryInfo.pensionFee.toString()),
             SalaryInfoParcel(SalaryInputViewTag.EmploymentInsuranceInputViewData, mSalaryInfo.employmentInsuranceFee.toString()),
             SalaryInfoParcel(SalaryInputViewTag.IncomeTaxInputViewData, mSalaryInfo.incomeTax.toString()),
-            SalaryInfoParcel(SalaryInputViewTag.ResidentTaxInputViewData, mSalaryInfo.residentTax.toString())
+            SalaryInfoParcel(SalaryInputViewTag.ResidentTaxInputViewData, mSalaryInfo.residentTax.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.OtherDeductionInputViewData, mSalaryInfo.other.toString())
     )
 
     init {
@@ -156,6 +157,14 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
                         0
                     }
                 }
+
+                SalaryInputViewTag.OtherDeductionInputViewData -> {
+                    mSalaryInfo.other = try {
+                        parcel.mStrValue.toInt()
+                    } catch (e: NumberFormatException) {
+                        0
+                    }
+                }
             }
         }
     }
@@ -189,7 +198,8 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
                 mSalaryInfo.pensionFee +
                 mSalaryInfo.employmentInsuranceFee +
                 mSalaryInfo.incomeTax +
-                mSalaryInfo.residentTax
+                mSalaryInfo.residentTax +
+                mSalaryInfo.other
     }
 
     /**

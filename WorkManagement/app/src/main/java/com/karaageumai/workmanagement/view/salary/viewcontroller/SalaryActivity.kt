@@ -258,7 +258,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                                 SalaryInputViewTag.PensionInsuranceInputViewData,
                                 SalaryInputViewTag.EmploymentInsuranceInputViewData,
                                 SalaryInputViewTag.IncomeTaxInputViewData,
-                                SalaryInputViewTag.ResidentTaxInputViewData
+                                SalaryInputViewTag.ResidentTaxInputViewData,
+                                SalaryInputViewTag.OtherDeductionInputViewData
                             )
                         ).toTypedArray()
                     // フラグメント生成

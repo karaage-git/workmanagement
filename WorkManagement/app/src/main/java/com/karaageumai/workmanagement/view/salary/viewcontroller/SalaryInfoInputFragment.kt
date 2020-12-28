@@ -283,7 +283,8 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
                 SalaryInputViewTag.PensionInsuranceInputViewData,
                 SalaryInputViewTag.EmploymentInsuranceInputViewData,
                 SalaryInputViewTag.IncomeTaxInputViewData,
-                SalaryInputViewTag.ResidentTaxInputViewData -> {
+                SalaryInputViewTag.ResidentTaxInputViewData,
+                SalaryInputViewTag.OtherDeductionInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
                         return true

@@ -146,6 +146,17 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
                 mIsCalcItem = true
             }
+
+            SalaryInputViewTag.OtherDeductionInputViewData -> {
+                mTitleResId = R.string.layoutitem_deduction_other_title
+                mSubTitleResId = R.string.layoutitem_deduction_health_common_subtitle
+                mInputHintResId = R.string.edittext_hint_deduction_other
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
+                mInputMaxLength = 9
+                mUnitResId = R.string.layoutitem_deduction_health_common_unit
+                mErrorMessageResId = R.string.layoutitem_deduction_health_common_error
+                mIsCalcItem = true
+            }
         }
     }
 

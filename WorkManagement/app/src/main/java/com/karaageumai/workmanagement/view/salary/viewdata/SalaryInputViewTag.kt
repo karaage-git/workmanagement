@@ -12,5 +12,6 @@ enum class SalaryInputViewTag {
     PensionInsuranceInputViewData,
     EmploymentInsuranceInputViewData,
     IncomeTaxInputViewData,
-    ResidentTaxInputViewData
+    ResidentTaxInputViewData,
+    OtherDeductionInputViewData
 }
