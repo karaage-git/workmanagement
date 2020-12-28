@@ -12,8 +12,8 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
             SalaryInfoParcel(SalaryInputViewTag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
             SalaryInfoParcel(SalaryInputViewTag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
             SalaryInfoParcel(SalaryInputViewTag.OverTimeInputViewData, mSalaryInfo.overtime.toString()),
-            SalaryInfoParcel(SalaryInputViewTag.BaseIncomeInputViewData, mSalaryInfo.salary.toString()),
-            SalaryInfoParcel(SalaryInputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeSalary.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.BaseIncomeInputViewData, mSalaryInfo.baseIncome.toString()),
+            SalaryInfoParcel(SalaryInputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeIncome.toString()),
             SalaryInfoParcel(SalaryInputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString()),
             SalaryInfoParcel(SalaryInputViewTag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
             SalaryInfoParcel(SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData, mSalaryInfo.longtermCareInsuranceFee.toString()),
@@ -87,7 +87,7 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
                 }
 
                 SalaryInputViewTag.BaseIncomeInputViewData -> {
-                    mSalaryInfo.salary = try {
+                    mSalaryInfo.baseIncome = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
                         0
@@ -95,7 +95,7 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
                 }
 
                 SalaryInputViewTag.OverTimeIncomeInputViewData -> {
-                    mSalaryInfo.overtimeSalary = try {
+                    mSalaryInfo.overtimeIncome = try {
                         parcel.mStrValue.toInt()
                     } catch (e: NumberFormatException) {
                         0
@@ -184,7 +184,7 @@ class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEn
      * @return 収入の合計値
      */
     fun getSumIncome(): Int {
-        return mSalaryInfo.salary + mSalaryInfo.overtimeSalary + mSalaryInfo.otherIncome
+        return mSalaryInfo.baseIncome + mSalaryInfo.overtimeIncome + mSalaryInfo.otherIncome
     }
 
     /**

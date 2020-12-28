@@ -22,9 +22,9 @@ data class SalaryInfo(
     // 有給休暇日数
     @ColumnInfo(name = "paid_holidays") var paidHolidays: Double = 0.0,
     // 給料
-    var salary: Int = 0,
+    var baseIncome: Int = 0,
     // 残業手当
-    @ColumnInfo(name = "overtime_salary") var overtimeSalary: Int = 0,
+    @ColumnInfo(name = "overtime_salary") var overtimeIncome: Int = 0,
     // その他（資格報奨金など）
     @ColumnInfo(name = "other_income") var otherIncome: Int = 0,
     // 健康保険料
