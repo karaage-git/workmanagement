@@ -30,7 +30,7 @@ data class SalaryInfo(
         // 健康保険料
         @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
         // 介護保険料
-        @ColumnInfo(name = "longterm_care_insurance_fee") var longtermCareInsuranceFee: Int = 0,
+        @ColumnInfo(name = "long_term_care_insurance_fee") var longTermCareInsuranceFee: Int = 0,
         // 年金保険料
         @ColumnInfo(name = "pension_fee") var pensionFee: Int = 0,
         // 雇用保険料
@@ -40,7 +40,7 @@ data class SalaryInfo(
         // 住民税
         @ColumnInfo(name = "resident_tax") var residentTax: Int = 0,
         // その他
-        var other: Int = 0,
+        var otherDeduction: Int = 0,
         // 完了フラグ
         @ColumnInfo(name = "is_complete") var isComplete: Boolean = false
 ) : Serializable
