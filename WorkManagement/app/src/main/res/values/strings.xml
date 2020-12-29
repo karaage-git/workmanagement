@@ -37,8 +37,6 @@
     <!--  ツールバー  -->
 
 
-
-
     <!--  トップメニュー  -->
     <string name="toolbar_title_topmenu">トップメニュー</string>
     <string name="btn_topmenu_resister">収入情報の登録/修正</string>
@@ -51,14 +49,15 @@
     <string name="btn_resistermenu_bonus">ボーナスを登録/修正</string>
 
     <!--  毎月の給料メニュー  -->
-    <string name="toolbar_title_checktargetyearmonth">毎月の給料を登録/修正</string>
-    <string name="message_checktargetyearmonth_when">
+    <string name="toolbar_title_check_target_year_month_salary">毎月の給料を登録/修正</string>
+    <string name="toolbar_title_check_target_year_month_bonus">ボーナスを登録/修正</string>
+    <string name="message_check_target_year_month_when">
         いつのデータを入力しますか？\n
         「YYYYMM形式」で入力してください。\n
         例（2020年1月の場合）：202001
     </string>
-    <string name="edittext_hint_checktargetyearmonth_yyyymm">(例)202001</string>
-    <string name="message_yyyymm_illegal">
+    <string name="edittext_hint_check_target_year_month_yyyy_mm">(例)202001</string>
+    <string name="message_yyyy_mm_illegal">
         入力形式が正しくありません。\n
         もう一度入力した値を確認してください。
     </string>
@@ -68,7 +67,7 @@
     </string>
     <string name="message_yyyymm_result_ok_new">新規データを登録します。</string>
     <string name="message_yyyymm_result_ok_already">
-        登録済み または 入力途中のデータがあります。
+        登録済みのデータがあります。\n
         入力データの修正を行うことができます。
     </string>
 

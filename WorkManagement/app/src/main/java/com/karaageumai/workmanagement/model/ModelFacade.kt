@@ -2,8 +2,8 @@ package com.karaageumai.workmanagement.model
 
 import androidx.room.Room
 import com.karaageumai.workmanagement.MainApplication
+import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.util.CalendarUtil
 import kotlinx.coroutines.runBlocking
 
 // 各APIの入り口を管理するクラス
@@ -13,11 +13,6 @@ object ModelFacade {
     private val mDb = Room.databaseBuilder(MainApplication.getContext(), WorkManagementDB::class.java, WorkManagementDB.DB_NAME).build()
     private val mSalaryInfoDao = mDb.salaryInfoDao()
     private val mBonusInfoDao = mDb.bonusInfoDao()
-
-    // 有効なYYYYMMかチェックする
-    fun checkYearMonth(aYYYYmm: String): CalendarUtil.Companion.CheckFormatResultCode {
-        return CalendarUtil.checkFormat(aYYYYmm)
-    }
 
     /**
      * 年、月の情報から、DBにデータが存在するかチェックする
@@ -69,9 +64,75 @@ object ModelFacade {
 
     }
 
+    /**
+     * SalaryInfoの更新
+     *
+     * @param aSalaryInfo 更新データ
+     */
     fun updateSalaryInfo(aSalaryInfo: SalaryInfo) {
         return runBlocking {
             mSalaryInfoDao.update(aSalaryInfo)
+        }
+    }
+
+    /**
+     * 年、月の情報から、DBにデータが存在するかチェックする
+     *
+     * @param aYear
+     * @param aMonth
+     * @return 存在する:true, 存在しない:false
+     */
+    fun isExistBonusInfo(aYear: Int, aMonth: Int): Boolean {
+        val bonusInfoList = runBlocking {
+            mBonusInfoDao.getBonusWithYearMonth(aYear, aMonth)
+        }
+
+        return bonusInfoList.isNotEmpty()
+
+    }
+
+    /**
+     * 新規にBonusInfoをDBに挿入する
+     *
+     * @param aBonusInfo
+     */
+    fun insertBonusInfo(aBonusInfo: BonusInfo) {
+        runBlocking {
+            mBonusInfoDao.insert(aBonusInfo)
+        }
+        return
+    }
+
+    /**
+     * 年、月を元にDBからBonusInfoを取得する
+     *
+     * @param aYear 年
+     * @param aMonth 月
+     * @return SalaryInfo
+     */
+    fun selectBonusInfo(aYear: Int, aMonth: Int): BonusInfo? {
+        // 基本的にはゼロ件か1件しか取得できない想定
+        val bonusInfoList = runBlocking {
+            mBonusInfoDao.getBonusWithYearMonth(aYear, aMonth)
+        }
+
+        // ゼロ件だった場合はnullを返す
+        if(bonusInfoList.isEmpty()) {
+            return null
+        }
+
+        return bonusInfoList.first()
+
+    }
+
+    /**
+     * BonusInfoの更新
+     *
+     * @param aBonusInfo 更新データ
+     */
+    fun updateBonusInfo(aBonusInfo: BonusInfo) {
+        return runBlocking {
+            mBonusInfoDao.update(aBonusInfo)
         }
     }
 

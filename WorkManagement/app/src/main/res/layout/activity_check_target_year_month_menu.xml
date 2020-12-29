@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.salary.viewcontroller.CheckTargetYearMonthActivity"
+    tools:context=".view.common.viewcontroller.CheckTargetYearMonthActivity"
     android:orientation="vertical">
 
     <!-- ツールバー  -->
@@ -27,7 +27,7 @@
         android:id="@+id/tv_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/message_checktargetyearmonth_when"
+        android:text="@string/message_check_target_year_month_when"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         android:gravity="center"
@@ -39,7 +39,7 @@
         android:id="@+id/et_target"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="@string/edittext_hint_checktargetyearmonth_yyyymm"
+        android:hint="@string/edittext_hint_check_target_year_month_yyyy_mm"
         android:textSize="30sp"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"

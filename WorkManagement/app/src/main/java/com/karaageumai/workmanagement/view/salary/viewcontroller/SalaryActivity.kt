@@ -18,6 +18,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
+import com.karaageumai.workmanagement.view.common.viewcontroller.*
 import com.karaageumai.workmanagement.view.salary.*
 import com.karaageumai.workmanagement.view.salary.util.SalaryInfoHelper
 import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
@@ -45,7 +46,7 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     var mChildFragmentMap: MutableMap<Int, SalaryInfoObservableFragment> = mutableMapOf()
 
     // 新規 or 更新を判定する情報
-    private lateinit var mCheckResult: CalendarUtil.Companion.CheckFormatResultCode
+    private var mEntryMode = ENTRY_MODE_NEW
 
     // DBに登録するデータ
     lateinit var mSalaryInfo: SalaryInfo
@@ -64,18 +65,11 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         toolbar.title = getString(R.string.toolbar_title_salary)
         setSupportActionBar(toolbar)
 
-        // intentからリザルトコードを取り出し、nullチェック、型チェックを行った上で変数に格納する
-        mCheckResult =
-                (intent.extras?.getSerializable(CheckTargetYearMonthActivity.KEY_CHECK_RESULT) ?: CalendarUtil.Companion.CheckFormatResultCode.ERROR).let { it ->
-                    if(it is CalendarUtil.Companion.CheckFormatResultCode) {
-                        it
-                    } else {
-                        CalendarUtil.Companion.CheckFormatResultCode.ERROR
-                    }
-                }
+        // intentから新規 or 更新を取得
+        mEntryMode = intent.getIntExtra(KEY_ENTRY_MODE, ENTRY_MODE_ERROR)
 
         // intentから年月を表す文字列を取得する
-        val yearMonth: String = intent.extras?.getString(CheckTargetYearMonthActivity.KEY_YEAR_MONTH, "") ?: ""
+        val yearMonth: String = intent.getStringExtra(KEY_YEAR_MONTH) ?: ""
 
         // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
         if (yearMonth.isEmpty()) {
@@ -99,15 +93,15 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         val month: Int = yearMonthPair.second
 
         // データを作成
-        when (mCheckResult) {
-            CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
+        when (mEntryMode) {
+            ENTRY_MODE_NEW -> {
                 // 新規データ
                 Log.i("create new SalaryInfo")
                 mSalaryInfo = SalaryInfo(0, year, month)
                 mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo, true)
             }
 
-            CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
+            ENTRY_MODE_ALREADY_EXIST -> {
                 // 既存データを取得
                 Log.i("get SalaryInfo from DB")
                 mModelFacade.selectSalaryInfo(year, month)?.let {
@@ -298,7 +292,6 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
         return when(item.itemId) {
             R.id.btn_save_data -> {
                 saveData()
-                finish()
                 true
             }
 
@@ -333,33 +326,35 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
     private fun saveData() {
         if(mSalaryInfoHelper.checkUserInputFinished()){
             mSalaryInfo.isComplete = true
-            when (mCheckResult) {
-                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
+            when (mEntryMode) {
+                ENTRY_MODE_NEW -> {
                     mModelFacade.insertSalaryInfo(mSalaryInfo)
                 }
 
-                CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
+                ENTRY_MODE_ALREADY_EXIST -> {
                     mModelFacade.updateSalaryInfo(mSalaryInfo)
                 }
                 else -> return
             }
+            finish()
         } else {
             val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this)
             alertDialog.setTitle(R.string.dialog_title)
                 .setMessage(R.string.dialog_message)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
-                    when (mCheckResult) {
-                        CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_NEW_ENTRY -> {
+                    when (mEntryMode) {
+                        ENTRY_MODE_NEW -> {
                             mModelFacade.insertSalaryInfo(mSalaryInfo)
                         }
 
-                        CalendarUtil.Companion.CheckFormatResultCode.RESULT_OK_ALREADY_EXIST -> {
+                        ENTRY_MODE_ALREADY_EXIST -> {
                             mModelFacade.updateSalaryInfo(mSalaryInfo)
                         }
 
                         else -> {}
                     }
                     dialog.dismiss()
+                    finish()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()

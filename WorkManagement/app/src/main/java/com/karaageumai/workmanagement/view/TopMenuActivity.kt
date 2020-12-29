@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.view.common.viewcontroller.ResisterMenuActivity
 
 class TopMenuActivity : AppCompatActivity() {
 

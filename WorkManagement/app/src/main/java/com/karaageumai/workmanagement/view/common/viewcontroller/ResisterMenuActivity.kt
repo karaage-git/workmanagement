@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view
+package com.karaageumai.workmanagement.view.common.viewcontroller
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +9,11 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.view.salary.viewcontroller.CheckTargetYearMonthActivity
+
+const val KEY_INPUT_MODE = "KEY_INPUT_MODE"
+const val INPUT_MODE_SALARY = 0
+const val INPUT_MODE_BONUS = 1
+const val INPUT_MODE_ERROR = -1
 
 class ResisterMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,14 +27,19 @@ class ResisterMenuActivity : AppCompatActivity() {
         toolbar.title = getString(R.string.toolbar_title_resistermenu)
         setSupportActionBar(toolbar)
 
-        val normalButton: Button = findViewById(R.id.btn_normal)
-        normalButton.setOnClickListener{
+        val salaryButton: Button = findViewById(R.id.btn_salary)
+        salaryButton.setOnClickListener{
             val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
+            intent.putExtra(KEY_INPUT_MODE, INPUT_MODE_SALARY)
             startActivity(intent)
         }
 
-
-
+        val bonusButton: Button = findViewById(R.id.btn_bonus)
+        bonusButton.setOnClickListener{
+            val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
+            intent.putExtra(KEY_INPUT_MODE, INPUT_MODE_BONUS)
+            startActivity(intent)
+        }
 
     }
 
