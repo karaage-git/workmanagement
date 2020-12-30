@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input
+package com.karaageumai.workmanagement.view.input.viewcontroller.salary
 
 import android.content.Context
 import android.view.View

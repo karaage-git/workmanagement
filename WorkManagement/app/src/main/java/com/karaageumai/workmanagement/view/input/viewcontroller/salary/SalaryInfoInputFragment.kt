@@ -12,8 +12,6 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.InputItemSetter
-import com.karaageumai.workmanagement.view.input.SalaryInfoListAdapter
-import com.karaageumai.workmanagement.view.input.SalaryInfoObservableFragment
 import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag

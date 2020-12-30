@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input
+package com.karaageumai.workmanagement.view.input.viewcontroller.salary
 
 import androidx.fragment.app.Fragment
 import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
