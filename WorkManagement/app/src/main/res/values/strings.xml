@@ -130,7 +130,7 @@
         1円単位で入力してください。
     </string>
 
-    <string name="layoutitem_income_baseincome_title">基本給</string>
+    <string name="layoutitem_income_baseincome_title">基本支給額</string>
     <string name="edittext_hint_income_baseincome">例：250000</string>
 
     <string name="layoutitem_income_overtime_title">残業手当</string>

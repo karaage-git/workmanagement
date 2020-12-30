@@ -1,27 +1,27 @@
-package com.karaageumai.workmanagement.view.input.viewdata.salary
+package com.karaageumai.workmanagement.view.input.viewdata
 
 import com.karaageumai.workmanagement.R
 
-data class SalarySumViewResData(val mTag: SalarySumViewTag) {
+data class SumViewResData(val mTag: SumViewTag) {
     val mTitleResId: Int
     val mUnitResId: Int
     val mBackgroundResId: Int
 
     init {
         when(mTag) {
-            SalarySumViewTag.WorkStatusSumViewData -> {
+            SumViewTag.WorkStatusSumViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_top
                 mUnitResId = R.string.layoutitem_workstatus_top_unit
                 mBackgroundResId = R.drawable.layout_frame_border_work
             }
 
-            SalarySumViewTag.IncomeSumViewData -> {
+            SumViewTag.IncomeSumViewData -> {
                 mTitleResId = R.string.layoutitem_income_top
                 mUnitResId = R.string.layoutitem_income_top_unit
                 mBackgroundResId = R.drawable.layout_frame_border_income
             }
 
-            SalarySumViewTag.DeductionSumViewData -> {
+            SumViewTag.DeductionSumViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_top
                 mUnitResId = R.string.layoutitem_deduction_top_unit
                 mBackgroundResId = R.drawable.layout_frame_border_deduction

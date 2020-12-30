@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller.salary
+package com.karaageumai.workmanagement.view.input.viewcontroller
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,9 +12,9 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.InputItemSetter
-import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewResData
-import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
+import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
@@ -26,14 +26,12 @@ private const val INPUT_MAX_VALUE = 1000000000
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SalaryInfoInputFragment.newInstance] factory method to
+ * Use the [BaseInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter {
+class BaseInputFragment : InputInfoObservableFragment(), InputItemSetter {
     // 給与情報
-    private var mSalaryInfoParcelList: MutableList<SalaryInfoParcel> = mutableListOf()
-    // 入力項目のViewを管理するマップ
-    private var mViewMap: MutableMap<SalaryInputViewTag, View> = mutableMapOf()
+    private var mInputInfoParcelList: MutableList<InputInfoParcel> = mutableListOf()
     // 背景色ID
     private var mBackgroundResId = 0
 
@@ -44,15 +42,16 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param aSalaryInfo
+         * @param aInputInfoParcelArray 表示する入力項目
+         * @param aBackgroundResId 背景色
          * @return A new instance of fragment DeductionInputFragment.
          */
         @JvmStatic
-        fun newInstance(aSalaryInfoParcelArray: Array<SalaryInfoParcel>,
+        fun newInstance(aInputInfoParcelArray: Array<InputInfoParcel>,
                         aBackgroundResId: Int
-        ) = SalaryInfoInputFragment().apply {
+        ) = BaseInputFragment().apply {
             arguments = Bundle().apply {
-                putParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY, aSalaryInfoParcelArray)
+                putParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY, aInputInfoParcelArray)
                 putInt(KEY_BACKGROUND_LAYOUT_RES_ID, aBackgroundResId)
             }
         }
@@ -64,8 +63,8 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
             bundle.getParcelableArray(KEY_SALARY_INFO_PARCEL_ARRAY)?.let {
                 // ダイレクトにキャストできないので、型チェックしてリストに追加する
                 for(parcel in it){
-                    if(parcel is SalaryInfoParcel){
-                        mSalaryInfoParcelList.add(parcel)
+                    if(parcel is InputInfoParcel){
+                        mInputInfoParcelList.add(parcel)
                     }
                 }
             }
@@ -85,16 +84,16 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
         val activity = activity
         if(activity != null) {
             // リストは参照渡しなので、要注意。（SalaryInfoListAdapter内でのリスト操作がここに影響します。）
-            val adapter = SalaryInfoListAdapter(activity, mSalaryInfoParcelList)
+            val adapter = InputInfoListAdapter(activity, mInputInfoParcelList)
             listView.adapter = adapter
             listView.setOnItemClickListener { _, _, position, _ ->
                 Log.i("item is clicked")
                 val tag = adapter.getItem(position)
                 Log.i(tag.toString())
-                if(tag is SalaryInputViewTag){
+                if(tag is InputViewTag){
                     createInputItemView(tag).let {
-                        val targetParcel: SalaryInfoParcel? = mSalaryInfoParcelList.let{ list ->
-                            var ret: SalaryInfoParcel? = null
+                        val targetParcel: InputInfoParcel? = mInputInfoParcelList.let{ list ->
+                            var ret: InputInfoParcel? = null
                             for(element in list){
                                 if(element.mTag == tag) {
                                     ret = element
@@ -136,18 +135,15 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
                                 .setCancelable(false)
                                 .show()
                         }
-
                     }
                 }
             }
         }
-
-
         return view
     }
 
-    override fun getSalaryInfoParcelList(): List<SalaryInfoParcel> {
-        return mSalaryInfoParcelList
+    override fun getInputInfoParcelList(): List<InputInfoParcel> {
+        return mInputInfoParcelList
     }
 
     // カスタムTextWatcher
@@ -215,10 +211,10 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
         val mEditText: EditText = aView.findViewById(R.id.et_data)
 
         val tag = mEditText.tag
-        if(tag is SalaryInputViewTag) {
+        if(tag is InputViewTag) {
             when (tag) {
                 // 0.5単位、最大値は1ヶ月、未入力不可
-                SalaryInputViewTag.WorkingDayInputViewData -> {
+                InputViewTag.WorkingDayInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
                         return true
@@ -239,8 +235,8 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
                 }
 
                 // 0.1単位、最大値は1ヶ月の時間、未入力不可
-                SalaryInputViewTag.WorkingTimeInputViewData,
-                SalaryInputViewTag.OverTimeInputViewData -> {
+                InputViewTag.WorkingTimeInputViewData,
+                InputViewTag.OverTimeInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
                         return true
@@ -261,16 +257,16 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
                 }
 
                 // 整数、最大値あり、未入力可
-                SalaryInputViewTag.BaseIncomeInputViewData,
-                SalaryInputViewTag.OverTimeIncomeInputViewData,
-                SalaryInputViewTag.OtherIncomeInputViewData,
-                SalaryInputViewTag.HealthInsuranceInputViewData,
-                SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData,
-                SalaryInputViewTag.PensionInsuranceInputViewData,
-                SalaryInputViewTag.EmploymentInsuranceInputViewData,
-                SalaryInputViewTag.IncomeTaxInputViewData,
-                SalaryInputViewTag.ResidentTaxInputViewData,
-                SalaryInputViewTag.OtherDeductionInputViewData -> {
+                InputViewTag.BaseIncomeInputViewData,
+                InputViewTag.OverTimeIncomeInputViewData,
+                InputViewTag.OtherIncomeInputViewData,
+                InputViewTag.HealthInsuranceInputViewData,
+                InputViewTag.LongTermCareInsuranceFeeInputViewData,
+                InputViewTag.PensionInsuranceInputViewData,
+                InputViewTag.EmploymentInsuranceInputViewData,
+                InputViewTag.IncomeTaxInputViewData,
+                InputViewTag.ResidentTaxInputViewData,
+                InputViewTag.OtherDeductionInputViewData -> {
                     // 未入力も許可
                     if (aValue.isEmpty()) {
                         return true
@@ -314,11 +310,11 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
      * @param aTag SalaryInputViewTag.Tag
      * @return 作成されたView
      */
-    private fun createInputItemView(aTag: SalaryInputViewTag): View {
+    private fun createInputItemView(aTag: InputViewTag): View {
         // レイアウトファイルからViewを読み込む
         val inputView: View = View.inflate(context, R.layout.layout_input_data, null)
 
-        val viewData = SalaryInputViewResData(aTag)
+        val viewData = InputViewResData(aTag)
 
         // タイトル
         val title: TextView = inputView.findViewById(R.id.tv_title)

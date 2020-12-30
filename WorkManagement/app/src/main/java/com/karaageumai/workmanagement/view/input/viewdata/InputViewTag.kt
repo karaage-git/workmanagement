@@ -1,6 +1,7 @@
-package com.karaageumai.workmanagement.view.input.viewdata.salary
+package com.karaageumai.workmanagement.view.input.viewdata
 
-enum class SalaryInputViewTag {
+// ボーナス情報は給与情報の一部として表現できるため、タグはInputViewTagの1種のみで必要十分
+enum class InputViewTag {
     WorkingDayInputViewData,
     WorkingTimeInputViewData,
     OverTimeInputViewData,

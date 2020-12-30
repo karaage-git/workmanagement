@@ -14,9 +14,9 @@ data class BonusInfo(
         // 支給月
         val month: Int,
         // 支給額
-        val bonus: Int,
+        var baseIncome: Int = 0,
         // その他の支給
-        val otherPayment: Int,
+        var otherIncome: Int = 0,
         // 健康保険料
         @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
         // 介護保険料
@@ -28,7 +28,7 @@ data class BonusInfo(
         // 所得税
         @ColumnInfo(name = "income_tax") var incomeTax: Int = 0,
         // その他
-        var other: Int = 0,
+        var otherDeduction: Int = 0,
         // 完了フラグ
         @ColumnInfo(name = "is_complete") var isComplete: Boolean = false
 ) : Serializable

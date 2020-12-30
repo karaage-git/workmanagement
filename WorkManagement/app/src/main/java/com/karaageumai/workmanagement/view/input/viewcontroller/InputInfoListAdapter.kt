@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller.salary
+package com.karaageumai.workmanagement.view.input.viewcontroller
 
 import android.content.Context
 import android.view.View
@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewResData
+import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
 
-class SalaryInfoListAdapter(
-        private val mContext: Context,
-        private val mSalaryInfoParcelList: List<SalaryInfoParcel>,
+class InputInfoListAdapter(
+    private val mContext: Context,
+    private val mInputInfoParcelList: List<InputInfoParcel>,
 ) : BaseAdapter() {
 
     data class ViewHolder(
@@ -21,11 +21,11 @@ class SalaryInfoListAdapter(
     )
 
     override fun getCount(): Int {
-        return mSalaryInfoParcelList.size
+        return mInputInfoParcelList.size
     }
 
     override fun getItem(position: Int): Any {
-        return mSalaryInfoParcelList[position].mTag
+        return mInputInfoParcelList[position].mTag
     }
 
     override fun getItemId(position: Int): Long {
@@ -45,8 +45,8 @@ class SalaryInfoListAdapter(
         } else {
             convertView.tag as ViewHolder to convertView
         }
-        val parcel: SalaryInfoParcel = mSalaryInfoParcelList[position]
-        SalaryInputViewResData(parcel.mTag).let {
+        val parcel: InputInfoParcel = mInputInfoParcelList[position]
+        InputViewResData(parcel.mTag).let {
             viewHolder.titleText.setText(it.mTitleResId)
             viewHolder.valueText.text = parcel.mStrValue
             viewHolder.unitText.setText(it.mUnitResId)

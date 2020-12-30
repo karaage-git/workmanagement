@@ -1,19 +1,18 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller.salary
+package com.karaageumai.workmanagement.view.input.viewcontroller
 
 import androidx.fragment.app.Fragment
-import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 
-abstract class SalaryInfoObservableFragment : Fragment() {
+abstract class InputInfoObservableFragment : Fragment() {
     // オブザーバーを管理するリスト
-    private var observers: ArrayList<SalaryInfoObserverInterface> = ArrayList()
+    private var observers: ArrayList<InputInfoObserverInterface> = ArrayList()
 
     /**
      * オブザーバーを追加する
      *
      * @param aObserver 追加するオブザーバー
      */
-    fun addObserver(aObserver: SalaryInfoObserverInterface) {
+    fun addObserver(aObserver: InputInfoObserverInterface) {
         observers.add(aObserver)
     }
 
@@ -22,7 +21,7 @@ abstract class SalaryInfoObservableFragment : Fragment() {
      *
      * @param aObserver 削除するオブザーバー
      */
-    fun deleteObserver(aObserver: SalaryInfoObserverInterface) {
+    fun deleteObserver(aObserver: InputInfoObserverInterface) {
         observers.remove(aObserver)
     }
 
@@ -37,9 +36,9 @@ abstract class SalaryInfoObservableFragment : Fragment() {
      * 登録されたオブザーバーに変更を通知する
      */
     fun notifyObserver() {
-        val iterator: Iterator<SalaryInfoObserverInterface> = observers.iterator()
+        val iterator: Iterator<InputInfoObserverInterface> = observers.iterator()
         while (iterator.hasNext()) {
-            val observer: SalaryInfoObserverInterface = iterator.next()
+            val observer: InputInfoObserverInterface = iterator.next()
             observer.update(this)
         }
     }
@@ -49,5 +48,5 @@ abstract class SalaryInfoObservableFragment : Fragment() {
      *
      * @return 変更内容
      */
-    abstract fun getSalaryInfoParcelList(): List<SalaryInfoParcel>
+    abstract fun getInputInfoParcelList(): List<InputInfoParcel>
 }

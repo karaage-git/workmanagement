@@ -1,9 +1,9 @@
-package com.karaageumai.workmanagement.view.input.viewdata.salary
+package com.karaageumai.workmanagement.view.input.viewdata
 
 import android.text.InputType
 import com.karaageumai.workmanagement.R
 
-data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
+data class InputViewResData(val mTag: InputViewTag) {
     val mTitleResId: Int
     val mSubTitleResId: Int
     val mInputHintResId: Int
@@ -11,11 +11,10 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
     val mInputMaxLength: Int
     val mUnitResId: Int
     val mErrorMessageResId: Int
-    val mIsCalcItem: Boolean
 
     init {
         when(mTag) {
-            SalaryInputViewTag.WorkingDayInputViewData -> {
+            InputViewTag.WorkingDayInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_workingday_title
                 mSubTitleResId = R.string.layoutitem_workstatus_workingday_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_workingday
@@ -23,10 +22,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 4
                 mUnitResId = R.string.layoutitem_workstatus_workingday_unit
                 mErrorMessageResId = R.string.layoutitem_workstatus_workingday_error
-                mIsCalcItem = false
             }
 
-            SalaryInputViewTag.WorkingTimeInputViewData -> {
+            InputViewTag.WorkingTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_workingtime_title
                 mSubTitleResId = R.string.layoutitem_workstatus_common_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_workingtime
@@ -34,10 +32,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 5
                 mUnitResId = R.string.layoutitem_workstatus_common_unit
                 mErrorMessageResId = R.string.layoutitem_workstatus_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.OverTimeInputViewData -> {
+            InputViewTag.OverTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_overtime_title
                 mSubTitleResId = R.string.layoutitem_workstatus_common_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_overtime
@@ -45,10 +42,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 5
                 mUnitResId = R.string.layoutitem_workstatus_common_unit
                 mErrorMessageResId = R.string.layoutitem_workstatus_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.BaseIncomeInputViewData -> {
+            InputViewTag.BaseIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_baseincome_title
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_baseincome
@@ -56,10 +52,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.OverTimeIncomeInputViewData -> {
+            InputViewTag.OverTimeIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_overtime_title
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_overtime
@@ -67,10 +62,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.OtherIncomeInputViewData -> {
+            InputViewTag.OtherIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_other_title
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_other
@@ -78,10 +72,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.HealthInsuranceInputViewData -> {
+            InputViewTag.HealthInsuranceInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_health_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_health
@@ -89,10 +82,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.LongTermCareInsuranceFeeInputViewData -> {
+            InputViewTag.LongTermCareInsuranceFeeInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_longterm_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_longterm
@@ -100,10 +92,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.PensionInsuranceInputViewData -> {
+            InputViewTag.PensionInsuranceInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_pension_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_pension
@@ -111,10 +102,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.EmploymentInsuranceInputViewData -> {
+            InputViewTag.EmploymentInsuranceInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_employment_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_employment
@@ -122,10 +112,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.IncomeTaxInputViewData -> {
+            InputViewTag.IncomeTaxInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_income_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_income
@@ -133,10 +122,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.ResidentTaxInputViewData -> {
+            InputViewTag.ResidentTaxInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_resident_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_resident
@@ -144,10 +132,9 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
 
-            SalaryInputViewTag.OtherDeductionInputViewData -> {
+            InputViewTag.OtherDeductionInputViewData -> {
                 mTitleResId = R.string.layoutitem_deduction_other_title
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_other
@@ -155,7 +142,6 @@ data class SalaryInputViewResData(val mTag: SalaryInputViewTag) {
                 mInputMaxLength = 9
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
-                mIsCalcItem = true
             }
         }
     }

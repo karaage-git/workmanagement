@@ -19,8 +19,8 @@ import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.viewcontroller.*
-import com.karaageumai.workmanagement.view.input.viewcontroller.bonus.BonusActivity
-import com.karaageumai.workmanagement.view.input.viewcontroller.salary.SalaryActivity
+import com.karaageumai.workmanagement.view.input.viewcontroller.BonusActivity
+import com.karaageumai.workmanagement.view.input.viewcontroller.SalaryActivity
 
 const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
 const val KEY_ENTRY_MODE = "KEY_ENTRY_MODE"
