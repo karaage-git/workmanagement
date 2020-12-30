@@ -9,7 +9,12 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.view.input.ResisterMenuActivity
+import com.karaageumai.workmanagement.view.common.viewcontroller.CheckTargetYearMonthActivity
+
+const val KEY_INPUT_MODE = "KEY_INPUT_MODE"
+const val INPUT_MODE_SALARY = 0
+const val INPUT_MODE_BONUS = 1
+const val INPUT_MODE_ERROR = -1
 
 class TopMenuActivity : AppCompatActivity() {
 
@@ -26,11 +31,21 @@ class TopMenuActivity : AppCompatActivity() {
         toolbar.title = getString(R.string.toolbar_title_topmenu)
         setSupportActionBar(toolbar)
 
-        // 情報登録画面へ遷移
-        val resisterButton: Button = findViewById(R.id.btn_register_info)
-        resisterButton.setOnClickListener {
-            Log.i("go resister")
-            val intent = Intent(this, ResisterMenuActivity::class.java)
+        // 給与情報の登録
+        val salaryButton: Button = findViewById(R.id.btn_input_salary)
+        salaryButton.setOnClickListener {
+            Log.i("Input SalaryInfo")
+            val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
+            intent.putExtra(KEY_INPUT_MODE, INPUT_MODE_SALARY)
+            startActivity(intent)
+        }
+
+        // ボーナス情報の登録
+        val bonusButton: Button = findViewById(R.id.btn_input_bonus)
+        bonusButton.setOnClickListener {
+            Log.i("Input BonusInfo")
+            val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
+            intent.putExtra(KEY_INPUT_MODE, INPUT_MODE_BONUS)
             startActivity(intent)
         }
 

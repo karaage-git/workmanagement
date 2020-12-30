@@ -39,8 +39,9 @@
 
     <!--  トップメニュー  -->
     <string name="toolbar_title_topmenu">トップメニュー</string>
-    <string name="btn_topmenu_resister">収入情報の登録/修正</string>
-    <string name="btn_topmenu_analyze">登録したデータを解析する</string>
+    <string name="btn_topmenu_input_salary">給与情報の登録/修正</string>
+    <string name="btn_topmenu_input_bonus">ボーナス情報の登録/修正</string>
+    <string name="btn_topmenu_analyze">データ解析</string>
     <string name="btn_topmenu_setting">基本設定</string>
 
     <!--  登録トップメニュー  -->

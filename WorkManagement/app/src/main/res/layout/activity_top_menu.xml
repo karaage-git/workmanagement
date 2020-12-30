@@ -14,27 +14,39 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn_register_info"
+        android:id="@+id/btn_input_salary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_topmenu_resister"
+        android:text="@string/btn_topmenu_input_salary"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
-        app:layout_constraintBottom_toTopOf="@id/btn_show_info"
+        app:layout_constraintTop_toTopOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@id/btn_input_bonus"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/btn_show_info"
+        android:id="@+id/btn_input_bonus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_topmenu_input_bonus"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        app:layout_constraintTop_toTopOf="@id/btn_input_salary"
+        app:layout_constraintBottom_toBottomOf="@id/btn_analyze_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_analyze_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/btn_topmenu_analyze"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
+        app:layout_constraintTop_toTopOf="@id/btn_input_bonus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_register_info" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

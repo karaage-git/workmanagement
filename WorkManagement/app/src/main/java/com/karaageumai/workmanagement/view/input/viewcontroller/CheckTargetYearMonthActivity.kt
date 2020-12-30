@@ -17,11 +17,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.util.CalendarUtil
-import com.karaageumai.workmanagement.view.TopMenuActivity
-import com.karaageumai.workmanagement.view.input.INPUT_MODE_BONUS
-import com.karaageumai.workmanagement.view.input.INPUT_MODE_ERROR
-import com.karaageumai.workmanagement.view.input.INPUT_MODE_SALARY
-import com.karaageumai.workmanagement.view.input.KEY_INPUT_MODE
+import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.viewcontroller.*
 import com.karaageumai.workmanagement.view.input.viewcontroller.bonus.BonusActivity
 import com.karaageumai.workmanagement.view.input.viewcontroller.salary.SalaryActivity
