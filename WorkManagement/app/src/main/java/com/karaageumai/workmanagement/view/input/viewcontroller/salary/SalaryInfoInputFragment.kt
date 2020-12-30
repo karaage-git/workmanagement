@@ -146,21 +146,9 @@ class SalaryInfoInputFragment : SalaryInfoObservableFragment(), InputItemSetter 
         return view
     }
 
-    override fun getSalaryInfoParcelList(): MutableList<SalaryInfoParcel> {
+    override fun getSalaryInfoParcelList(): List<SalaryInfoParcel> {
         return mSalaryInfoParcelList
     }
-
-    override fun getNotEnteredInputItemList(): MutableList<SalaryInputViewTag> {
-        val retList: MutableList<SalaryInputViewTag> = mutableListOf()
-        for (element in mViewMap) {
-            if(!checkAndShowIcon(element.value)) {
-                retList.add(element.key)
-            }
-        }
-        return retList
-    }
-
-    //private fun updateSalaryInfo()
 
     // カスタムTextWatcher
     inner class SalaryInfoTextWatcher(private val mView: View) : TextWatcher {
