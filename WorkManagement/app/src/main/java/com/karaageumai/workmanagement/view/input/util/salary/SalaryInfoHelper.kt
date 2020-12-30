@@ -1,8 +1,8 @@
-package com.karaageumai.workmanagement.view.salary.util
+package com.karaageumai.workmanagement.view.input.util.salary
 
 import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
 import kotlin.NumberFormatException
 
 class SalaryInfoHelper(private val mSalaryInfo: SalaryInfo, private val mIsNewEntry: Boolean) {

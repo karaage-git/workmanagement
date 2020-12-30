@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary.viewcontroller
+package com.karaageumai.workmanagement.view.input.viewcontroller.salary
 
 import android.os.Bundle
 import android.text.Editable
@@ -12,11 +12,11 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.view.InputItemSetter
-import com.karaageumai.workmanagement.view.salary.SalaryInfoListAdapter
-import com.karaageumai.workmanagement.view.salary.SalaryInfoObservableFragment
-import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResData
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.SalaryInfoListAdapter
+import com.karaageumai.workmanagement.view.input.SalaryInfoObservableFragment
+import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewResData
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
 import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary.viewdata
+package com.karaageumai.workmanagement.view.input.viewdata.salary
 
 import com.karaageumai.workmanagement.R
 

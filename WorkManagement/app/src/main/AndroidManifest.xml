@@ -10,8 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".view.bonus.viewcontroller.BonusActivity"></activity>
-        <activity android:name=".view.salary.viewcontroller.SalaryActivity" />
+        <activity android:name=".view.input.viewcontroller.bonus.BonusActivity"></activity>
+        <activity android:name=".view.input.viewcontroller.salary.SalaryActivity" />
         <activity android:name=".view.common.viewcontroller.CheckTargetYearMonthActivity" />
         <activity android:name=".view.TopMenuActivity">
             <intent-filter>
@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.common.viewcontroller.ResisterMenuActivity" />
+        <activity android:name=".view.input.ResisterMenuActivity" />
     </application>
 
 </manifest>

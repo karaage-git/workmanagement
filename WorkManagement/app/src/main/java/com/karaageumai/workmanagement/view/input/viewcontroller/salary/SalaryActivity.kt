@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary.viewcontroller
+package com.karaageumai.workmanagement.view.input.viewcontroller.salary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,12 +19,12 @@ import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.common.viewcontroller.*
-import com.karaageumai.workmanagement.view.salary.*
-import com.karaageumai.workmanagement.view.salary.util.SalaryInfoHelper
-import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
-import com.karaageumai.workmanagement.view.salary.viewdata.SalarySumViewResData
-import com.karaageumai.workmanagement.view.salary.viewdata.SalarySumViewTag
+import com.karaageumai.workmanagement.view.input.*
+import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoHelper
+import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalarySumViewResData
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalarySumViewTag
 import java.lang.IllegalArgumentException
 
 class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
@@ -213,8 +213,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
 
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
-                        salaryInfoParcelArrayList,
-                        R.color.work_status_basic
+                            salaryInfoParcelArrayList,
+                            R.color.work_status_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)
@@ -235,8 +235,8 @@ class SalaryActivity : AppCompatActivity(), SalaryInfoObserverInterface {
                         ).toTypedArray()
                     // フラグメント生成
                     val fragment: SalaryInfoObservableFragment = SalaryInfoInputFragment.newInstance(
-                        salaryInfoParcelArrayList,
-                        R.color.income_basic
+                            salaryInfoParcelArrayList,
+                            R.color.income_basic
                     )
                     // SalaryInfoのオブザーバーをセット
                     fragment.addObserver(this@SalaryActivity)

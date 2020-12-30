@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary
+package com.karaageumai.workmanagement.view.input
 
 import android.content.Context
 import android.view.View
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.salary.util.SalaryInfoParcel
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewResData
+import com.karaageumai.workmanagement.view.input.util.salary.SalaryInfoParcel
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewResData
 
 class SalaryInfoListAdapter(
         private val mContext: Context,

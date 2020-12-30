@@ -18,8 +18,13 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.TopMenuActivity
-import com.karaageumai.workmanagement.view.bonus.viewcontroller.BonusActivity
-import com.karaageumai.workmanagement.view.salary.viewcontroller.SalaryActivity
+import com.karaageumai.workmanagement.view.input.INPUT_MODE_BONUS
+import com.karaageumai.workmanagement.view.input.INPUT_MODE_ERROR
+import com.karaageumai.workmanagement.view.input.INPUT_MODE_SALARY
+import com.karaageumai.workmanagement.view.input.KEY_INPUT_MODE
+import com.karaageumai.workmanagement.view.input.viewcontroller.*
+import com.karaageumai.workmanagement.view.input.viewcontroller.bonus.BonusActivity
+import com.karaageumai.workmanagement.view.input.viewcontroller.salary.SalaryActivity
 
 const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
 const val KEY_ENTRY_MODE = "KEY_ENTRY_MODE"

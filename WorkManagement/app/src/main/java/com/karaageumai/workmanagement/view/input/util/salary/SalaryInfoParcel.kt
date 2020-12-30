@@ -1,7 +1,7 @@
-package com.karaageumai.workmanagement.view.salary.util
+package com.karaageumai.workmanagement.view.input.util.salary
 
 import android.os.Parcelable
-import com.karaageumai.workmanagement.view.salary.viewdata.SalaryInputViewTag
+import com.karaageumai.workmanagement.view.input.viewdata.salary.SalaryInputViewTag
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.common.viewcontroller
+package com.karaageumai.workmanagement.view.input
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.view.common.viewcontroller.CheckTargetYearMonthActivity
 
 const val KEY_INPUT_MODE = "KEY_INPUT_MODE"
 const val INPUT_MODE_SALARY = 0

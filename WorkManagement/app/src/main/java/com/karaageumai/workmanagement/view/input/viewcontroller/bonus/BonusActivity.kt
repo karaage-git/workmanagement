@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.bonus.viewcontroller
+package com.karaageumai.workmanagement.view.input.viewcontroller.bonus
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

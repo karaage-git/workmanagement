@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.salary
+package com.karaageumai.workmanagement.view.input
 
 
 interface SalaryInfoObserverInterface {

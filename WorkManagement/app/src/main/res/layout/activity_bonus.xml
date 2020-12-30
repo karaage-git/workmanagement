@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.bonus.viewcontroller.BonusActivity">
+    tools:context=".view.input.viewcontroller.bonus.BonusActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
