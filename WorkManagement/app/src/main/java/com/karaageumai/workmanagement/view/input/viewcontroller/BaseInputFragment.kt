@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.input.viewcontroller
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -8,10 +9,11 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.InputItemSetter
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
@@ -29,7 +31,7 @@ private const val INPUT_MAX_VALUE = 1000000000
  * Use the [BaseInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BaseInputFragment : InputInfoObservableFragment(), InputItemSetter {
+class BaseInputFragment : InputInfoObservableFragment() {
     // 給与情報
     private var mInputInfoParcelList: MutableList<InputInfoParcel> = mutableListOf()
     // 背景色ID
@@ -351,5 +353,24 @@ class BaseInputFragment : InputInfoObservableFragment(), InputItemSetter {
 
         return inputView
 
+    }
+
+    /**
+     * アイコンとエラーメッセージの表示切り替え
+     */
+    private fun showAndChangeIcon(
+            aImageView: ImageView,
+            aResId: Int,
+            aErrorMessageTextView: TextView,
+            isShowMessage: Boolean) {
+        val context: Context = MainApplication.getContext()
+        aImageView.setImageDrawable(ContextCompat.getDrawable(context, aResId))
+        aImageView.visibility = View.VISIBLE
+
+        aErrorMessageTextView.visibility = if (isShowMessage) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
     }
 }
