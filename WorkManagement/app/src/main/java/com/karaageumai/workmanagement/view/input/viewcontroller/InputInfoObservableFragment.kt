@@ -5,7 +5,7 @@ import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 
 abstract class InputInfoObservableFragment : Fragment() {
     // オブザーバーを管理するリスト
-    private var observers: ArrayList<InputInfoObserverInterface> = ArrayList()
+    private var mObservers: ArrayList<InputInfoObserverInterface> = ArrayList()
 
     /**
      * オブザーバーを追加する
@@ -13,7 +13,7 @@ abstract class InputInfoObservableFragment : Fragment() {
      * @param aObserver 追加するオブザーバー
      */
     fun addObserver(aObserver: InputInfoObserverInterface) {
-        observers.add(aObserver)
+        mObservers.add(aObserver)
     }
 
     /**
@@ -22,21 +22,21 @@ abstract class InputInfoObservableFragment : Fragment() {
      * @param aObserver 削除するオブザーバー
      */
     fun deleteObserver(aObserver: InputInfoObserverInterface) {
-        observers.remove(aObserver)
+        mObservers.remove(aObserver)
     }
 
     /**
      * 全オブザーバーを削除
      */
     fun deleteAllObserver() {
-        observers.clear()
+        mObservers.clear()
     }
 
     /**
      * 登録されたオブザーバーに変更を通知する
      */
     fun notifyObserver() {
-        val iterator: Iterator<InputInfoObserverInterface> = observers.iterator()
+        val iterator: Iterator<InputInfoObserverInterface> = mObservers.iterator()
         while (iterator.hasNext()) {
             val observer: InputInfoObserverInterface = iterator.next()
             observer.update(this)
