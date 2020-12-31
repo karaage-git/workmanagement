@@ -7,11 +7,11 @@ import kotlin.NumberFormatException
 object CalendarUtil {
     enum class CheckFormatResultCode {
         // 結果：OK
-        RESULT_OK,
+        ResultOK,
         // 結果：年月として不適当
-        RESULT_NG_ILLEGAL_FORMAT,
+        ResultNGIllegalFormat,
         // 結果：年月として解釈できるが、アプリのサポート対象外年月
-        RESULT_NG_OUT_OF_RANGE
+        ResultNGOutOfRange
     }
 
     /**
@@ -25,13 +25,13 @@ object CalendarUtil {
         if(aYYYYmm.length != 6) {
             // 6桁以外の場合は即終了
             Log.i("argument is not 6 digit")
-            return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
+            return CheckFormatResultCode.ResultNGIllegalFormat
         }
 
         val yearMonthPair = try {
             splitYearMonth(aYYYYmm)
         } catch (e: IllegalArgumentException) {
-            return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
+            return CheckFormatResultCode.ResultNGIllegalFormat
         }
 
         val year: Int = yearMonthPair.first
@@ -40,17 +40,17 @@ object CalendarUtil {
         if((month < 1) || (month > 12)) {
             // 月が1未満 または 12より大きい場合はNG
             Log.i("Format of Month is wrong")
-            return CheckFormatResultCode.RESULT_NG_ILLEGAL_FORMAT
+            return CheckFormatResultCode.ResultNGIllegalFormat
         }
 
         if((year < 2000) || (year > 2050)) {
             // 2000〜2050年までを有効とみなす
             Log.i("Out of range")
-            return CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE
+            return CheckFormatResultCode.ResultNGOutOfRange
         }
 
         Log.i("OK")
-        return CheckFormatResultCode.RESULT_OK
+        return CheckFormatResultCode.ResultOK
     }
 
     /**

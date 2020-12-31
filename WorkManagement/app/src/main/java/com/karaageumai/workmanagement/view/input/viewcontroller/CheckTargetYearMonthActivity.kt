@@ -160,7 +160,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
             mResultStatus = CalendarUtil.checkFormat(mYearMonth)
             when(mResultStatus) {
                 // YYYYmmが正しい入力の場合
-                CalendarUtil.CheckFormatResultCode.RESULT_OK -> {
+                CalendarUtil.CheckFormatResultCode.ResultOK -> {
                     // YYYYmmをスプリット
                     val pair = CalendarUtil.splitYearMonth(mYearMonth)
                     Log.i("year : ${pair.first}, month : ${pair.second}")
@@ -181,8 +181,8 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
                     }
                 }
                 // 範囲外の数値が来た場合
-                CalendarUtil.CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE -> {
-                    Log.i(CalendarUtil.CheckFormatResultCode.RESULT_NG_OUT_OF_RANGE.toString())
+                CalendarUtil.CheckFormatResultCode.ResultNGOutOfRange -> {
+                    Log.i(CalendarUtil.CheckFormatResultCode.ResultNGOutOfRange.toString())
                     mResultTextView.text = getString(R.string.message_yyyymm_out_range)
                     mStartButton.visibility = View.INVISIBLE
                 }
