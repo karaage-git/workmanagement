@@ -163,7 +163,7 @@
     <string name="layoutitem_deduction_income_title">所得税</string>
     <string name="edittext_hint_deduction_income">例：10000</string>
 
-    <string name="layoutitem_deduction_resident_title">所得税</string>
+    <string name="layoutitem_deduction_resident_title">住民税</string>
     <string name="edittext_hint_deduction_resident">例：10000</string>
 
     <string name="layoutitem_deduction_other_title">その他</string>
