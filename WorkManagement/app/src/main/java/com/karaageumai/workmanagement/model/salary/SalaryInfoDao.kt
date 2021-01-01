@@ -15,4 +15,7 @@ interface SalaryInfoDao {
 
     @Query("select * from salary_table where year = :aYear and month = :aMonth")
     suspend fun getSalaryWithYearMonth(aYear: Int, aMonth: Int): List<SalaryInfo>
+
+    @Query("select * from salary_table")
+    suspend fun selectAllData(): List<SalaryInfo>
 }

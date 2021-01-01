@@ -72,6 +72,9 @@
         入力データの修正を行うことができます。
     </string>
 
+    <string name="spinner_salary">%1$d年%2$d月分の給与</string>
+    <string name="spinner_bonus">%1$d年%2$d月分のボーナス</string>
+
     <!--  Salary  -->
     <string name="toolbar_title_salary">給料情報入力</string>
     <string name="tab_title_workstatus">勤怠状態</string>

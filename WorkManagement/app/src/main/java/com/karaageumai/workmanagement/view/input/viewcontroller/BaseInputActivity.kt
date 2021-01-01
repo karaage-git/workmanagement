@@ -14,7 +14,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.common.viewcontroller.*
+import com.karaageumai.workmanagement.view.input.viewcontroller.*
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.SumViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag

@@ -1,29 +1,21 @@
-package com.karaageumai.workmanagement.view.common.viewcontroller
+package com.karaageumai.workmanagement.view.input.viewcontroller
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
-import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.IntDef
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.model.ModelFacade
-import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.viewcontroller.*
-import com.karaageumai.workmanagement.view.input.viewcontroller.BonusActivity
-import com.karaageumai.workmanagement.view.input.viewcontroller.SalaryActivity
+import java.util.*
 
-const val KEY_YEAR_MONTH = "KEY_YEAR_MONTH"
 const val KEY_ENTRY_MODE = "KEY_ENTRY_MODE"
+const val KEY_YEAR = "KEY_YEAR"
+const val KEY_MONTH = "KEY_MONTH"
 
 @IntDef(ENTRY_MODE_NEW, ENTRY_MODE_ALREADY_EXIST, ENTRY_MODE_ERROR)
 @Retention(AnnotationRetention.SOURCE)
@@ -33,68 +25,82 @@ const val ENTRY_MODE_ALREADY_EXIST = 1
 const val ENTRY_MODE_ERROR = -1
 
 
-class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
+class CheckTargetYearMonthActivity : AppCompatActivity() {
     // 各View
-    private lateinit var mEditText: EditText
+    private lateinit var mSpinner: Spinner
     private lateinit var mTextView: TextView
     private lateinit var mResultTextView: TextView
     private lateinit var mStartButton: Button
 
     // 入力されるYYYYmmを保持するプロパティ
-    private var mYearMonth: String = ""
-    // データのチェック結果
-    private lateinit var mResultStatus: CalendarUtil.CheckFormatResultCode
+    private var mYear: Int = 0
+    private var mMonth: Int = 0
     // 新規or更新を判定するフラグ
     private var mIsNewEntry = true
-    //
+    // 給料orボーナスを判定するフラグ
     private var mMode = INPUT_MODE_SALARY
+    // 年と月のPairを管理するためのリスト
+    private lateinit var mYearMonthList: List<Pair<Int, Int>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         Log.i("onCreate()")
-
         setContentView(R.layout.activity_check_target_year_month_menu)
 
         // 給与orボーナスの判定
         mMode = intent.getIntExtra(KEY_INPUT_MODE, INPUT_MODE_ERROR)
-        if(mMode == INPUT_MODE_ERROR){
-            // エラーだった場合はトップへ戻る
+        // ツールバー
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        // 説明文
+        mTextView = findViewById(R.id.tv_normal)
+        // スピナー
+        mSpinner = findViewById(R.id.sp_target)
+        // 入力のチェック結果を出力するTextView
+        mResultTextView = findViewById(R.id.tv_message)
+        // スタートボタン
+        mStartButton = findViewById(R.id.btn_start)
+        // 年月リスト
+        mYearMonthList = createYearMonthList()
+
+        // モード別の初期化処理
+        if (mMode == INPUT_MODE_ERROR) {
+            // エラーとみなす
             Log.i("mMode : ERROR")
             val intent = Intent(this, TopMenuActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
-        // ツールバーのタイトルセット
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = when (mMode) {
-            INPUT_MODE_SALARY -> getString(R.string.toolbar_title_check_target_year_month_salary)
-            INPUT_MODE_BONUS -> getString(R.string.toolbar_title_check_target_year_month_bonus)
-            else -> ""
-        }
-        setSupportActionBar(toolbar)
+        val adapter = YearMonthSpinnerAdapter(this, mYearMonthList, mMode)
+        mSpinner.adapter = adapter
 
-        // 説明文
-        mTextView = findViewById(R.id.tv_normal)
-        // 入力エリア
-        mEditText = findViewById(R.id.et_target)
-        // 入力のチェック結果を出力するTextView
-        mResultTextView = findViewById(R.id.tv_message)
-        // スタートボタン
-        mStartButton = findViewById(R.id.btn_start)
-
-        // 自身以外にフォーカスが移った際に、キーボードを消す
-        mEditText.setOnFocusChangeListener { v, hasFocus ->
-            if(!hasFocus) {
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
+        mSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                mYear = mYearMonthList[position].first
+                mMonth = mYearMonthList[position].second
             }
-        }
-        mEditText.addTextChangedListener(this)
 
-        // 初期表示は非表示しておく
-        mStartButton.visibility = View.INVISIBLE
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // 何もしない
+            }
+
+        }
+
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH) + 1
+        Log.i("current : $year/$month")
+        val position = mYearMonthList.indexOf(Pair(year, month))
+        if(position >= 0) {
+            mSpinner.setSelection(position)
+        }
+
         mStartButton.setOnClickListener {
             val intent = when(mMode) {
                 INPUT_MODE_SALARY -> {
@@ -119,7 +125,8 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
 
                 else -> return@setOnClickListener
             }
-            intent.putExtra(KEY_YEAR_MONTH, mYearMonth)
+            intent.putExtra(KEY_YEAR, mYear)
+            intent.putExtra(KEY_MONTH, mMonth)
             startActivity(intent)
             // 戻ってこられないようにしておく
             finish()
@@ -135,85 +142,17 @@ class CheckTargetYearMonthActivity : AppCompatActivity(), TextWatcher {
         return true
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        // 画面がタッチされた際に、強制的に説明文にフォーカスを移す
-        // 結果的に、mEditTextのフォーカスが外れ、キーボードが消える
-        mTextView.requestFocus()
-        return super.dispatchTouchEvent(ev)
-    }
-
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-        // 何もしない
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        // 何もしない
-    }
-
-    override fun afterTextChanged(s: Editable?) {
-        // 入力文字が6桁のみのときに判定を行う
-        Log.i("User input : $s")
-        if(s?.length == 6) {
-            // 入力値を取得
-            mYearMonth = s.toString()
-            // 入力値チェック
-            mResultStatus = CalendarUtil.checkFormat(mYearMonth)
-            when(mResultStatus) {
-                // YYYYmmが正しい入力の場合
-                CalendarUtil.CheckFormatResultCode.ResultOK -> {
-                    // YYYYmmをスプリット
-                    val pair = CalendarUtil.splitYearMonth(mYearMonth)
-                    Log.i("year : ${pair.first}, month : ${pair.second}")
-
-                    isExistData(pair.first, pair.second)?.let{
-                        if (it) {
-                            // 更新：DBにデータが存在する場合
-                            Log.i("DB has data at $mYearMonth")
-                            mIsNewEntry = false
-                            mResultTextView.text = getString(R.string.message_yyyymm_result_ok_already)
-                        } else {
-                            // 新規：DBにデータが存在しない場合
-                            Log.i("DB does not have data at $mYearMonth")
-                            mIsNewEntry = true
-                            mResultTextView.text = getString(R.string.message_yyyymm_result_ok_new)
-                        }
-                        mStartButton.visibility = View.VISIBLE
-                    }
-                }
-                // 範囲外の数値が来た場合
-                CalendarUtil.CheckFormatResultCode.ResultNGOutOfRange -> {
-                    Log.i(CalendarUtil.CheckFormatResultCode.ResultNGOutOfRange.toString())
-                    mResultTextView.text = getString(R.string.message_yyyymm_out_range)
-                    mStartButton.visibility = View.INVISIBLE
-                }
-                // 形式が異なる場合
-                else -> {
-                    Log.i("format is not match")
-                    mResultTextView.text = getString(R.string.message_yyyy_mm_illegal)
-                    mStartButton.visibility = View.INVISIBLE
-                }
+    /**
+     * 2000/01 〜 2050/12の年月の組み合わせを作成する
+     */
+    private fun createYearMonthList(): List<Pair<Int, Int>> {
+        val ret: MutableList<Pair<Int, Int>> = mutableListOf()
+        for(year in 2000..2050) {
+            for(month in 1..12) {
+                ret.add(Pair(year, month))
             }
-        } else {
-            Log.i("length : ${s?.length}")
-            // 結果をクリア
-            mResultTextView.text = ""
-            mStartButton.visibility = View.INVISIBLE
         }
+        return ret
     }
 
-    private fun isExistData(aYear: Int, aMonth: Int): Boolean? {
-        return when(mMode) {
-            INPUT_MODE_SALARY -> {
-                Log.i("INPUT_MODE_SALARY")
-                ModelFacade.isExistSalaryInfo(aYear, aMonth)
-            }
-
-            INPUT_MODE_BONUS -> {
-                Log.i("INPUT_MODE_BONUS")
-                ModelFacade.isExistBonusInfo(aYear, aMonth)
-            }
-
-            else -> null
-        }
-    }
 }

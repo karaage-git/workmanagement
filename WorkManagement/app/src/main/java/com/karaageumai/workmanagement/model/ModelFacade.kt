@@ -25,9 +25,7 @@ object ModelFacade {
         val salaryInfoList = runBlocking {
             mSalaryInfoDao.getSalaryWithYearMonth(aYear, aMonth)
         }
-
         return salaryInfoList.isNotEmpty()
-
     }
 
     /**
@@ -61,7 +59,6 @@ object ModelFacade {
         }
         
         return salaryInfoList.first()
-
     }
 
     /**
@@ -74,6 +71,25 @@ object ModelFacade {
             mSalaryInfoDao.update(aSalaryInfo)
         }
     }
+
+    /**
+     * 給与情報を全件取得し、年月のデータリストを作成する
+     *
+     * @return データが存在する年と月のPairリスト
+     */
+    fun selectSalaryYearMonthList(): List<Pair<Int, Int>> {
+        val ret: MutableList<Pair<Int, Int>> = mutableListOf()
+
+        val dataList = runBlocking {
+            mSalaryInfoDao.selectAllData()
+        }
+
+        for (data in dataList) {
+            ret.add(Pair(data.year, data.month))
+        }
+        return ret
+    }
+
 
     /**
      * 年、月の情報から、DBにデータが存在するかチェックする
@@ -134,6 +150,24 @@ object ModelFacade {
         return runBlocking {
             mBonusInfoDao.update(aBonusInfo)
         }
+    }
+
+    /**
+     * ボーナス情報を全件取得し、年月のデータリストを作成する
+     *
+     * @return データが存在する年と月のPairリスト
+     */
+    fun selectBonusYearMonthList(): List<Pair<Int, Int>> {
+        val ret: MutableList<Pair<Int, Int>> = mutableListOf()
+
+        val dataList = runBlocking {
+            mBonusInfoDao.selectAllData()
+        }
+
+        for (data in dataList) {
+            ret.add(Pair(data.year, data.month))
+        }
+        return ret
     }
 
 }

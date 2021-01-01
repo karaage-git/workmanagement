@@ -6,7 +6,6 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.util.CalendarUtil
-import com.karaageumai.workmanagement.view.common.viewcontroller.*
 import com.karaageumai.workmanagement.view.input.util.BonusInfoHelper
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
@@ -23,28 +22,16 @@ class BonusActivity : BaseInputActivity() {
     override fun init() {
         mEntryMode = intent.getIntExtra(KEY_ENTRY_MODE, ENTRY_MODE_ERROR)
 
-        val yearMonth = intent.getStringExtra(KEY_YEAR_MONTH) ?: ""
+        val year = intent.getIntExtra(KEY_YEAR, 0)
+        val month = intent.getIntExtra(KEY_MONTH, 0)
 
         // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
-        if (yearMonth.isEmpty()) {
+        if ((year == 0) or (month == 0)) {
             Log.i("can not get data. go to TopMenu.")
             // 通常はありえないルート
             // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
         }
 
-        // 年月を分割
-        val yearMonthPair: Pair<Int, Int> = try {
-            CalendarUtil.splitYearMonth(yearMonth)
-        } catch (e: IllegalArgumentException) {
-            // 通常はありえないルート
-            // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
-            return
-        }
-
-        // 年
-        val year: Int = yearMonthPair.first
-        // 月
-        val month: Int = yearMonthPair.second
         // データを作成
         when (mEntryMode) {
             ENTRY_MODE_NEW -> {
@@ -67,6 +54,8 @@ class BonusActivity : BaseInputActivity() {
                 // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
             }
         }
+
+        Log.i("mMode:$mEntryMode, year:$year, month:$month")
 
     }
 

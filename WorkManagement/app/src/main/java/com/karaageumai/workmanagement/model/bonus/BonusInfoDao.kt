@@ -1,6 +1,7 @@
 package com.karaageumai.workmanagement.model.bonus
 
 import androidx.room.*
+import com.karaageumai.workmanagement.model.salary.SalaryInfo
 
 @Dao
 interface BonusInfoDao {
@@ -15,4 +16,7 @@ interface BonusInfoDao {
 
     @Query("select * from bonus_table where year = :aYear and month = :aMonth")
     suspend fun getBonusWithYearMonth(aYear: Int, aMonth: Int): List<BonusInfo>
+
+    @Query("select * from bonus_table")
+    suspend fun selectAllData(): List<BonusInfo>
 }

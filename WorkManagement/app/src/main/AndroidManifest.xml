@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".view.input.viewcontroller.BonusActivity"></activity>
         <activity android:name=".view.input.viewcontroller.SalaryActivity" />
-        <activity android:name=".view.common.viewcontroller.CheckTargetYearMonthActivity" />
+        <activity android:name=".view.input.viewcontroller.CheckTargetYearMonthActivity" />
         <activity android:name=".view.TopMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
