@@ -5,25 +5,33 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.util.SalaryInfoHelper
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
 import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag
 
 class SalaryActivity : BaseInputActivity() {
+    // 新規or更新を判定する値
     var mEntryMode: Int = ENTRY_MODE_ERROR
-    lateinit var mSalaryInfo: SalaryInfo
+    // 給与情報
+    private lateinit var mSalaryInfo: SalaryInfo
+    // 給与情報（バックアップ）
+    private lateinit var mSalaryInfoBackup: SalaryInfo
+    // 給与情報編集用のヘルパー
     private lateinit var mSalaryInfoHelper: SalaryInfoHelper
+    // 年
+    private var mYear = 0
+    // 月
+    private var mMonth = 0
 
     override fun init() {
         mEntryMode = intent.getIntExtra(KEY_ENTRY_MODE, ENTRY_MODE_ERROR)
 
-        val year = intent.getIntExtra(KEY_YEAR, 0)
-        val month = intent.getIntExtra(KEY_MONTH, 0)
+        mYear = intent.getIntExtra(KEY_YEAR, 0)
+        mMonth = intent.getIntExtra(KEY_MONTH, 0)
 
         // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
-        if ((year == 0) or (month == 0)) {
+        if ((mYear == 0) or (mMonth == 0)) {
             Log.i("can not get data. go to TopMenu.")
             // 通常はありえないルート
             // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
@@ -34,14 +42,14 @@ class SalaryActivity : BaseInputActivity() {
             ENTRY_MODE_NEW -> {
                 // 新規データ
                 Log.i("create new SalaryInfo")
-                mSalaryInfo = SalaryInfo(0, year, month)
+                mSalaryInfo = SalaryInfo(0, mYear, mMonth)
                 mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo, true)
             }
 
             ENTRY_MODE_ALREADY_EXIST -> {
                 // 既存データを取得
                 Log.i("get SalaryInfo from DB")
-                ModelFacade.selectSalaryInfo(year, month)?.let {
+                ModelFacade.selectSalaryInfo(mYear, mMonth)?.let {
                     mSalaryInfo = it
                     mSalaryInfoHelper = SalaryInfoHelper(mSalaryInfo, false)
                 }
@@ -52,7 +60,10 @@ class SalaryActivity : BaseInputActivity() {
             }
         }
 
-        Log.i("mMode:$mEntryMode, year:$year, month:$month")
+        // 編集前のデータをバックアップしておく
+        mSalaryInfoBackup = mSalaryInfo
+
+        Log.i("mMode:$mEntryMode, year:$mYear, month:$mMonth")
 
     }
 
@@ -132,21 +143,40 @@ class SalaryActivity : BaseInputActivity() {
             }
             finish()
         } else {
-            val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this)
-            alertDialog.setTitle(R.string.dialog_title)
-                .setMessage(R.string.dialog_message)
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.dialog_title)
+                    .setMessage(R.string.dialog_message)
+                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                        mSalaryInfo.isComplete = true
+                        when (mEntryMode) {
+                            ENTRY_MODE_NEW -> {
+                                ModelFacade.insertSalaryInfo(mSalaryInfo)
+                            }
+
+                            ENTRY_MODE_ALREADY_EXIST -> {
+                                ModelFacade.updateSalaryInfo(mSalaryInfo)
+                            }
+
+                            else -> {}
+                        }
+                        dialog.dismiss()
+                        finish()
+                    }
+                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
+            return
+        }
+    }
+
+    override fun deleteData() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_title_delete)
+                .setMessage(getString(R.string.dialog_message_delete, getInputDataDescription()))
                 .setPositiveButton(R.string.ok) { dialog, _ ->
-                    mSalaryInfo.isComplete = true
-                    when (mEntryMode) {
-                        ENTRY_MODE_NEW -> {
-                            ModelFacade.insertSalaryInfo(mSalaryInfo)
-                        }
-
-                        ENTRY_MODE_ALREADY_EXIST -> {
-                            ModelFacade.updateSalaryInfo(mSalaryInfo)
-                        }
-
-                        else -> {}
+                    if (mEntryMode == ENTRY_MODE_ALREADY_EXIST) {
+                        ModelFacade.deleteSalaryInfo(mSalaryInfoBackup)
                     }
                     dialog.dismiss()
                     finish()
@@ -155,8 +185,7 @@ class SalaryActivity : BaseInputActivity() {
                     dialog.dismiss()
                 }
                 .show()
-            return
-        }
+        return
     }
 
     override fun getTabPageList(): List<TabPage> {
@@ -165,5 +194,9 @@ class SalaryActivity : BaseInputActivity() {
 
     override fun getSumViewTagList(): List<SumViewTag> {
         return listOf(SumViewTag.WorkStatusSumViewData, SumViewTag.IncomeSumViewData, SumViewTag.DeductionSumViewData)
+    }
+
+    override fun getInputDataDescription(): String {
+        return getString(R.string.salary_description, mYear, mMonth)
     }
 }

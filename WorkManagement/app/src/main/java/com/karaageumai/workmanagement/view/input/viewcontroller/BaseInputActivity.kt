@@ -44,13 +44,21 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base_input)
 
-        // 小クラスの初期化
+        // 子クラスの初期化
         init()
 
         // ツールバー設定
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.title = getString(R.string.toolbar_title_salary)
+        toolbar.title = getString(R.string.toolbar_title_input)
         setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        // データの説明をセット
+        val descriptionView: TextView = findViewById(R.id.tv_description)
+        descriptionView.text = getInputDataDescription()
 
         // 表示する合計値Viewのタグリスト
         val sumViewTagList: List<SumViewTag> = getSumViewTagList()
@@ -198,6 +206,11 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
                 true
             }
 
+            R.id.btn_delete_data -> {
+                deleteData()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -248,6 +261,11 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     abstract fun saveData()
 
     /**
+     * データの削除
+     */
+    abstract fun deleteData()
+
+    /**
      * 表示するタブの種類を取得
      */
     abstract fun getTabPageList(): List<TabPage>
@@ -256,4 +274,9 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
      * 表示する合計Viewの種類を取得
      */
     abstract fun getSumViewTagList(): List<SumViewTag>
+
+    /**
+     * 入力対象データの説明文言を取得する
+     */
+    abstract fun getInputDataDescription(): String
 }

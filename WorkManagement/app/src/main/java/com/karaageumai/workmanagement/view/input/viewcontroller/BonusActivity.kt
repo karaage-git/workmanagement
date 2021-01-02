@@ -5,7 +5,6 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
-import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.input.util.BonusInfoHelper
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
@@ -15,18 +14,24 @@ class BonusActivity : BaseInputActivity() {
     // 新規or更新を判定する値
     var mEntryMode: Int = ENTRY_MODE_ERROR
     // ボーナス情報
-    lateinit var mBonusInfo: BonusInfo
+    private lateinit var mBonusInfo: BonusInfo
+    // ボーナス情報(バックアップ)
+    private lateinit var mBonusInfoBackup: BonusInfo
     // ボーナス情報編集用のヘルパー
     private lateinit var mBonusInfoHelper: BonusInfoHelper
+    // 年
+    private var mYear = 0
+    // 月
+    private var mMonth = 0
 
     override fun init() {
         mEntryMode = intent.getIntExtra(KEY_ENTRY_MODE, ENTRY_MODE_ERROR)
 
-        val year = intent.getIntExtra(KEY_YEAR, 0)
-        val month = intent.getIntExtra(KEY_MONTH, 0)
+        mYear = intent.getIntExtra(KEY_YEAR, 0)
+        mMonth = intent.getIntExtra(KEY_MONTH, 0)
 
         // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
-        if ((year == 0) or (month == 0)) {
+        if ((mYear == 0) or (mMonth == 0)) {
             Log.i("can not get data. go to TopMenu.")
             // 通常はありえないルート
             // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
@@ -37,14 +42,14 @@ class BonusActivity : BaseInputActivity() {
             ENTRY_MODE_NEW -> {
                 // 新規データ
                 Log.i("create new BonusInfo")
-                mBonusInfo = BonusInfo(0, year, month)
+                mBonusInfo = BonusInfo(0, mYear, mMonth)
                 mBonusInfoHelper = BonusInfoHelper(mBonusInfo, true)
             }
 
             ENTRY_MODE_ALREADY_EXIST -> {
                 // 既存データを取得
                 Log.i("get BonusInfo from DB")
-                ModelFacade.selectBonusInfo(year, month)?.let {
+                ModelFacade.selectBonusInfo(mYear, mMonth)?.let {
                     mBonusInfo = it
                     mBonusInfoHelper = BonusInfoHelper(mBonusInfo, false)
                 }
@@ -55,7 +60,9 @@ class BonusActivity : BaseInputActivity() {
             }
         }
 
-        Log.i("mMode:$mEntryMode, year:$year, month:$month")
+        mBonusInfoBackup = mBonusInfo
+
+        Log.i("mMode:$mEntryMode, year:$mYear, month:$mMonth")
 
     }
 
@@ -152,11 +159,33 @@ class BonusActivity : BaseInputActivity() {
         }
     }
 
+    override fun deleteData() {
+        AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_title_delete)
+                .setMessage(getString(R.string.dialog_message_delete, getInputDataDescription()))
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    if (mEntryMode == ENTRY_MODE_ALREADY_EXIST) {
+                        ModelFacade.deleteBonusInfo(mBonusInfoBackup)
+                    }
+                    dialog.dismiss()
+                    finish()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        return
+    }
+
     override fun getTabPageList(): List<TabPage> {
         return listOf(TabPage.Income, TabPage.Deduction)
     }
 
     override fun getSumViewTagList(): List<SumViewTag> {
         return listOf(SumViewTag.IncomeSumViewData, SumViewTag.DeductionSumViewData)
+    }
+
+    override fun getInputDataDescription(): String {
+        return getString(R.string.bonus_description, mYear, mMonth)
     }
 }

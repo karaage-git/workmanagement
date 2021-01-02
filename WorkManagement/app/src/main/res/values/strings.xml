@@ -30,6 +30,7 @@
     <!--  共通  -->
     <string name="start">スタート！</string>
     <string name="save">保存</string>
+    <string name="delete">削除</string>
     <string name="zero">0</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
@@ -49,34 +50,15 @@
     <string name="btn_resistermenu_normal">毎月の給料を登録/修正</string>
     <string name="btn_resistermenu_bonus">ボーナスを登録/修正</string>
 
-    <!--  毎月の給料メニュー  -->
-    <string name="toolbar_title_check_target_year_month_salary">毎月の給料を登録/修正</string>
-    <string name="toolbar_title_check_target_year_month_bonus">ボーナスを登録/修正</string>
-    <string name="message_check_target_year_month_when">
-        いつのデータを入力しますか？\n
-        「YYYYMM形式」で入力してください。\n
-        例（2020年1月の場合）：202001
-    </string>
-    <string name="edittext_hint_check_target_year_month_yyyy_mm">(例)202001</string>
-    <string name="message_yyyy_mm_illegal">
-        入力形式が正しくありません。\n
-        もう一度入力した値を確認してください。
-    </string>
-    <string name="message_yyyymm_out_range">
-        入力形式が正しくありません。\n
-        2000年〜2050年の間で入力してください。
-    </string>
-    <string name="message_yyyymm_result_ok_new">新規データを登録します。</string>
-    <string name="message_yyyymm_result_ok_already">
-        登録済みのデータがあります。\n
-        入力データの修正を行うことができます。
-    </string>
+    <!--  年月選択  -->
+    <string name="toolbar_title_check_target_year_month">対象年月選択</string>
+    <string name="message_check_target_year_month_1">入力対象の年月を選択してください</string>
+    <string name="message_check_target_year_month_2">(入力済みデータにはアイコンが付いています)</string>
 
     <string name="spinner_salary">%1$d年%2$d月分の給与</string>
     <string name="spinner_bonus">%1$d年%2$d月分のボーナス</string>
 
-    <!--  Salary  -->
-    <string name="toolbar_title_salary">給料情報入力</string>
+    <string name="toolbar_title_input">情報入力</string>
     <string name="tab_title_workstatus">勤怠状態</string>
     <string name="tab_title_income">収入</string>
     <string name="tab_title_deduction">控除</string>
@@ -85,6 +67,11 @@
     <string name="dialog_message">
         未入力の項目があります。\n
         未入力項目は値が0で登録されますが、よろしいですか？
+    </string>
+
+    <string name="dialog_title_delete">削除しますか？</string>
+    <string name="dialog_message_delete">
+        データ「%1$s」を削除します。
     </string>
 
 

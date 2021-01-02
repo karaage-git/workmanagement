@@ -90,6 +90,15 @@ object ModelFacade {
         return ret
     }
 
+    /**
+     * 指定したSalaryInfoの削除
+     */
+    fun deleteSalaryInfo(aSalaryInfo: SalaryInfo) {
+        return runBlocking {
+            mSalaryInfoDao.delete(aSalaryInfo)
+        }
+    }
+
 
     /**
      * 年、月の情報から、DBにデータが存在するかチェックする
@@ -168,6 +177,15 @@ object ModelFacade {
             ret.add(Pair(data.year, data.month))
         }
         return ret
+    }
+
+    /**
+     * 指定したBonusInfoの削除
+     */
+    fun deleteBonusInfo(aBonusInfo: BonusInfo) {
+        return runBlocking {
+            mBonusInfoDao.delete(aBonusInfo)
+        }
     }
 
 }
