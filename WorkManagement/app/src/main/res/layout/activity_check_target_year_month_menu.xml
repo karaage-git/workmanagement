@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.input.viewcontroller.CheckTargetYearMonthActivity"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <!-- ツールバー  -->
     <androidx.appcompat.widget.Toolbar
@@ -14,23 +14,26 @@
         style="@style/MyToolBar"
         tools:ignore="MissingConstraints" />
 
-    <!--  次画面遷移用のボタン  -->
-    <Button
-        android:id="@+id/btn_start"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:layout_margin="40dp" />
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
 
-    <!--  キーボード表示を制御するため、フォーカスを当てられるようにしておく  -->
     <TextView
-        android:id="@+id/tv_normal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/message_check_target_year_month_when"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        android:gravity="center" />
+        android:text="@string/message_check_target_year_month_1"
+        android:textSize="15sp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/message_check_target_year_month_2"
+        android:textSize="12sp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center" />
 
     <!--  YYYYMM入力欄  -->
     <Spinner
@@ -40,16 +43,19 @@
         android:spinnerMode="dialog"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
-        android:gravity="center"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/tv_message"
+    <!--  次画面遷移用のボタン  -->
+    <Button
+        android:id="@+id/btn_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/purple_700"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        android:gravity="center" />
+        android:text="@string/start"
+        android:layout_margin="40dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

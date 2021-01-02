@@ -7,7 +7,6 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.view.INPUT_MODE_BONUS
 import com.karaageumai.workmanagement.view.INPUT_MODE_SALARY
 
@@ -49,11 +48,11 @@ class YearMonthSpinnerAdapter(
         val targetYearMonth = mYearMonthList[position]
         viewHolder.itemText.text = when (mMode){
             INPUT_MODE_SALARY -> {
-                 mContext.getString(R.string.spinner_salary, targetYearMonth.first, targetYearMonth.second)
+                 mContext.getString(R.string.salary_description, targetYearMonth.first, targetYearMonth.second)
             }
 
             INPUT_MODE_BONUS -> {
-                mContext.getString(R.string.spinner_bonus, targetYearMonth.first, targetYearMonth.second)
+                mContext.getString(R.string.bonus_description, targetYearMonth.first, targetYearMonth.second)
             }
 
             else -> ""

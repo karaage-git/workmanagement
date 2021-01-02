@@ -52,13 +52,10 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
         mMode = intent.getIntExtra(KEY_INPUT_MODE, INPUT_MODE_ERROR)
         // ツールバー
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.title = getString(R.string.toolbar_title_check_target_year_month)
         setSupportActionBar(toolbar)
-        // 説明文
-        mTextView = findViewById(R.id.tv_normal)
         // スピナー
         mSpinner = findViewById(R.id.sp_target)
-        // 入力のチェック結果を出力するTextView
-        mResultTextView = findViewById(R.id.tv_message)
         // スタートボタン
         mStartButton = findViewById(R.id.btn_start)
         // 年月リスト
