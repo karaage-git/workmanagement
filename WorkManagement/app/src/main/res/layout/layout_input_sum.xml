@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/layout_frame_border_work"
-    android:layout_marginHorizontal="5dp">
+    android:layout_margin="5dp">
 
     <!--  何も無いと見辛いので、勤務状態をプレースホルダにしておく  -->
 
