@@ -42,7 +42,7 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_salary)
+        setContentView(R.layout.activity_base_input)
 
         // 小クラスの初期化
         init()
