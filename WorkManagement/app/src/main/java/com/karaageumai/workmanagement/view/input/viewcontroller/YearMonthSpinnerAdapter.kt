@@ -14,15 +14,9 @@ import com.karaageumai.workmanagement.view.INPUT_MODE_SALARY
 class YearMonthSpinnerAdapter(
     private val mContext: Context,
     private val mYearMonthList: List<Pair<Int, Int>>,
+    private val mDBDataYearMonthList: List<Pair<Int, Int>>,
     private val mMode: Int
 ) : BaseAdapter() {
-
-    private val mDBDataYearMonthList: List<Pair<Int, Int>> = when (mMode) {
-        INPUT_MODE_SALARY -> ModelFacade.selectSalaryYearMonthList()
-        INPUT_MODE_BONUS -> ModelFacade.selectBonusYearMonthList()
-        else -> listOf()
-    }
-
     data class ViewHolder(
         val icon: ImageView,
         val itemText: TextView

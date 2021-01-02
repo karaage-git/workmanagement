@@ -9,6 +9,7 @@ import androidx.annotation.IntDef
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.viewcontroller.*
 import java.util.*
@@ -35,12 +36,12 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
     // 入力されるYYYYmmを保持するプロパティ
     private var mYear: Int = 0
     private var mMonth: Int = 0
-    // 新規or更新を判定するフラグ
-    private var mIsNewEntry = true
     // 給料orボーナスを判定するフラグ
     private var mMode = INPUT_MODE_SALARY
     // 年と月のPairを管理するためのリスト
     private lateinit var mYearMonthList: List<Pair<Int, Int>>
+    // DBに存在するデータの年月リスト
+    private lateinit var mDBYearMonthList: List<Pair<Int, Int>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,16 +64,25 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
         // 年月リスト
         mYearMonthList = createYearMonthList()
 
-        // モード別の初期化処理
-        if (mMode == INPUT_MODE_ERROR) {
-            // エラーとみなす
-            Log.i("mMode : ERROR")
-            val intent = Intent(this, TopMenuActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
+        when(mMode) {
+            INPUT_MODE_SALARY -> {
+                mDBYearMonthList = ModelFacade.selectSalaryYearMonthList()
+            }
+
+            INPUT_MODE_BONUS -> {
+                mDBYearMonthList = ModelFacade.selectBonusYearMonthList()
+            }
+
+            INPUT_MODE_ERROR -> {
+                // エラーとみなす
+                Log.i("mMode : ERROR")
+                val intent = Intent(this, TopMenuActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+            }
         }
 
-        val adapter = YearMonthSpinnerAdapter(this, mYearMonthList, mMode)
+        val adapter = YearMonthSpinnerAdapter(this, mYearMonthList, mDBYearMonthList, mMode)
         mSpinner.adapter = adapter
 
         mSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -105,20 +115,20 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
             val intent = when(mMode) {
                 INPUT_MODE_SALARY -> {
                     Intent(this, SalaryActivity::class.java).let {
-                        if(mIsNewEntry){
-                            it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_NEW)
-                        } else {
+                        if(isExistData()){
                             it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_ALREADY_EXIST)
+                        } else {
+                            it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_NEW)
                         }
                     }
                 }
 
                 INPUT_MODE_BONUS -> {
                     Intent(this, BonusActivity::class.java).let {
-                        if(mIsNewEntry){
-                            it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_NEW)
-                        } else {
+                        if(isExistData()){
                             it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_ALREADY_EXIST)
+                        } else {
+                            it.putExtra(KEY_ENTRY_MODE, ENTRY_MODE_NEW)
                         }
                     }
                 }
@@ -153,6 +163,16 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
             }
         }
         return ret
+    }
+
+    /**
+     * DBに同年月のデータが存在するかチェックし、新規or更新を判定する
+     *
+     * @return true:存在する, false:存在しない
+     */
+    private fun isExistData(): Boolean {
+        val position = mDBYearMonthList.indexOf(Pair(mYear, mMonth))
+        return position >= 0
     }
 
 }
