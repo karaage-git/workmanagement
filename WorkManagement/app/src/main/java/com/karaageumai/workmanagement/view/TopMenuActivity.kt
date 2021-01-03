@@ -25,7 +25,6 @@ class TopMenuActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_top_menu)
 
-        // Todo:全アクティビティで共通処理となるため、BaseActivity的なものを作成してもいいかも
         // ツールバー読み込み
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.toolbar_title_topmenu)
