@@ -30,11 +30,12 @@ class BonusActivity : BaseInputActivity() {
         mYear = intent.getIntExtra(KEY_YEAR, 0)
         mMonth = intent.getIntExtra(KEY_MONTH, 0)
 
-        // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
+        // 仮にデータが空 or エラーだった場合はfinishする
         if ((mYear == 0) or (mMonth == 0)) {
-            Log.i("can not get data. go to TopMenu.")
             // 通常はありえないルート
-            // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
+            Log.i("mYear:$mYear, mMonth:$mMonth, error has occurred.")
+            showErrorToast()
+            finish()
         }
 
         // データを作成
@@ -56,7 +57,10 @@ class BonusActivity : BaseInputActivity() {
             }
 
             else -> {
-                // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
+                // 通常はありえないルート
+                Log.i("mMode:$mEntryMode, error has occurred.")
+                showErrorToast()
+                finish()
             }
         }
 
@@ -123,10 +127,12 @@ class BonusActivity : BaseInputActivity() {
             when (mEntryMode) {
                 ENTRY_MODE_NEW -> {
                     ModelFacade.insertBonusInfo(mBonusInfo)
+                    showSaveToast()
                 }
 
                 ENTRY_MODE_ALREADY_EXIST -> {
                     ModelFacade.updateBonusInfo(mBonusInfo)
+                    showUpdateToast()
                 }
                 else -> return
             }
@@ -140,10 +146,12 @@ class BonusActivity : BaseInputActivity() {
                     when (mEntryMode) {
                         ENTRY_MODE_NEW -> {
                             ModelFacade.insertBonusInfo(mBonusInfo)
+                            showSaveToast()
                         }
 
                         ENTRY_MODE_ALREADY_EXIST -> {
                             ModelFacade.updateBonusInfo(mBonusInfo)
+                            showUpdateToast()
                         }
 
                         else -> {}
@@ -166,6 +174,7 @@ class BonusActivity : BaseInputActivity() {
                 .setPositiveButton(R.string.ok) { dialog, _ ->
                     if (mEntryMode == ENTRY_MODE_ALREADY_EXIST) {
                         ModelFacade.deleteBonusInfo(mBonusInfoBackup)
+                        showDeleteToast()
                     }
                     dialog.dismiss()
                     finish()

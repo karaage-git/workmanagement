@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -53,6 +54,7 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
         toolbar.setNavigationOnClickListener {
+            showCancelToast()
             finish()
         }
 
@@ -215,8 +217,53 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
         }
     }
 
-    fun getSumViewMap(): Map<SumViewTag, TextView> {
+    /**
+     * 子クラスから合計Viewを取得するためのメソッド
+     */
+    protected fun getSumViewMap(): Map<SumViewTag, TextView> {
         return mSumViewMap
+    }
+
+    /**
+     * 保存完了時のトーストを表示する
+     */
+    protected fun showSaveToast() {
+        showToast(getString(R.string.toast_save))
+    }
+
+    /**
+     * 更新完了時のトーストを表示する
+     */
+    protected fun showUpdateToast() {
+        showToast(getString(R.string.toast_update))
+    }
+
+    /**
+     * 削除完了時のトーストを表示する
+     */
+    protected fun showDeleteToast() {
+        showToast(getString(R.string.toast_delete))
+    }
+
+    /**
+     * エラー発生時のトーストを表示する
+     */
+    protected fun showErrorToast() {
+        showToast(getString(R.string.toast_error))
+    }
+
+    /**
+     * 入力キャンセル時のトーストを表示する
+     */
+    private fun showCancelToast() {
+        showToast(getString(R.string.toast_cancel))
+    }
+
+    /**
+     * トースト作成用の共通メソッド
+     */
+    private fun showToast(aMessage: String) {
+        Toast.makeText(applicationContext, aMessage, Toast.LENGTH_LONG).show()
     }
 
     /**

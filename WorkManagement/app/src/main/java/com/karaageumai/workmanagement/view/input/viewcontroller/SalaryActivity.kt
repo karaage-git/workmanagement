@@ -30,11 +30,12 @@ class SalaryActivity : BaseInputActivity() {
         mYear = intent.getIntExtra(KEY_YEAR, 0)
         mMonth = intent.getIntExtra(KEY_MONTH, 0)
 
-        // 仮にデータが空 or エラーだった場合はトップメニューに遷移させる
+        // 仮にデータが空 or エラーだった場合はfinishする
         if ((mYear == 0) or (mMonth == 0)) {
-            Log.i("can not get data. go to TopMenu.")
             // 通常はありえないルート
-            // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
+            Log.i("mYear:$mYear, mMonth:$mMonth, error has occurred.")
+            showErrorToast()
+            finish()
         }
 
         // データを作成
@@ -56,7 +57,10 @@ class SalaryActivity : BaseInputActivity() {
             }
 
             else -> {
-                // Todo : 失敗したらfinish()してトップに戻す。トップでダイアログだしておく。
+                // 通常はありえないルート
+                Log.i("mMode:$mEntryMode, error has occurred.")
+                showErrorToast()
+                finish()
             }
         }
 
@@ -134,10 +138,12 @@ class SalaryActivity : BaseInputActivity() {
             when (mEntryMode) {
                 ENTRY_MODE_NEW -> {
                     ModelFacade.insertSalaryInfo(mSalaryInfo)
+                    showSaveToast()
                 }
 
                 ENTRY_MODE_ALREADY_EXIST -> {
                     ModelFacade.updateSalaryInfo(mSalaryInfo)
+                    showUpdateToast()
                 }
                 else -> return
             }
@@ -151,10 +157,12 @@ class SalaryActivity : BaseInputActivity() {
                         when (mEntryMode) {
                             ENTRY_MODE_NEW -> {
                                 ModelFacade.insertSalaryInfo(mSalaryInfo)
+                                showSaveToast()
                             }
 
                             ENTRY_MODE_ALREADY_EXIST -> {
                                 ModelFacade.updateSalaryInfo(mSalaryInfo)
+                                showUpdateToast()
                             }
 
                             else -> {}
@@ -177,6 +185,7 @@ class SalaryActivity : BaseInputActivity() {
                 .setPositiveButton(R.string.ok) { dialog, _ ->
                     if (mEntryMode == ENTRY_MODE_ALREADY_EXIST) {
                         ModelFacade.deleteSalaryInfo(mSalaryInfoBackup)
+                        showDeleteToast()
                     }
                     dialog.dismiss()
                     finish()

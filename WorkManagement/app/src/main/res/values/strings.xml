@@ -58,6 +58,12 @@
     <string name="salary_description">%1$d年%2$02d月分の給与</string>
     <string name="bonus_description">%1$d年%2$02d月分のボーナス</string>
 
+    <string name="toast_save">データを保存しました</string>
+    <string name="toast_update">データを更新しました</string>
+    <string name="toast_delete">データを削除しました</string>
+    <string name="toast_cancel">データ入力をキャンセルしました</string>
+    <string name="toast_error">エラーが発生しました</string>
+
     <string name="toolbar_title_input">情報入力</string>
     <string name="tab_title_workstatus">勤怠状態</string>
     <string name="tab_title_income">収入</string>
