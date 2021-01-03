@@ -200,6 +200,14 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
         return true
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        // バックキー押下はキャンセル扱い
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            showCancelToast()
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     // ツールバー操作の定義
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
