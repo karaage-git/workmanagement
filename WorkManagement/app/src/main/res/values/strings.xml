@@ -42,7 +42,8 @@
     <string name="toolbar_title_topmenu">トップメニュー</string>
     <string name="btn_topmenu_input_salary">給与情報の登録/修正</string>
     <string name="btn_topmenu_input_bonus">ボーナス情報の登録/修正</string>
-    <string name="btn_topmenu_analyze">データ解析</string>
+    <string name="btn_topmenu_analyze_annual_data">年間データの閲覧</string>
+    <string name="btn_topmenu_analyze_comparison">データの比較/分析</string>
     <string name="btn_topmenu_setting">基本設定</string>
 
     <!--  登録トップメニュー  -->
@@ -164,5 +165,8 @@
 
     <string name="layoutitem_deduction_other_title">その他</string>
     <string name="edittext_hint_deduction_other">例：10000</string>
+
+    <!--  データ分析  -->
+    <string name="layout_item_display_annual_data_button">詳細を表示</string>
 
 </resources>

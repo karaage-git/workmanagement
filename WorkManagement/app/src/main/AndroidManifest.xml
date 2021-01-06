@@ -10,16 +10,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".view.input.viewcontroller.BonusActivity"></activity>
-        <activity android:name=".view.input.viewcontroller.SalaryActivity" />
-        <activity android:name=".view.input.viewcontroller.CheckTargetYearMonthActivity" />
-        <activity android:name=".view.TopMenuActivity">
+        <activity android:name=".view.TopMenuActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.input.common.CheckTargetYearMonthActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.input.salary.SalaryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.input.bonus.BonusActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.analyze.viewcontroller.DisplayAnnualDataActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

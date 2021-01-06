@@ -2,6 +2,7 @@ package com.karaageumai.workmanagement
 
 import android.app.Application
 import android.content.Context
+import com.karaageumai.workmanagement.presenter.IBasePresenter
 
 class MainApplication : Application() {
 
@@ -18,10 +19,21 @@ class MainApplication : Application() {
     }
 
     companion object {
-        // どのクラスからもContextを取得できるようにする
+        // Contextを共有する仕組み
         private var mInstance: MainApplication? = null
+        // BasePresenterを共有する仕組み
+        private var mPresenter: IBasePresenter? = null
+
         fun getContext() : Context {
             return mInstance!!.applicationContext
+        }
+
+        fun setPresenter(aPresenter: IBasePresenter?) {
+            mPresenter = aPresenter
+        }
+
+        fun getPresenter(): IBasePresenter? {
+            return mPresenter
         }
     }
 

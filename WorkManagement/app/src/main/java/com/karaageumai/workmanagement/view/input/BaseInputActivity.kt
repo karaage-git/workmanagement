@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller
+package com.karaageumai.workmanagement.view.input
 
 import android.os.Bundle
 import android.view.*
@@ -14,8 +14,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.input.viewcontroller.*
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.SumViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag
@@ -23,7 +23,7 @@ import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag
 /**
  * 情報入力を行うActivityのベース
  */
-abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterface{
+abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
     // 表示するタブの種類と順番を管理するリスト（インデックスがタブのページに相当）
     private var mTabPageList:List<TabPage> = listOf()
     // タブ用のViewPager2
@@ -31,7 +31,7 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     // タブレイアウト
     private lateinit var mTabLayout: TabLayout
     // 子フラグメントを管理するマップ
-    var mChildFragmentMap: MutableMap<Int, InputInfoObservableFragment> = mutableMapOf()
+    var mChildFragmentMap: MutableMap<Int, BaseInputFragment> = mutableMapOf()
     // 合計を表示するViewを管理するマップ
     private var mSumViewMap: MutableMap<SumViewTag, TextView> = mutableMapOf()
 
@@ -127,6 +127,12 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
         updateSumView()
     }
 
+    override fun onDestroy() {
+        // 共有Presenterを初期化
+        MainApplication.setPresenter(null)
+        super.onDestroy()
+    }
+
     // タブ生成処理
     private inner class ScreenSlidePagerAdapter(mActivity: AppCompatActivity) : FragmentStateAdapter(mActivity) {
         // タブアイテムの数取得
@@ -142,12 +148,10 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
                     val inputInfoParcelArrayList: Array<InputInfoParcel> = getWorkStatusInputInfoParcelList().toTypedArray()
 
                     // フラグメント生成
-                    val fragment: InputInfoObservableFragment = BaseInputFragment.newInstance(
+                    val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
                             R.color.work_status_basic
                     )
-                    // SalaryInfoのオブザーバーをセット
-                    fragment.addObserver(this@BaseInputActivity)
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.WorkStatus)] = fragment
                     return fragment
@@ -157,12 +161,10 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
                     Log.i("create IncomeInputFragment()")
                     val inputInfoParcelArrayList: Array<InputInfoParcel> = getIncomeInputInfoParcelList().toTypedArray()
                     // フラグメント生成
-                    val fragment: InputInfoObservableFragment = BaseInputFragment.newInstance(
+                    val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
                             R.color.income_basic
                     )
-                    // SalaryInfoのオブザーバーをセット
-                    fragment.addObserver(this@BaseInputActivity)
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.Income)] = fragment
                     return fragment
@@ -173,12 +175,10 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
                     // 表示する項目を定義するArray
                     val inputInfoParcelArrayList: Array<InputInfoParcel> = getDeductionInputInfoParcelList().toTypedArray()
                     // フラグメント生成
-                    val fragment: InputInfoObservableFragment = BaseInputFragment.newInstance(
+                    val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
                             R.color.deduction_basic
                     )
-                    // SalaryInfoのオブザーバーをセット
-                    fragment.addObserver(this@BaseInputActivity)
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.Deduction)] = fragment
                     return fragment
@@ -235,7 +235,7 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     /**
      * 保存完了時のトーストを表示する
      */
-    protected fun showSaveToast() {
+    protected fun showInsertToast() {
         showToast(getString(R.string.toast_save))
     }
 
@@ -268,6 +268,16 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     }
 
     /**
+     * 表示する合計Viewの種類を取得
+     */
+    abstract fun getSumViewTagList(): List<SumViewTag>
+
+    /**
+     * 表示するタブの種類を取得
+     */
+    abstract fun getTabPageList(): List<TabPage>
+
+    /**
      * トースト作成用の共通メソッド
      */
     private fun showToast(aMessage: String) {
@@ -278,12 +288,6 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
      * 子クラスの初期化
      */
     abstract fun init()
-
-    /**
-     * 新規or更新を表す定数を取得
-     */
-    @EntryMode
-    abstract fun getEntryMode(): Int
 
     /**
      * 勤怠情報の入力Viewを取得
@@ -301,11 +305,6 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     abstract fun getDeductionInputInfoParcelList(): List<InputInfoParcel>
 
     /**
-     * 更新時の処理
-     */
-    abstract override fun update(aInputInfoObservable: InputInfoObservableFragment)
-
-    /**
      * 合計Viewの更新
      */
     abstract fun updateSumView()
@@ -321,17 +320,41 @@ abstract class BaseInputActivity : AppCompatActivity(), InputInfoObserverInterfa
     abstract fun deleteData()
 
     /**
-     * 表示するタブの種類を取得
-     */
-    abstract fun getTabPageList(): List<TabPage>
-
-    /**
-     * 表示する合計Viewの種類を取得
-     */
-    abstract fun getSumViewTagList(): List<SumViewTag>
-
-    /**
      * 入力対象データの説明文言を取得する
      */
     abstract fun getInputDataDescription(): String
+
+    // SalaryとBonusで共通処理
+    override fun onInputItem(aIsSuccess: Boolean) {
+        Log.i("onInputItem")
+        if(aIsSuccess) {
+            Log.i("input success")
+            updateSumView()
+        } else {
+            Log.i("input failure")
+            showErrorToast()
+            finish()
+        }
+    }
+
+    // SalaryとBonusで共通処理
+    override fun onInsertData() {
+        Log.i("onInsertData()")
+        showInsertToast()
+        finish()
+    }
+
+    // SalaryとBonusで共通処理
+    override fun onUpdateData() {
+        Log.i("onUpdateData()")
+        showUpdateToast()
+        finish()
+    }
+
+    // SalaryとBonusで共通処理
+    override fun onDeleteData() {
+        Log.i("onDeleteData()")
+        showDeleteToast()
+        finish()
+    }
 }

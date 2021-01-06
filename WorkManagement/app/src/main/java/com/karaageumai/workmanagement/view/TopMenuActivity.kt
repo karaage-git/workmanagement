@@ -9,7 +9,8 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.view.input.viewcontroller.CheckTargetYearMonthActivity
+import com.karaageumai.workmanagement.view.analyze.viewcontroller.DisplayAnnualDataActivity
+import com.karaageumai.workmanagement.view.input.common.CheckTargetYearMonthActivity
 
 const val KEY_INPUT_MODE = "KEY_INPUT_MODE"
 const val INPUT_MODE_SALARY = 0
@@ -45,6 +46,14 @@ class TopMenuActivity : AppCompatActivity() {
             Log.i("Input BonusInfo")
             val intent = Intent(this, CheckTargetYearMonthActivity::class.java)
             intent.putExtra(KEY_INPUT_MODE, INPUT_MODE_BONUS)
+            startActivity(intent)
+        }
+
+        // 年間データの表示
+        val displayAnnualDataButton: Button = findViewById(R.id.btn_annual_data)
+        displayAnnualDataButton.setOnClickListener {
+            Log.i("Display annual data")
+            val intent = Intent(this, DisplayAnnualDataActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller
+package com.karaageumai.workmanagement.view.input
 
 import android.content.Context
 import android.view.View

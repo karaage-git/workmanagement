@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller
+package com.karaageumai.workmanagement.view.input.common
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +11,8 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.view.*
-import com.karaageumai.workmanagement.view.input.viewcontroller.*
+import com.karaageumai.workmanagement.view.input.bonus.BonusActivity
+import com.karaageumai.workmanagement.view.input.salary.SalaryActivity
 import java.util.*
 
 const val KEY_ENTRY_MODE = "KEY_ENTRY_MODE"

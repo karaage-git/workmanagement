@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewcontroller
+package com.karaageumai.workmanagement.view.input
 
 import android.content.Context
 import android.os.Bundle
@@ -13,31 +13,28 @@ import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.util.NumberFormatUtil
+import com.karaageumai.workmanagement.presenter.IBasePresenter
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
-import java.lang.NumberFormatException
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
 private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
-
-private const val MAX_DAYS_PER_MONTH = 31.0
-private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
-private const val INPUT_MAX_VALUE = 1000000000
 
 /**
  * A simple [Fragment] subclass.
  * Use the [BaseInputFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class BaseInputFragment : InputInfoObservableFragment() {
+class BaseInputFragment : Fragment() {
     // 給与情報
     private var mInputInfoParcelList: MutableList<InputInfoParcel> = mutableListOf()
     // 背景色ID
     private var mBackgroundResId = 0
-
+    // 入力ダイアログ
     private var mAlertDialog: AlertDialog? = null
+    //
+    private var mPresenter: IBasePresenter? = MainApplication.getPresenter()
 
     companion object {
         /**
@@ -128,7 +125,7 @@ class BaseInputFragment : InputInfoObservableFragment() {
                                     targetParcel.mStrValue = strValue
                                     targetParcel.mIsComplete = true
 
-                                    notifyObserver()
+                                    mPresenter?.updateItem(targetParcel)
                                 }
                                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                                     editText.removeTextChangedListener(textWatcher)
@@ -142,10 +139,6 @@ class BaseInputFragment : InputInfoObservableFragment() {
             }
         }
         return view
-    }
-
-    override fun getInputInfoParcelList(): List<InputInfoParcel> {
-        return mInputInfoParcelList
     }
 
     // カスタムTextWatcher
@@ -211,83 +204,9 @@ class BaseInputFragment : InputInfoObservableFragment() {
      */
     private fun checkInputFormat(aView: View, aValue: String): Boolean {
         val mEditText: EditText = aView.findViewById(R.id.et_data)
-
         val tag = mEditText.tag
         if(tag is InputViewTag) {
-            when (tag) {
-                // 0.5単位、最大値は1ヶ月、未入力不可
-                InputViewTag.WorkingDayInputViewData -> {
-                    // 未入力も許可
-                    if (aValue.isEmpty()) {
-                        return true
-                    } else {
-                        return try {
-                            val temp: Double = aValue.toDouble()
-                            if (NumberFormatUtil.checkNumberFormat05(aValue)) {
-                                temp <= MAX_DAYS_PER_MONTH
-                            } else {
-                                // 0.5単位でなければ無効
-                                false
-                            }
-                        } catch (e: NumberFormatException) {
-                            // 数値でなければ無効
-                            false
-                        }
-                    }
-                }
-
-                // 0.1単位、最大値は1ヶ月の時間、未入力不可
-                InputViewTag.WorkingTimeInputViewData,
-                InputViewTag.OverTimeInputViewData -> {
-                    // 未入力も許可
-                    if (aValue.isEmpty()) {
-                        return true
-                    } else {
-                        return try {
-                            val temp: Double = aValue.toDouble()
-                            if (NumberFormatUtil.checkNumberFormat01(aValue)) {
-                                temp <= MAX_TIME_PER_MONTH
-                            } else {
-                                // 0.1単位でなければ無効
-                                false
-                            }
-                        } catch (e: NumberFormatException) {
-                            // 数値でなければ無効
-                            false
-                        }
-                    }
-                }
-
-                // 整数、最大値あり、未入力可
-                InputViewTag.BaseIncomeInputViewData,
-                InputViewTag.OverTimeIncomeInputViewData,
-                InputViewTag.OtherIncomeInputViewData,
-                InputViewTag.HealthInsuranceInputViewData,
-                InputViewTag.LongTermCareInsuranceFeeInputViewData,
-                InputViewTag.PensionInsuranceInputViewData,
-                InputViewTag.EmploymentInsuranceInputViewData,
-                InputViewTag.IncomeTaxInputViewData,
-                InputViewTag.ResidentTaxInputViewData,
-                InputViewTag.OtherDeductionInputViewData -> {
-                    // 未入力も許可
-                    if (aValue.isEmpty()) {
-                        return true
-                    } else {
-                        return try {
-                            val temp: Int = aValue.toInt()
-                            if (NumberFormatUtil.checkNaturalNumberFormat(aValue)) {
-                                temp <= INPUT_MAX_VALUE
-                            } else {
-                                // 整数でなければ無効
-                                false
-                            }
-                        } catch (e: NumberFormatException) {
-                            // 数値でなければ無効
-                            false
-                        }
-                    }
-                }
-            }
+            return mPresenter?.checkInputData(tag, aValue) ?: false
         }
         return false
     }

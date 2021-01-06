@@ -34,18 +34,42 @@
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         app:layout_constraintTop_toTopOf="@id/btn_input_salary"
-        app:layout_constraintBottom_toBottomOf="@id/btn_analyze_info"
+        app:layout_constraintBottom_toBottomOf="@id/btn_annual_data"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/btn_analyze_info"
+        android:id="@+id/btn_annual_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_topmenu_analyze"
+        android:text="@string/btn_topmenu_analyze_annual_data"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         app:layout_constraintTop_toTopOf="@id/btn_input_bonus"
+        app:layout_constraintBottom_toBottomOf="@id/btn_comparison"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_comparison"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_topmenu_analyze_comparison"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        app:layout_constraintTop_toTopOf="@id/btn_annual_data"
+        app:layout_constraintBottom_toBottomOf="@id/btn_setting"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_topmenu_setting"
+        android:layout_marginStart="@dimen/margin_top_menu_side"
+        android:layout_marginEnd="@dimen/margin_top_menu_side"
+        app:layout_constraintTop_toTopOf="@id/btn_comparison"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
