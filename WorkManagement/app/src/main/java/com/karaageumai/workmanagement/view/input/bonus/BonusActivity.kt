@@ -2,8 +2,8 @@ package com.karaageumai.workmanagement.view.input.bonus
 
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
-import com.karaageumai.workmanagement.presenter.bonus.BonusPresenter
-import com.karaageumai.workmanagement.presenter.bonus.IBonusPresenter
+import com.karaageumai.workmanagement.presenter.input.bonus.BonusPresenter
+import com.karaageumai.workmanagement.presenter.input.bonus.IBonusPresenter
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.BaseInputActivity
 import com.karaageumai.workmanagement.view.input.common.KEY_MONTH

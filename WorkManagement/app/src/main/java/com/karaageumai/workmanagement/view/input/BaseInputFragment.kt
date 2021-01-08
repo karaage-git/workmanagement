@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.presenter.IBasePresenter
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
 import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
@@ -34,7 +34,7 @@ class BaseInputFragment : Fragment() {
     // 入力ダイアログ
     private var mAlertDialog: AlertDialog? = null
     //
-    private var mPresenter: IBasePresenter? = MainApplication.getPresenter()
+    private var mInputPresenter: IBaseInputPresenter? = MainApplication.getPresenter()
 
     companion object {
         /**
@@ -125,7 +125,7 @@ class BaseInputFragment : Fragment() {
                                     targetParcel.mStrValue = strValue
                                     targetParcel.mIsComplete = true
 
-                                    mPresenter?.updateItem(targetParcel)
+                                    mInputPresenter?.updateItem(targetParcel)
                                 }
                                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                                     editText.removeTextChangedListener(textWatcher)
@@ -206,7 +206,7 @@ class BaseInputFragment : Fragment() {
         val mEditText: EditText = aView.findViewById(R.id.et_data)
         val tag = mEditText.tag
         if(tag is InputViewTag) {
-            return mPresenter?.checkInputData(tag, aValue) ?: false
+            return mInputPresenter?.checkInputData(tag, aValue) ?: false
         }
         return false
     }

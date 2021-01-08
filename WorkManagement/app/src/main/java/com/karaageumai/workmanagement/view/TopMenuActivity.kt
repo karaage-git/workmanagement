@@ -9,7 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.view.analyze.viewcontroller.DisplayAnnualDataActivity
+import com.karaageumai.workmanagement.view.analyze.annual.AnnualAnalyzeActivity
 import com.karaageumai.workmanagement.view.input.common.CheckTargetYearMonthActivity
 
 const val KEY_INPUT_MODE = "KEY_INPUT_MODE"
@@ -53,7 +53,7 @@ class TopMenuActivity : AppCompatActivity() {
         val displayAnnualDataButton: Button = findViewById(R.id.btn_annual_data)
         displayAnnualDataButton.setOnClickListener {
             Log.i("Display annual data")
-            val intent = Intent(this, DisplayAnnualDataActivity::class.java)
+            val intent = Intent(this, AnnualAnalyzeActivity::class.java)
             startActivity(intent)
         }
 

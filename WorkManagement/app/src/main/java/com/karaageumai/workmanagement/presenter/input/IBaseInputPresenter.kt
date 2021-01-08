@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.presenter
+package com.karaageumai.workmanagement.presenter.input
 
 import android.content.Context
 import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
@@ -11,7 +11,7 @@ private const val MAX_DAYS_PER_MONTH = 31.0
 private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
 private const val INPUT_MAX_VALUE = 1000000000
 
-interface IBasePresenter {
+interface IBaseInputPresenter {
     /**
      * タグを指定してInputInfoParcelを取得する
      *

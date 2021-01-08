@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.presenter.salary
+package com.karaageumai.workmanagement.presenter.input.salary
 
 import android.app.AlertDialog
 import android.content.Context

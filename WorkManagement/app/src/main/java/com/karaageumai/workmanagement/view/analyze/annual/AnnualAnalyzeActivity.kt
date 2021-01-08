@@ -1,12 +1,12 @@
-package com.karaageumai.workmanagement.view.analyze.viewcontroller
+package com.karaageumai.workmanagement.view.analyze.annual
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.karaageumai.workmanagement.R
 
-class DisplayAnnualDataActivity : AppCompatActivity() {
+class AnnualAnalyzeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_annual_data)
+        setContentView(R.layout.activity_annual_analyze)
     }
 }

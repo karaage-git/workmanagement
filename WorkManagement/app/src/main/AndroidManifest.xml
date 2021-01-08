@@ -28,7 +28,7 @@
         <activity android:name=".view.input.bonus.BonusActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".view.analyze.viewcontroller.DisplayAnnualDataActivity"
+        <activity android:name=".view.analyze.annual.AnnualAnalyzeActivity"
             android:screenOrientation="portrait" />
 
     </application>

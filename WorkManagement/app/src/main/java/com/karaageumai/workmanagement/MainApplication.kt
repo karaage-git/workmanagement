@@ -2,7 +2,7 @@ package com.karaageumai.workmanagement
 
 import android.app.Application
 import android.content.Context
-import com.karaageumai.workmanagement.presenter.IBasePresenter
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 
 class MainApplication : Application() {
 
@@ -22,18 +22,27 @@ class MainApplication : Application() {
         // Contextを共有する仕組み
         private var mInstance: MainApplication? = null
         // BasePresenterを共有する仕組み
-        private var mPresenter: IBasePresenter? = null
+        private var mInputPresenter: IBaseInputPresenter? = null
 
+        /**
+         * Contextの取得
+         */
         fun getContext() : Context {
             return mInstance!!.applicationContext
         }
 
-        fun setPresenter(aPresenter: IBasePresenter?) {
-            mPresenter = aPresenter
+        /**
+         * 情報入力用のPresenterを共有用にセットする
+         */
+        fun setPresenter(aInputPresenter: IBaseInputPresenter?) {
+            mInputPresenter = aInputPresenter
         }
 
-        fun getPresenter(): IBasePresenter? {
-            return mPresenter
+        /**
+         * 情報入力用のPresenterを取得する
+         */
+        fun getPresenter(): IBaseInputPresenter? {
+            return mInputPresenter
         }
     }
 

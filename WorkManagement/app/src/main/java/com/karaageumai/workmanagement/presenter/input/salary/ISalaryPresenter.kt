@@ -1,8 +1,8 @@
-package com.karaageumai.workmanagement.presenter.salary
+package com.karaageumai.workmanagement.presenter.input.salary
 
-import com.karaageumai.workmanagement.presenter.IBasePresenter
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 
-interface ISalaryPresenter : IBasePresenter {
+interface ISalaryPresenter : IBaseInputPresenter {
     /**
      * 労働時間の合計値を算出する
      *

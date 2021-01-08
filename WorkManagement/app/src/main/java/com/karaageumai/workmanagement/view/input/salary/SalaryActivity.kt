@@ -2,8 +2,8 @@ package com.karaageumai.workmanagement.view.input.salary
 
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
-import com.karaageumai.workmanagement.presenter.salary.ISalaryPresenter
-import com.karaageumai.workmanagement.presenter.salary.SalaryPresenter
+import com.karaageumai.workmanagement.presenter.input.salary.ISalaryPresenter
+import com.karaageumai.workmanagement.presenter.input.salary.SalaryPresenter
 import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.BaseInputActivity
 import com.karaageumai.workmanagement.view.input.common.KEY_MONTH

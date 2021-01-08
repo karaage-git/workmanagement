@@ -1,8 +1,8 @@
-package com.karaageumai.workmanagement.presenter.bonus
+package com.karaageumai.workmanagement.presenter.input.bonus
 
-import com.karaageumai.workmanagement.presenter.IBasePresenter
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 
-interface IBonusPresenter : IBasePresenter {
+interface IBonusPresenter : IBaseInputPresenter {
     /**
      * 収入の合計値を算出する
      *
