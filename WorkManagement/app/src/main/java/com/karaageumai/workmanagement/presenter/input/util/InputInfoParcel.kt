@@ -1,7 +1,7 @@
-package com.karaageumai.workmanagement.view.input.util
+package com.karaageumai.workmanagement.presenter.input.util
 
 import android.os.Parcelable
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

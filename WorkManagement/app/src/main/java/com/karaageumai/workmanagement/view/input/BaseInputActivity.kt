@@ -16,9 +16,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.SumViewResData
-import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewResData
+import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewTag
 
 /**
  * 情報入力を行うActivityのベース

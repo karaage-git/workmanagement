@@ -6,9 +6,9 @@ import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.IBaseInputView
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 
 class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
     // ボーナス情報

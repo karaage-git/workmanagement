@@ -3,8 +3,8 @@ package com.karaageumai.workmanagement.presenter.input
 import android.content.Context
 import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 import java.lang.NumberFormatException
 
 private const val MAX_DAYS_PER_MONTH = 31.0

@@ -4,12 +4,12 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.presenter.input.bonus.BonusPresenter
 import com.karaageumai.workmanagement.presenter.input.bonus.IBonusPresenter
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.BaseInputActivity
 import com.karaageumai.workmanagement.view.input.common.KEY_MONTH
 import com.karaageumai.workmanagement.view.input.common.KEY_YEAR
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
-import com.karaageumai.workmanagement.view.input.viewdata.SumViewTag
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewTag
 
 class BonusActivity : BaseInputActivity() {
     // ボーナス情報のPresenter

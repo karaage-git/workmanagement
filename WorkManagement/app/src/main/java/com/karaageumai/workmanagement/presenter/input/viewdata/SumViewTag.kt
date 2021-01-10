@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.input.viewdata
+package com.karaageumai.workmanagement.presenter.input.viewdata
 
 enum class SumViewTag {
     WorkStatusSumViewData,

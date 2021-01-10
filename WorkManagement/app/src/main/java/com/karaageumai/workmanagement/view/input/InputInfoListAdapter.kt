@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewResData
 
 class InputInfoListAdapter(
     private val mContext: Context,

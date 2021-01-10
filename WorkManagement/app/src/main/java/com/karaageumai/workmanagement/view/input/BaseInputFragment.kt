@@ -14,9 +14,9 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
-import com.karaageumai.workmanagement.view.input.util.InputInfoParcel
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewResData
-import com.karaageumai.workmanagement.view.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewResData
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
 private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
