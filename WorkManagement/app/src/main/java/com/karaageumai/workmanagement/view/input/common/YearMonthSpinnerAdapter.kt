@@ -35,7 +35,7 @@ class YearMonthSpinnerAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val (viewHolder, view) = if (convertView == null) {
-            val itemView = View.inflate(mContext, R.layout.layout_spinner_row_item, null)
+            val itemView = View.inflate(mContext, R.layout.layout_spinner_check_year_month, null)
             val icon: ImageView = itemView.findViewById(R.id.iv_check_ic)
             val value: TextView = itemView.findViewById(R.id.tv_spinner_item)
             val viewHolder = ViewHolder(icon, value)

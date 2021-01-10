@@ -62,6 +62,18 @@ object ModelFacade {
     }
 
     /**
+     * 年を指定してSalaryInfoのリストを取得する
+     *
+     * @param aYear 年
+     * @return SalaryInfoのリスト
+     */
+    fun selectSalaryInfo(aYear: Int): List<SalaryInfo> {
+        return runBlocking {
+            mSalaryInfoDao.getSalaryWithYear(aYear)
+        }
+    }
+
+    /**
      * SalaryInfoの更新
      *
      * @param aSalaryInfo 更新データ
@@ -148,6 +160,18 @@ object ModelFacade {
 
         return bonusInfoList.first()
 
+    }
+
+    /**
+     * 年を指定してBonusInfoのリストを取得する
+     *
+     * @param aYear 年
+     * @return BonusInfoのリスト
+     */
+    fun selectBonusInfo(aYear: Int): List<BonusInfo> {
+        return runBlocking {
+            mBonusInfoDao.getBonusWithYear(aYear)
+        }
     }
 
     /**

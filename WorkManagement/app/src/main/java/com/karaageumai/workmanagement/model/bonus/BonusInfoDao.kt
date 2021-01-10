@@ -17,6 +17,9 @@ interface BonusInfoDao {
     @Query("select * from bonus_table where year = :aYear and month = :aMonth")
     suspend fun getBonusWithYearMonth(aYear: Int, aMonth: Int): List<BonusInfo>
 
+    @Query("select * from bonus_table where year = :aYear")
+    suspend fun getBonusWithYear(aYear: Int): List<BonusInfo>
+
     @Query("select * from bonus_table")
     suspend fun selectAllData(): List<BonusInfo>
 }

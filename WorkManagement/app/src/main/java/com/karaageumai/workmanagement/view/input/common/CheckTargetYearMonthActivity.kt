@@ -9,6 +9,8 @@ import androidx.annotation.IntDef
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.MAX_YEAR
+import com.karaageumai.workmanagement.MIN_YEAR
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.bonus.BonusActivity
@@ -155,7 +157,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
      */
     private fun createYearMonthList(): List<Pair<Int, Int>> {
         val ret: MutableList<Pair<Int, Int>> = mutableListOf()
-        for(year in 2000..2050) {
+        for(year in MIN_YEAR..MAX_YEAR) {
             for(month in 1..12) {
                 ret.add(Pair(year, month))
             }

@@ -1,6 +1,8 @@
 package com.karaageumai.workmanagement.util
 
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.MAX_YEAR
+import com.karaageumai.workmanagement.MIN_YEAR
 import kotlin.IllegalArgumentException
 import kotlin.NumberFormatException
 
@@ -43,7 +45,7 @@ object CalendarUtil {
             return CheckFormatResultCode.ResultNGIllegalFormat
         }
 
-        if((year < 2000) || (year > 2050)) {
+        if((year < MIN_YEAR) || (year > MAX_YEAR)) {
             // 2000〜2050年までを有効とみなす
             Log.i("Out of range")
             return CheckFormatResultCode.ResultNGOutOfRange

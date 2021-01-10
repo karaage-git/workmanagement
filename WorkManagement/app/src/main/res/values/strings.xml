@@ -168,5 +168,6 @@
 
     <!--  データ分析  -->
     <string name="layout_item_display_annual_data_button">詳細を表示</string>
+    <string name="annual_analyze_row_working_day">合計勤務日数</string>
 
 </resources>
