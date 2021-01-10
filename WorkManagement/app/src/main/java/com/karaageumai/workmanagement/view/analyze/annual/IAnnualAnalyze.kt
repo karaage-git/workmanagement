@@ -10,6 +10,8 @@ interface IAnnualAnalyze {
 
     /**
      * 表示データの準備ができた際にコールされる
+     *
+     * @param aLoadDataList ロードできたデータのリスト
      */
     fun onLoadedData(aLoadDataList: List<AnnualDataRow>)
 }
