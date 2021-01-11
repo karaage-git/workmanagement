@@ -154,7 +154,7 @@
     <string name="layoutitem_deduction_longterm_title">介護保険料</string>
     <string name="edittext_hint_deduction_longterm">例：10000</string>
 
-    <string name="layoutitem_deduction_employment_title">雇用保険</string>
+    <string name="layoutitem_deduction_employment_title">雇用保険料</string>
     <string name="edittext_hint_deduction_employment">例：10000</string>
 
     <string name="layoutitem_deduction_income_title">所得税</string>
@@ -175,7 +175,21 @@
     <string name="annual_analyze_row_unit_money">円</string>
     <string name="annual_analyze_row_working_day">合計勤務日数</string>
     <string name="annual_analyze_row_working_time">合計労働時間</string>
-    <string name="annual_analyze_row_income">合計収入</string>
-    <string name="annual_analyze_row_base_income">合計基本給</string>
+    <string name="annual_analyze_row_base_working_time">所定労働時間</string>
+    <string name="annual_analyze_row_over_working_time">残業時間</string>
+    <string name="annual_analyze_row_income">合計収入額</string>
+    <string name="annual_analyze_row_base_income">基本支給額</string>
+    <string name="annual_analyze_row_overtime_income">残業手当</string>
+    <string name="annual_analyze_row_other_income">その他</string>
+    <string name="annual_analyze_row_bonus">ボーナス</string>
+    <string name="annual_analyze_row_deduction">合計控除額</string>
+    <string name="annual_analyze_row_deduction_health">健康保険料</string>
+    <string name="annual_analyze_row_deduction_long_term">介護保険料</string>
+    <string name="annual_analyze_row_deduction_pension">年金保険料</string>
+    <string name="annual_analyze_row_deduction_employment">雇用保険料</string>
+    <string name="annual_analyze_row_deduction_income">所得税</string>
+    <string name="annual_analyze_row_deduction_resident">住民税</string>
+    <string name="annual_analyze_row_deduction_other">その他</string>
+    <string name="annual_analyze_row_after_tax_income">手取りの総額</string>
 
 </resources>
