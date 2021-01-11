@@ -1,6 +1,5 @@
 package com.karaageumai.workmanagement.model.bonus
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -18,17 +17,17 @@ data class BonusInfo(
         // その他の支給
         var otherIncome: Int = 0,
         // 健康保険料
-        @ColumnInfo(name = "health_insurance_fee") var healthInsuranceFee: Int = 0,
+        var healthInsuranceFee: Int = 0,
         // 介護保険料
-        @ColumnInfo(name = "long_term_care_insurance_fee") var longTermCareInsuranceFee: Int = 0,
+        var longTermCareInsuranceFee: Int = 0,
         // 年金保険料
-        @ColumnInfo(name = "pension_fee") var pensionFee: Int = 0,
+        var pensionFee: Int = 0,
         // 雇用保険料
-        @ColumnInfo(name = "employment_insurance_fee") var employmentInsuranceFee: Int = 0,
+        var employmentInsuranceFee: Int = 0,
         // 所得税
-        @ColumnInfo(name = "income_tax") var incomeTax: Int = 0,
+        var incomeTax: Int = 0,
         // その他
         var otherDeduction: Int = 0,
         // 完了フラグ
-        @ColumnInfo(name = "is_complete") var isComplete: Boolean = false
+        var isComplete: Boolean = false
 ) : Serializable
