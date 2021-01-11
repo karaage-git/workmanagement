@@ -167,7 +167,15 @@
     <string name="edittext_hint_deduction_other">例：10000</string>
 
     <!--  データ分析  -->
+    <!--  内訳表示用のインデント（Unicodeで半角スペース4文字）  -->
+    <string name="annual_analyze_row_indent">\u0020\u0020\u0020\u0020</string>
     <string name="layout_item_display_annual_data_button">詳細を表示</string>
+    <string name="annual_analyze_row_unit_day">日</string>
+    <string name="annual_analyze_row_unit_time">時間</string>
+    <string name="annual_analyze_row_unit_money">円</string>
     <string name="annual_analyze_row_working_day">合計勤務日数</string>
+    <string name="annual_analyze_row_working_time">合計労働時間</string>
+    <string name="annual_analyze_row_income">合計収入</string>
+    <string name="annual_analyze_row_base_income">合計基本給</string>
 
 </resources>

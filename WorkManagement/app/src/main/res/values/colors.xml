@@ -13,4 +13,6 @@
     <color name="income_basic">#FFEFD5</color>
     <color name="deduction_basic">#E6E6FA</color>
     <color name="annual_analyze">#9932CC</color>
+    <color name="annual_analyze_row_0">#CC99FF</color>
+    <color name="annual_analyze_row_1">#CCCCFF</color>
 </resources>
