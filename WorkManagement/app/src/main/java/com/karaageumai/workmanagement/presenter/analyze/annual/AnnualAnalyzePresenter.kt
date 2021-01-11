@@ -43,11 +43,11 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
     private fun getSumWorkingDayDataRow(aYear: Int): AnnualDataRow {
         val data = getAnnualData(aYear)
         val salaryInfoList = data.salaryInfoList
-        var value = 0.0
+        var value = 0
         for(salary in salaryInfoList) {
             value += salary.workingDay
         }
-        return AnnualDataRow(R.string.annual_analyze_row_working_day, value.toString(), R.string.annual_analyze_row_unit_day, false)
+        return AnnualDataRow(R.string.annual_analyze_row_working_day, (value / 10.0).toString(), R.string.annual_analyze_row_unit_day, false)
     }
 
     /**
@@ -56,14 +56,14 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
     private fun getSumWorkingTimeDataRow(aYear: Int): AnnualDataRow {
         val data = getAnnualData(aYear)
         val salaryInfoList = data.salaryInfoList
-        var value = 0.0
+        var value = 0
         for(salary in salaryInfoList) {
             // 通常の労働時間を加算
             value += salary.workingTime
             // 残業時間を加算
             value += salary.overtime
         }
-        return AnnualDataRow(R.string.annual_analyze_row_working_time, value.toString(), R.string.annual_analyze_row_unit_time, false)
+        return AnnualDataRow(R.string.annual_analyze_row_working_time, (value / 10.0).toString(), R.string.annual_analyze_row_unit_time, false)
     }
 
     /**

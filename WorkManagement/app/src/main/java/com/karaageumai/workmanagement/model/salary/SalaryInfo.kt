@@ -13,14 +13,14 @@ data class SalaryInfo(
         val year: Int,
         // ターゲットとなる月
         val month: Int,
-        // 勤務日数（半休を考慮）
-        @ColumnInfo(name = "working_day") var workingDay: Double = 0.0,
-        // 勤務時間（1時間未満を考慮）
-        @ColumnInfo(name = "working_time") var workingTime: Double = 0.0,
-        // 残業時間（1時間未満を考慮）
-        var overtime: Double = 0.0,
-        // 有給休暇日数
-        @ColumnInfo(name = "paid_holidays") var paidHolidays: Double = 0.0,
+        // 勤務日数（半休を考慮）（丸め誤差対策として10倍の値を保存）
+        @ColumnInfo(name = "working_day") var workingDay: Int = 0,
+        // 勤務時間（1時間未満を考慮）（丸め誤差対策として10倍の値を保存）
+        @ColumnInfo(name = "working_time") var workingTime: Int = 0,
+        // 残業時間（1時間未満を考慮）（丸め誤差対策として10倍の値を保存）
+        var overtime: Int = 0,
+        // 有給休暇日数（丸め誤差対策として10倍の値を保存）
+        @ColumnInfo(name = "paid_holidays") var paidHolidays: Int = 0,
         // 給料
         var baseIncome: Int = 0,
         // 残業手当

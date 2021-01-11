@@ -2,6 +2,7 @@ package com.karaageumai.workmanagement.presenter.input.salary
 
 import android.app.AlertDialog
 import android.content.Context
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
@@ -63,7 +64,7 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     }
 
     override fun getSumWorkTime(): Double {
-        return mSalaryInfo.workingTime + mSalaryInfo.overtime
+        return (mSalaryInfo.workingTime + mSalaryInfo.overtime) / 10.0
     }
 
     override fun getSumIncome(): Int {
@@ -85,32 +86,33 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     }
 
     override fun updateItem(aParcel: InputInfoParcel) {
+        Log.i(mSalaryInfo.toString())
         var isSuccess = true
         when(aParcel.mTag){
             InputViewTag.WorkingDayInputViewData -> {
                 mSalaryInfo.workingDay = try {
-                    aParcel.mStrValue.toDouble()
+                    (aParcel.mStrValue.toDouble() * 10).toInt()
                 } catch (e: NumberFormatException) {
                     isSuccess = false
-                    0.0
+                    0
                 }
             }
 
             InputViewTag.WorkingTimeInputViewData -> {
                 mSalaryInfo.workingTime = try {
-                    aParcel.mStrValue.toDouble()
+                    (aParcel.mStrValue.toDouble() * 10).toInt()
                 } catch (e: NumberFormatException) {
                     isSuccess = false
-                    0.0
+                    0
                 }
             }
 
             InputViewTag.OverTimeInputViewData -> {
                 mSalaryInfo.overtime = try {
-                    aParcel.mStrValue.toDouble()
+                    (aParcel.mStrValue.toDouble() * 10).toInt()
                 } catch (e: NumberFormatException) {
                     isSuccess = false
-                    0.0
+                    0
                 }
             }
 
@@ -204,6 +206,7 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
                 }
             }
         }
+        Log.i(mSalaryInfo.toString())
         mActivity.onInputItem(isSuccess)
     }
 
