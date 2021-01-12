@@ -180,8 +180,9 @@
     <string name="annual_analyze_row_income">合計収入額</string>
     <string name="annual_analyze_row_base_income">基本支給額</string>
     <string name="annual_analyze_row_overtime_income">残業手当</string>
-    <string name="annual_analyze_row_other_income">その他</string>
-    <string name="annual_analyze_row_bonus">ボーナス</string>
+    <string name="annual_analyze_row_other_income">その他(給与)</string>
+    <string name="annual_analyze_row_bonus">ボーナス支給額</string>
+    <string name="annual_analyze_row_bonus_other">その他(ボーナス)</string>
     <string name="annual_analyze_row_deduction">合計控除額</string>
     <string name="annual_analyze_row_deduction_health">健康保険料</string>
     <string name="annual_analyze_row_deduction_long_term">介護保険料</string>

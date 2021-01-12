@@ -39,6 +39,7 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
         dataRowList.add(createSumOverTimeIncomeDataRow(aYear))
         dataRowList.add(createSumOtherIncomeDataRow(aYear))
         dataRowList.add(createSumBonusDataRow(aYear))
+        dataRowList.add(createSumBonusOtherDataRow(aYear))
         dataRowList.add(createSumDeductionDataRow(aYear))
         dataRowList.add(createSumHealthInsuranceFeeDataRow(aYear))
         dataRowList.add(createSumLongTermCareInsuranceFeeDataRow(aYear))
@@ -134,6 +135,16 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
     private fun createSumBonusDataRow(aYear: Int): AnnualDataRow {
         return AnnualDataRow(R.string.annual_analyze_row_bonus,
                 getSumBonus(aYear).toString(),
+                R.string.annual_analyze_row_unit_money,
+                true)
+    }
+
+    /**
+     * ボーナスのその他合計を表示するためのデータを作成する
+     */
+    private fun createSumBonusOtherDataRow(aYear: Int): AnnualDataRow {
+        return AnnualDataRow(R.string.annual_analyze_row_bonus_other,
+                getSumBonusOther(aYear).toString(),
                 R.string.annual_analyze_row_unit_money,
                 true)
     }
@@ -348,7 +359,7 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
         val salaryInfoList = data.salaryInfoList
         var value = 0
         for(salaryInfo in salaryInfoList){
-            // 残業代
+            // その他
             value += salaryInfo.otherIncome
         }
         return value
@@ -364,6 +375,15 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
         for(bonusInfo in bonusInfoList) {
             // 基本支給
             value += bonusInfo.baseIncome
+        }
+        return value
+    }
+
+    private fun getSumBonusOther(aYear: Int): Int {
+        val data = getAnnualData(aYear)
+        val bonusInfoList = data.bonusInfoList
+        var value = 0
+        for(bonusInfo in bonusInfoList) {
             // その他
             value += bonusInfo.otherIncome
         }
