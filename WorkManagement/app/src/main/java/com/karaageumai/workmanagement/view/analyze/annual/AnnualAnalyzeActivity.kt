@@ -23,14 +23,32 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
     private lateinit var mPresenter: IAnnualAnalyzePresenter
     // 現在選択されている年（初期値は実行日の年）
     private var mYear: Int = Calendar.getInstance().get(Calendar.YEAR)
+    // 年or年度を選択するトグル
+    private lateinit var mToggle: ToggleButton
+    // 年or年度を示すフラグ
+    private var mIsWorkYearMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_analyze)
 
+        // Presenter初期化
+        mPresenter = AnnualAnalyzePresenter(this)
+
         // レイアウト読み込み
         mSpinner = findViewById(R.id.sp_year)
         mTableLayout = findViewById(R.id.table_annual_data)
+        mToggle = findViewById(R.id.toggle_year)
+
+        // トグルの初期化、リスナーセット
+        mToggle.isChecked = mIsWorkYearMode
+        mToggle.setOnCheckedChangeListener { _, isChecked ->
+            Log.i("toggle : $isChecked")
+            mIsWorkYearMode = isChecked
+            // モードを更新して、データをリロード
+            mPresenter.changeMode(mIsWorkYearMode)
+            mPresenter.loadData(mYear)
+        }
 
         // スピナー用のリストを作る
         val yearList: MutableList<Int> = mutableListOf()
@@ -58,7 +76,6 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
                 // 何もしない
             }
         }
-        mPresenter = AnnualAnalyzePresenter(this)
         mPresenter.loadData(mYear)
     }
 
@@ -66,7 +83,12 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
         return mYear
     }
 
+    override fun getIsWorkYearMode(): Boolean {
+        return mIsWorkYearMode
+    }
+
     override fun onLoadedData(aLoadDataList: List<AnnualDataRow>) {
+        Log.i("onLoadedData()")
         // テーブル初期化
         mTableLayout.removeAllViews()
 

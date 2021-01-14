@@ -23,7 +23,7 @@ object ModelFacade {
      */
     fun isExistSalaryInfo(aYear: Int, aMonth: Int): Boolean {
         val salaryInfoList = runBlocking {
-            mSalaryInfoDao.getSalaryWithYearMonth(aYear, aMonth)
+            mSalaryInfoDao.selectSalaryWithYearMonth(aYear, aMonth)
         }
         return salaryInfoList.isNotEmpty()
     }
@@ -50,7 +50,7 @@ object ModelFacade {
     fun selectSalaryInfo(aYear: Int, aMonth: Int): SalaryInfo? {
         // 基本的にはゼロ件か1件しか取得できない想定
         val salaryInfoList = runBlocking {
-            mSalaryInfoDao.getSalaryWithYearMonth(aYear, aMonth)
+            mSalaryInfoDao.selectSalaryWithYearMonth(aYear, aMonth)
         }
         
         // ゼロ件だった場合はnullを返す
@@ -69,7 +69,27 @@ object ModelFacade {
      */
     fun selectSalaryInfo(aYear: Int): List<SalaryInfo> {
         return runBlocking {
-            mSalaryInfoDao.getSalaryWithYear(aYear)
+            mSalaryInfoDao.selectSalaryWithYear(aYear)
+        }
+    }
+
+    /**
+     * 期間を指定してSalaryInfoを取得する
+     *
+     * @param aStartYear 開始年
+     * @param aStartMonth 開始月
+     * @param aEndYear 終了年
+     * @param aEndMonth 終了月
+     * @return SalaryInfoのリスト
+     */
+    fun selectSalaryInfoForWorkYear(
+            aStartYear: Int,
+            aStartMonth: Int,
+            aEndYear: Int,
+            aEndMonth: Int
+    ): List<SalaryInfo> {
+        return runBlocking {
+            mSalaryInfoDao.selectSalaryWithTerm(aStartYear, aStartMonth, aEndYear, aEndMonth)
         }
     }
 
@@ -121,7 +141,7 @@ object ModelFacade {
      */
     fun isExistBonusInfo(aYear: Int, aMonth: Int): Boolean {
         val bonusInfoList = runBlocking {
-            mBonusInfoDao.getBonusWithYearMonth(aYear, aMonth)
+            mBonusInfoDao.selectBonusWithYearMonth(aYear, aMonth)
         }
 
         return bonusInfoList.isNotEmpty()
@@ -135,6 +155,7 @@ object ModelFacade {
      */
     fun insertBonusInfo(aBonusInfo: BonusInfo) {
         runBlocking {
+            // Todo 一応年月でデータの存在チェックしておいたほうがよい
             mBonusInfoDao.insert(aBonusInfo)
         }
         return
@@ -150,7 +171,7 @@ object ModelFacade {
     fun selectBonusInfo(aYear: Int, aMonth: Int): BonusInfo? {
         // 基本的にはゼロ件か1件しか取得できない想定
         val bonusInfoList = runBlocking {
-            mBonusInfoDao.getBonusWithYearMonth(aYear, aMonth)
+            mBonusInfoDao.selectBonusWithYearMonth(aYear, aMonth)
         }
 
         // ゼロ件だった場合はnullを返す
@@ -170,7 +191,27 @@ object ModelFacade {
      */
     fun selectBonusInfo(aYear: Int): List<BonusInfo> {
         return runBlocking {
-            mBonusInfoDao.getBonusWithYear(aYear)
+            mBonusInfoDao.selectBonusWithYear(aYear)
+        }
+    }
+
+    /**
+     * 期間を指定してBonusInfoを取得する
+     *
+     * @param aStartYear 開始年
+     * @param aStartMonth 開始月
+     * @param aEndYear 終了年
+     * @param aEndMonth 終了月
+     * @return BonusInfoのリスト
+     */
+    fun selectBonusInfoForWorkYear(
+            aStartYear: Int,
+            aStartMonth: Int,
+            aEndYear: Int,
+            aEndMonth: Int
+    ): List<BonusInfo> {
+        return runBlocking {
+            mBonusInfoDao.selectBonusWithTerm(aStartYear, aStartMonth, aEndYear, aEndMonth)
         }
     }
 

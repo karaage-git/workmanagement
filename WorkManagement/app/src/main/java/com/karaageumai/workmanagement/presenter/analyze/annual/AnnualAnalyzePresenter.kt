@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.presenter.analyze.annual
 
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
@@ -7,12 +8,26 @@ import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.analyze.annual.IAnnualAnalyze
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
 
+// 年度の開始月
+const val WORK_YEAR_START_MONTH = 4
+// 年度の終了月
+const val WORK_YEAR_END_MONTH = 3
+
 class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePresenter {
-    private val mAnnualDataMap: MutableMap<Int, AnnualData> = mutableMapOf()
+    // 年モード用のデータ管理マップ
+    private val mAnnualDataMapForYear: MutableMap<Int, AnnualData> = mutableMapOf()
+    // 年度モード用のデータ管理マップ
+    private val mAnnualDataMapForWorkYear:  MutableMap<Int, AnnualData> = mutableMapOf()
+    // 年or年度を示すフラグ
+    private var mIsWorkYearMode = mActivity.getIsWorkYearMode()
 
     init {
         // 初期表示用のデータを取得
-        mAnnualDataMap[mActivity.getYear()] = getAnnualData(mActivity.getYear())
+        if(mIsWorkYearMode) {
+            mAnnualDataMapForWorkYear[mActivity.getYear()] = getAnnualData(mActivity.getYear())
+        } else {
+            mAnnualDataMapForYear[mActivity.getYear()] = getAnnualData(mActivity.getYear())
+        }
     }
 
     /**
@@ -20,7 +35,44 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
      * データがロードされていなければ、DBから取得する
      */
     private fun getAnnualData(aYear: Int): AnnualData {
-        return mAnnualDataMap[aYear] ?: AnnualData(ModelFacade.selectSalaryInfo(aYear), ModelFacade.selectBonusInfo(aYear))
+        Log.i("mIsWorkYearMode : $mIsWorkYearMode")
+        if(mIsWorkYearMode) {
+            return mAnnualDataMapForWorkYear[aYear].let {
+                if(it != null){
+                    it
+                } else {
+                    val newData = AnnualData(
+                            ModelFacade.selectSalaryInfoForWorkYear(
+                                    aYear,
+                                    WORK_YEAR_START_MONTH,
+                                    aYear + 1,
+                                    WORK_YEAR_END_MONTH
+                            ),
+                            ModelFacade.selectBonusInfoForWorkYear(
+                                    aYear,
+                                    WORK_YEAR_START_MONTH,
+                                    aYear + 1,
+                                    WORK_YEAR_END_MONTH
+                            )
+                    )
+                    mAnnualDataMapForWorkYear[aYear] = newData
+                    newData
+                }
+            }
+        } else {
+            return mAnnualDataMapForYear[aYear].let {
+                if(it != null){
+                    it
+                } else {
+                    val newData = AnnualData(
+                            ModelFacade.selectSalaryInfo(aYear),
+                            ModelFacade.selectBonusInfo(aYear)
+                    )
+                    mAnnualDataMapForYear[aYear] = newData
+                    newData
+                }
+            }
+        }
     }
 
     data class AnnualData(
@@ -50,6 +102,10 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
         dataRowList.add(createSumOtherDeductionDataRow(aYear))
         dataRowList.add(createSumAfterTaxIncomeDataRow(aYear))
         mActivity.onLoadedData(dataRowList)
+    }
+
+    override fun changeMode(aIsWorkYearMode: Boolean) {
+        mIsWorkYearMode = aIsWorkYearMode
     }
 
     /**
