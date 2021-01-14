@@ -33,9 +33,9 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
         }
 
         mInputInfoParcelList = listOf(
-                InputInfoParcel(InputViewTag.WorkingDayInputViewData, mSalaryInfo.workingDay.toString()),
-                InputInfoParcel(InputViewTag.WorkingTimeInputViewData, mSalaryInfo.workingTime.toString()),
-                InputInfoParcel(InputViewTag.OverTimeInputViewData, mSalaryInfo.overtime.toString()),
+                InputInfoParcel(InputViewTag.WorkingDayInputViewData, (mSalaryInfo.workingDay / 10.0).toString()),
+                InputInfoParcel(InputViewTag.WorkingTimeInputViewData, (mSalaryInfo.workingTime / 10.0).toString()),
+                InputInfoParcel(InputViewTag.OverTimeInputViewData, (mSalaryInfo.overtime / 10.0).toString()),
                 InputInfoParcel(InputViewTag.BaseIncomeInputViewData, mSalaryInfo.baseIncome.toString()),
                 InputInfoParcel(InputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeIncome.toString()),
                 InputInfoParcel(InputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString()),

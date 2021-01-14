@@ -33,7 +33,7 @@ class BaseInputFragment : Fragment() {
     private var mBackgroundResId = 0
     // 入力ダイアログ
     private var mAlertDialog: AlertDialog? = null
-    //
+    // Presenter
     private var mInputPresenter: IBaseInputPresenter? = MainApplication.getPresenter()
 
     companion object {
