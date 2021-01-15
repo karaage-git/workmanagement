@@ -17,6 +17,7 @@ import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewResData
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 private const val KEY_SALARY_INFO_PARCEL_ARRAY = "KEY_SALARY_INFO_PARCEL_ARRAY"
 private const val KEY_BACKGROUND_LAYOUT_RES_ID = "KEY_BACKGROUND_LAYOUT_RES_ID"
@@ -115,9 +116,9 @@ class BaseInputFragment : Fragment() {
                             mAlertDialog = alertDialog
                                 .setView(it)
                                 .setPositiveButton(R.string.ok) { dialog, _ ->
-                                    // Todo 末尾が「.」の場合は、ここで除去する
                                     editText.removeTextChangedListener(textWatcher)
-                                    val strValue = editText.text.toString()
+                                    val userInput = editText.text.toString()
+                                    val strValue = NumberFormatUtil.trimLastDot(userInput)
                                     Log.i(strValue)
 
                                     dialog.dismiss()

@@ -95,4 +95,17 @@ object NumberFormatUtil {
             else -> false
         }
     }
+
+    /**
+     * 文字列の末尾が小数点だった場合に取り除くメソッド
+     *
+     * @param aSting 編集対象の文字列（数値の想定）
+     * @return 末尾の小数点が取り除かれた文字列
+     */
+    fun trimLastDot(aSting: String): String {
+        if (aSting.last() == '.') {
+            return aSting.replace(".", "")
+        }
+        return aSting
+    }
 }
