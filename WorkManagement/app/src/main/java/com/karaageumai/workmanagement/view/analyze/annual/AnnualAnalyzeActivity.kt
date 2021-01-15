@@ -2,8 +2,11 @@ package com.karaageumai.workmanagement.view.analyze.annual
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.*
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MAX_YEAR
@@ -31,6 +34,11 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_analyze)
+
+        // ツールバー
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.title = getString(R.string.toolbar_title_annual_analyze)
+        setSupportActionBar(toolbar)
 
         // Presenter初期化
         mPresenter = AnnualAnalyzePresenter(this)
@@ -125,5 +133,13 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
             // 親Viewに追加
             mTableLayout.addView(tableRow)
         }
+    }
+
+    // ツールバーのレイアウト反映
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        Log.i("onCreateOptionsMenu()")
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_empty, menu)
+        return true
     }
 }

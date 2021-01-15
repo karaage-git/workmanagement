@@ -43,8 +43,6 @@
     <string name="btn_topmenu_input_salary">給与情報の登録/修正</string>
     <string name="btn_topmenu_input_bonus">ボーナス情報の登録/修正</string>
     <string name="btn_topmenu_analyze_annual_data">年間データの閲覧</string>
-    <string name="btn_topmenu_analyze_comparison">データの比較/分析</string>
-    <string name="btn_topmenu_setting">基本設定</string>
 
     <!--  登録トップメニュー  -->
     <string name="toolbar_title_resistermenu">登録トップ</string>
@@ -168,6 +166,7 @@
 
     <!--  データ分析  -->
     <!--  内訳表示用のインデント（Unicodeで半角スペース4文字）  -->
+    <string name="toolbar_title_annual_analyze">年間データの閲覧</string>
     <string name="annual_analyze_row_indent">\u0020\u0020\u0020\u0020</string>
     <string name="layout_item_display_annual_data_button">詳細を表示</string>
     <string name="annual_analyze_row_unit_day">日</string>
