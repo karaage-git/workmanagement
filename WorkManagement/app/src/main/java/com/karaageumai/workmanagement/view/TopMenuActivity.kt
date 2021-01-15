@@ -9,7 +9,7 @@ import android.widget.Button
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.view.analyze.annual.AnnualAnalyzeActivity
+import com.karaageumai.workmanagement.view.analyze.annual.top.AnnualAnalyzeActivity
 import com.karaageumai.workmanagement.view.input.common.CheckTargetYearMonthActivity
 
 const val KEY_INPUT_MODE = "KEY_INPUT_MODE"

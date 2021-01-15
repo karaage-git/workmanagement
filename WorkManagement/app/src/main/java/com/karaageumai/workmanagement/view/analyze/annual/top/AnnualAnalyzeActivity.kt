@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.analyze.annual
+package com.karaageumai.workmanagement.view.analyze.annual.top
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

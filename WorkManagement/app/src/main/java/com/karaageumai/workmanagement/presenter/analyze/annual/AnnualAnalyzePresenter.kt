@@ -5,7 +5,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
-import com.karaageumai.workmanagement.view.analyze.annual.IAnnualAnalyze
+import com.karaageumai.workmanagement.view.analyze.annual.top.IAnnualAnalyze
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
 
 // 年度の開始月
