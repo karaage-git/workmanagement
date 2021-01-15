@@ -157,14 +157,14 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
 
     override fun saveData(aContext: Context) {
         if(checkUserInputFinished()) {
-            saveData()
+            insertOrUpdateData(aContext)
         } else {
             AlertDialog.Builder(aContext)
                     .setTitle(R.string.dialog_title)
                     .setMessage(R.string.dialog_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->
                         dialog.dismiss()
-                        saveData()
+                        insertOrUpdateData(aContext)
                     }
                     .setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
@@ -194,14 +194,24 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
         return MainApplication.getContext().getString(R.string.bonus_description, mActivity.getYear(), mActivity.getMonth())
     }
 
-    private fun saveData() {
-        mBonusInfo.isComplete = true
-        if(mIsNewEntry) {
-            ModelFacade.insertBonusInfo(mBonusInfo)
-            mActivity.onInsertData()
-        } else {
-            ModelFacade.updateBonusInfo(mBonusInfo)
-            mActivity.onUpdateData()
-        }
+    private fun insertOrUpdateData(aContext: Context) {
+        AlertDialog.Builder(aContext)
+            .setTitle(R.string.dialog_title)
+            .setMessage(aContext.getString(R.string.dialog_message_after_tax, (getSumIncome() - getSumDeduction()).toString()))
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+                mBonusInfo.isComplete = true
+                if(mIsNewEntry) {
+                    ModelFacade.insertBonusInfo(mBonusInfo)
+                    mActivity.onInsertData()
+                } else {
+                    ModelFacade.updateBonusInfo(mBonusInfo)
+                    mActivity.onUpdateData()
+                }
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }

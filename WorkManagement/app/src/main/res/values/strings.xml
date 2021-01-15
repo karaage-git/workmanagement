@@ -73,6 +73,11 @@
         未入力の項目があります。\n
         未入力項目は値が0で登録されますが、よろしいですか？
     </string>
+    <string name="dialog_message_after_tax">
+        手取り金額（収入総額から控除総額を引いた金額）は\n
+        %1$s円\n
+        です。
+    </string>
 
     <string name="dialog_title_delete">削除しますか？</string>
     <string name="dialog_message_delete">

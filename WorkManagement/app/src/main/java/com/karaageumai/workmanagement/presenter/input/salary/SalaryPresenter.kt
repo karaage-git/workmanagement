@@ -212,14 +212,14 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
 
     override fun saveData(aContext: Context) {
         if(checkUserInputFinished()){
-            saveData()
+            insertOrUpdateData(aContext)
         } else {
             AlertDialog.Builder(aContext)
                     .setTitle(R.string.dialog_title)
                     .setMessage(R.string.dialog_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->
                         dialog.dismiss()
-                        saveData()
+                        insertOrUpdateData(aContext)
                     }
                     .setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
@@ -249,14 +249,24 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
         return MainApplication.getContext().getString(R.string.salary_description, mActivity.getYear(), mActivity.getMonth())
     }
 
-    private fun saveData() {
-        mSalaryInfo.isComplete = true
-        if(mIsNewEntry) {
-            ModelFacade.insertSalaryInfo(mSalaryInfo)
-            mActivity.onInsertData()
-        } else {
-            ModelFacade.updateSalaryInfo(mSalaryInfo)
-            mActivity.onUpdateData()
-        }
+    private fun insertOrUpdateData(aContext: Context) {
+        AlertDialog.Builder(aContext)
+            .setTitle(R.string.dialog_title)
+            .setMessage(aContext.getString(R.string.dialog_message_after_tax, (getSumIncome() - getSumDeduction()).toString()))
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+                mSalaryInfo.isComplete = true
+                if(mIsNewEntry) {
+                    ModelFacade.insertSalaryInfo(mSalaryInfo)
+                    mActivity.onInsertData()
+                } else {
+                    ModelFacade.updateSalaryInfo(mSalaryInfo)
+                    mActivity.onUpdateData()
+                }
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 }
