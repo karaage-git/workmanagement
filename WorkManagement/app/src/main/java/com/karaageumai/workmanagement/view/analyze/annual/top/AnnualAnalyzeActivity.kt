@@ -15,6 +15,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.analyze.annual.AnnualAnalyzePresenter
 import com.karaageumai.workmanagement.presenter.analyze.annual.IAnnualAnalyzePresenter
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
+import com.karaageumai.workmanagement.util.NumberFormatUtil
 import java.util.*
 
 class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
@@ -117,7 +118,7 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
 
             // 値
             val value: TextView = tableRow.findViewById(R.id.tv_row_value)
-            value.text = data.dataValue
+            value.text = NumberFormatUtil.separateThousand(data.dataValue)
             // 単位
             val unit: TextView = tableRow.findViewById(R.id.tv_row_unit)
             unit.setText(data.unitResId)
