@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewResData
+import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class InputInfoListAdapter(
     private val mContext: Context,
@@ -48,7 +49,7 @@ class InputInfoListAdapter(
         val parcel: InputInfoParcel = mInputInfoParcelList[position]
         InputViewResData(parcel.mTag).let {
             viewHolder.titleText.setText(it.mTitleResId)
-            viewHolder.valueText.text = parcel.mStrValue
+            viewHolder.valueText.text = NumberFormatUtil.separateThousand(parcel.mStrValue)
             viewHolder.unitText.setText(it.mUnitResId)
         }
 

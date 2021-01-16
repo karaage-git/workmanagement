@@ -1,6 +1,7 @@
 package com.karaageumai.workmanagement.util
 
-import java.lang.NumberFormatException
+import android.icu.text.NumberFormat
+import kotlin.NumberFormatException
 
 object NumberFormatUtil {
     /**
@@ -107,5 +108,28 @@ object NumberFormatUtil {
             return aSting.replace(".", "")
         }
         return aSting
+    }
+
+    /**
+     * 文字列を金額用に桁区切りする
+     *
+     * @param aSting 編集対象の文字列（数値を想定）
+     * @return 桁区切りされた文字列（引数の文字列を数値に変換できない場合は引数をそのまま返す）
+     */
+    fun separateThousand(aSting: String): String {
+        val formatter = NumberFormat.getInstance()
+        formatter.isGroupingUsed = true
+        return try {
+            // Intに変換できる場合
+            formatter.format(aSting.toInt())
+        } catch (e: NumberFormatException) {
+            try {
+                // Doubleに変換できる場合
+                formatter.format(aSting.toDouble())
+            } catch (e: NumberFormatException) {
+                // Int、Doubleに変換できない場合は引数をそのまま返す
+                aSting
+            }
+        }
     }
 }

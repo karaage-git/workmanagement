@@ -10,6 +10,7 @@ import com.karaageumai.workmanagement.view.input.common.KEY_MONTH
 import com.karaageumai.workmanagement.view.input.common.KEY_YEAR
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewTag
+import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class SalaryActivity : BaseInputActivity() {
     // 給与情報のPresenter
@@ -82,13 +83,13 @@ class SalaryActivity : BaseInputActivity() {
     override fun updateSumView() {
         val map = super.getSumViewMap()
         map[SumViewTag.WorkStatusSumViewData]?.let {
-            it.text = mSalaryInfoPresenter.getSumWorkTime().toString()
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumWorkTime().toString())
         }
         map[SumViewTag.IncomeSumViewData]?.let {
-            it.text = mSalaryInfoPresenter.getSumIncome().toString()
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumIncome().toString())
         }
         map[SumViewTag.DeductionSumViewData]?.let {
-            it.text = mSalaryInfoPresenter.getSumDeduction().toString()
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumDeduction().toString())
         }
     }
 

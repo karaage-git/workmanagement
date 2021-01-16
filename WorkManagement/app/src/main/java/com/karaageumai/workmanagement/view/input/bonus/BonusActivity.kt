@@ -10,6 +10,7 @@ import com.karaageumai.workmanagement.view.input.common.KEY_MONTH
 import com.karaageumai.workmanagement.view.input.common.KEY_YEAR
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewTag
+import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class BonusActivity : BaseInputActivity() {
     // ボーナス情報のPresenter
@@ -75,10 +76,10 @@ class BonusActivity : BaseInputActivity() {
     override fun updateSumView() {
         val map = super.getSumViewMap()
         map[SumViewTag.IncomeSumViewData]?.let {
-            it.text = mBonusInfoPresenter.getSumIncome().toString()
+            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter.getSumIncome().toString())
         }
         map[SumViewTag.DeductionSumViewData]?.let {
-            it.text = mBonusInfoPresenter.getSumDeduction().toString()
+            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter.getSumDeduction().toString())
         }
     }
 
