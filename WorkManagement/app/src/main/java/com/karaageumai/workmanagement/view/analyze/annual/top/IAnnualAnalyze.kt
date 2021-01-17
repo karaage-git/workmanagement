@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.analyze.annual.top
 
+import androidx.annotation.UiThread
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
 
 interface IAnnualAnalyze {
@@ -19,5 +20,6 @@ interface IAnnualAnalyze {
      *
      * @param aLoadDataList ロードできたデータのリスト
      */
+    @UiThread
     fun onLoadedData(aLoadDataList: List<AnnualDataRow>)
 }
