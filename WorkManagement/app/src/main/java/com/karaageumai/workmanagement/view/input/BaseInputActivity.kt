@@ -130,6 +130,8 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
     override fun onDestroy() {
         // 共有Presenterを初期化
         MainApplication.setPresenter(null)
+        // Presenterの参照をクリア
+        removePresenter()
         super.onDestroy()
     }
 
@@ -323,6 +325,11 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
      * 入力対象データの説明文言を取得する
      */
     abstract fun getInputDataDescription(): String
+
+    /**
+     * Presenterの参照をクリアする
+     */
+    abstract fun removePresenter()
 
     // SalaryとBonusで共通処理
     override fun onInputItem(aIsSuccess: Boolean) {

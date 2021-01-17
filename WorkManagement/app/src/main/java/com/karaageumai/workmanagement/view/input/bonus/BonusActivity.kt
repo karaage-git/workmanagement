@@ -14,7 +14,7 @@ import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class BonusActivity : BaseInputActivity() {
     // ボーナス情報のPresenter
-    private lateinit var mBonusInfoPresenter: IBonusPresenter
+    private var mBonusInfoPresenter: IBonusPresenter? = null
     // 年
     private var mYear = 0
     // 月
@@ -52,16 +52,16 @@ class BonusActivity : BaseInputActivity() {
     }
 
     override fun getIncomeInputInfoParcelList(): List<InputInfoParcel> {
-        return mBonusInfoPresenter.getInputInfoParcelList(
+        return mBonusInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.BaseIncomeInputViewData,
                 InputViewTag.OtherIncomeInputViewData
             )
-        )
+        ) ?: listOf()
     }
 
     override fun getDeductionInputInfoParcelList(): List<InputInfoParcel> {
-        return mBonusInfoPresenter.getInputInfoParcelList(
+        return mBonusInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.HealthInsuranceInputViewData,
                 InputViewTag.LongTermCareInsuranceFeeInputViewData,
@@ -70,29 +70,33 @@ class BonusActivity : BaseInputActivity() {
                 InputViewTag.IncomeTaxInputViewData,
                 InputViewTag.OtherDeductionInputViewData
             )
-        )
+        ) ?: listOf()
     }
 
     override fun updateSumView() {
         val map = super.getSumViewMap()
         map[SumViewTag.IncomeSumViewData]?.let {
-            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter.getSumIncome().toString())
+            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter?.getSumIncome().toString())
         }
         map[SumViewTag.DeductionSumViewData]?.let {
-            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter.getSumDeduction().toString())
+            it.text = NumberFormatUtil.separateThousand(mBonusInfoPresenter?.getSumDeduction().toString())
         }
     }
 
     override fun saveData() {
-        mBonusInfoPresenter.saveData(this)
+        mBonusInfoPresenter?.saveData(this)
     }
 
     override fun deleteData() {
-        mBonusInfoPresenter.deleteData(this)
+        mBonusInfoPresenter?.deleteData(this)
     }
 
     override fun getInputDataDescription(): String {
-        return mBonusInfoPresenter.getDataDescription()
+        return mBonusInfoPresenter?.getDataDescription() ?: ""
+    }
+
+    override fun removePresenter() {
+        mBonusInfoPresenter = null
     }
 
     override fun getYear(): Int {

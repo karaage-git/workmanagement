@@ -14,7 +14,7 @@ import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class SalaryActivity : BaseInputActivity() {
     // 給与情報のPresenter
-    private lateinit var mSalaryInfoPresenter: ISalaryPresenter
+    private var mSalaryInfoPresenter: ISalaryPresenter? = null
     // 年
     private var mYear = 0
     // 月
@@ -47,27 +47,27 @@ class SalaryActivity : BaseInputActivity() {
     }
 
     override fun getWorkStatusInputInfoParcelList(): List<InputInfoParcel> {
-        return mSalaryInfoPresenter.getInputInfoParcelList(
+        return mSalaryInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.WorkingDayInputViewData,
                 InputViewTag.WorkingTimeInputViewData,
                 InputViewTag.OverTimeInputViewData
             )
-        )
+        ) ?: listOf()
     }
 
     override fun getIncomeInputInfoParcelList(): List<InputInfoParcel> {
-        return mSalaryInfoPresenter.getInputInfoParcelList(
+        return mSalaryInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.BaseIncomeInputViewData,
                 InputViewTag.OverTimeIncomeInputViewData,
                 InputViewTag.OtherIncomeInputViewData
             )
-        )
+        ) ?: listOf()
     }
 
     override fun getDeductionInputInfoParcelList(): List<InputInfoParcel> {
-        return mSalaryInfoPresenter.getInputInfoParcelList(
+        return mSalaryInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.HealthInsuranceInputViewData,
                 InputViewTag.LongTermCareInsuranceFeeInputViewData,
@@ -77,32 +77,36 @@ class SalaryActivity : BaseInputActivity() {
                 InputViewTag.ResidentTaxInputViewData,
                 InputViewTag.OtherDeductionInputViewData
             )
-        )
+        ) ?: listOf()
     }
 
     override fun updateSumView() {
         val map = super.getSumViewMap()
         map[SumViewTag.WorkStatusSumViewData]?.let {
-            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumWorkTime().toString())
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter?.getSumWorkTime().toString())
         }
         map[SumViewTag.IncomeSumViewData]?.let {
-            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumIncome().toString())
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter?.getSumIncome().toString())
         }
         map[SumViewTag.DeductionSumViewData]?.let {
-            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter.getSumDeduction().toString())
+            it.text = NumberFormatUtil.separateThousand(mSalaryInfoPresenter?.getSumDeduction().toString())
         }
     }
 
     override fun saveData() {
-        mSalaryInfoPresenter.saveData(this)
+        mSalaryInfoPresenter?.saveData(this)
     }
 
     override fun deleteData() {
-        mSalaryInfoPresenter.deleteData(this)
+        mSalaryInfoPresenter?.deleteData(this)
     }
 
     override fun getInputDataDescription(): String {
-        return mSalaryInfoPresenter.getDataDescription()
+        return mSalaryInfoPresenter?.getDataDescription() ?: ""
+    }
+
+    override fun removePresenter() {
+        mSalaryInfoPresenter = null
     }
 
     override fun getYear(): Int {

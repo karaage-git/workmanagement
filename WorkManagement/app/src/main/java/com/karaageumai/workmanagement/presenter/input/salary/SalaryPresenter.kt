@@ -10,8 +10,11 @@ import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.IBaseInputView
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import java.lang.ref.WeakReference
 
-class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
+class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
+    // Activity
+    private val mActivity: WeakReference<IBaseInputView> = WeakReference(aActivity)
     // 給与情報
     private val mSalaryInfo: SalaryInfo
     // 新規or更新を判定するフラグ
@@ -21,46 +24,101 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     // 削除時に使用する変更前データ
     private val mBackup: SalaryInfo
 
+    companion object {
+        // エラー時に使用するダミー情報
+        private val dummyInfo = SalaryInfo(0,0,0)
+    }
+
     init {
-        mSalaryInfo = ModelFacade.selectSalaryInfo(mActivity.getYear(), mActivity.getMonth()).let{
-            if(it != null) {
-                mIsNewEntry = false
-                it
+        val activity = mActivity.get()
+        if (activity != null) {
+            mSalaryInfo =
+                ModelFacade.selectSalaryInfo(activity.getYear(), activity.getMonth()).let {
+                    if (it != null) {
+                        mIsNewEntry = false
+                        it
+                    } else {
+                        mIsNewEntry = true
+                        SalaryInfo(0, activity.getYear(), activity.getMonth())
+                    }
+                }
+
+            mInputInfoParcelList = listOf(
+                InputInfoParcel(
+                    InputViewTag.WorkingDayInputViewData,
+                    (mSalaryInfo.workingDay / 10.0).toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.WorkingTimeInputViewData,
+                    (mSalaryInfo.workingTime / 10.0).toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OverTimeInputViewData,
+                    (mSalaryInfo.overtime / 10.0).toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.BaseIncomeInputViewData,
+                    mSalaryInfo.baseIncome.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OverTimeIncomeInputViewData,
+                    mSalaryInfo.overtimeIncome.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OtherIncomeInputViewData,
+                    mSalaryInfo.otherIncome.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.HealthInsuranceInputViewData,
+                    mSalaryInfo.healthInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.LongTermCareInsuranceFeeInputViewData,
+                    mSalaryInfo.longTermCareInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.PensionInsuranceInputViewData,
+                    mSalaryInfo.pensionFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.EmploymentInsuranceInputViewData,
+                    mSalaryInfo.employmentInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.IncomeTaxInputViewData,
+                    mSalaryInfo.incomeTax.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.ResidentTaxInputViewData,
+                    mSalaryInfo.residentTax.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OtherDeductionInputViewData,
+                    mSalaryInfo.otherDeduction.toString()
+                )
+            )
+
+            // 更新時にはすべて入力済みとして扱う対応
+            if (mIsNewEntry) {
+                for (parcel in mInputInfoParcelList) {
+                    parcel.mIsComplete = false
+                }
             } else {
-                mIsNewEntry = true
-                SalaryInfo(0, mActivity.getYear(), mActivity.getMonth())
+                for (parcel in mInputInfoParcelList) {
+                    parcel.mIsComplete = true
+                }
             }
-        }
 
-        mInputInfoParcelList = listOf(
-                InputInfoParcel(InputViewTag.WorkingDayInputViewData, (mSalaryInfo.workingDay / 10.0).toString()),
-                InputInfoParcel(InputViewTag.WorkingTimeInputViewData, (mSalaryInfo.workingTime / 10.0).toString()),
-                InputInfoParcel(InputViewTag.OverTimeInputViewData, (mSalaryInfo.overtime / 10.0).toString()),
-                InputInfoParcel(InputViewTag.BaseIncomeInputViewData, mSalaryInfo.baseIncome.toString()),
-                InputInfoParcel(InputViewTag.OverTimeIncomeInputViewData, mSalaryInfo.overtimeIncome.toString()),
-                InputInfoParcel(InputViewTag.OtherIncomeInputViewData, mSalaryInfo.otherIncome.toString()),
-                InputInfoParcel(InputViewTag.HealthInsuranceInputViewData, mSalaryInfo.healthInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.LongTermCareInsuranceFeeInputViewData, mSalaryInfo.longTermCareInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.PensionInsuranceInputViewData, mSalaryInfo.pensionFee.toString()),
-                InputInfoParcel(InputViewTag.EmploymentInsuranceInputViewData, mSalaryInfo.employmentInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.IncomeTaxInputViewData, mSalaryInfo.incomeTax.toString()),
-                InputInfoParcel(InputViewTag.ResidentTaxInputViewData, mSalaryInfo.residentTax.toString()),
-                InputInfoParcel(InputViewTag.OtherDeductionInputViewData, mSalaryInfo.otherDeduction.toString())
-        )
+            // バックアップデータ
+            mBackup = mSalaryInfo
 
-        // 更新時にはすべて入力済みとして扱う対応
-        if(mIsNewEntry){
-            for (parcel in mInputInfoParcelList) {
-                parcel.mIsComplete = false
-            }
         } else {
-            for (parcel in mInputInfoParcelList) {
-                parcel.mIsComplete = true
-            }
+            // Activityが取得できない場合はエラーとみなし、ダミーデータをセットする
+            mSalaryInfo = dummyInfo
+            mIsNewEntry = false
+            mInputInfoParcelList = listOf()
+            mBackup = dummyInfo
         }
-
-        mBackup = mSalaryInfo
-
     }
 
     override fun getSumWorkTime(): Double {
@@ -86,6 +144,11 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     }
 
     override fun updateItem(aParcel: InputInfoParcel) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         Log.i(mSalaryInfo.toString())
         var isSuccess = true
         when(aParcel.mTag){
@@ -207,10 +270,17 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
             }
         }
         Log.i(mSalaryInfo.toString())
-        mActivity.onInputItem(isSuccess)
+        mActivity.get()?.onInputItem(isSuccess)
     }
 
+    // Todo:contextはmActivityから取得できるのでは？
+
     override fun saveData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         if(checkUserInputFinished()){
             insertOrUpdateData(aContext)
         } else {
@@ -229,6 +299,11 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     }
 
     override fun deleteData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         AlertDialog.Builder(aContext)
                 .setTitle(R.string.dialog_title_delete)
                 .setMessage(aContext.getString(R.string.dialog_message_delete, getDataDescription()))
@@ -237,7 +312,7 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
                         ModelFacade.deleteSalaryInfo(mBackup)
                     }
                     dialog.dismiss()
-                    mActivity.onDeleteData()
+                    mActivity.get()?.onDeleteData()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
@@ -246,10 +321,19 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
     }
 
     override fun getDataDescription(): String {
-        return MainApplication.getContext().getString(R.string.salary_description, mActivity.getYear(), mActivity.getMonth())
+        return if (mActivity.get() == null) {
+            ""
+        } else {
+            MainApplication.getContext().getString(R.string.salary_description, mActivity.get()?.getYear(), mActivity.get()?.getMonth())
+        }
     }
 
     private fun insertOrUpdateData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         AlertDialog.Builder(aContext)
             .setTitle(R.string.dialog_title)
             .setMessage(aContext.getString(R.string.dialog_message_after_tax, (getSumIncome() - getSumDeduction()).toString()))
@@ -258,10 +342,10 @@ class SalaryPresenter(var mActivity: IBaseInputView) : ISalaryPresenter {
                 mSalaryInfo.isComplete = true
                 if(mIsNewEntry) {
                     ModelFacade.insertSalaryInfo(mSalaryInfo)
-                    mActivity.onInsertData()
+                    mActivity.get()?.onInsertData()
                 } else {
                     ModelFacade.updateSalaryInfo(mSalaryInfo)
-                    mActivity.onUpdateData()
+                    mActivity.get()?.onUpdateData()
                 }
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->

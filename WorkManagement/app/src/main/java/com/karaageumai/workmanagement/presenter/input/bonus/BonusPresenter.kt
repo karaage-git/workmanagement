@@ -2,6 +2,7 @@ package com.karaageumai.workmanagement.presenter.input.bonus
 
 import android.app.AlertDialog
 import android.content.Context
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
@@ -9,8 +10,11 @@ import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.IBaseInputView
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import java.lang.ref.WeakReference
 
-class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
+class BonusPresenter(aActivity: IBaseInputView) : IBonusPresenter {
+    // Activity
+    private val mActivity: WeakReference<IBaseInputView> = WeakReference(aActivity)
     // ボーナス情報
     private val mBonusInfo: BonusInfo
     // 新規or更新を判定するフラグ
@@ -20,40 +24,80 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
     // 削除時に使用する変更前データ
     private val mBackup: BonusInfo
 
+    companion object {
+        // エラー時に使用するダミー情報
+        private val dummyInfo = BonusInfo(0,0,0)
+    }
+
     init {
-        mBonusInfo = ModelFacade.selectBonusInfo(mActivity.getYear(), mActivity.getMonth()).let{
-            if(it != null) {
-                mIsNewEntry = false
-                it
+        val activity = mActivity.get()
+        if (activity != null) {
+            mBonusInfo =
+                ModelFacade.selectBonusInfo(activity.getYear(), activity.getMonth()).let {
+                    if (it != null) {
+                        mIsNewEntry = false
+                        it
+                    } else {
+                        mIsNewEntry = true
+                        BonusInfo(0, activity.getYear(), activity.getMonth())
+                    }
+                }
+            mInputInfoParcelList = listOf(
+                InputInfoParcel(
+                    InputViewTag.BaseIncomeInputViewData,
+                    mBonusInfo.baseIncome.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OtherIncomeInputViewData,
+                    mBonusInfo.otherIncome.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.HealthInsuranceInputViewData,
+                    mBonusInfo.healthInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.LongTermCareInsuranceFeeInputViewData,
+                    mBonusInfo.longTermCareInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.PensionInsuranceInputViewData,
+                    mBonusInfo.pensionFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.EmploymentInsuranceInputViewData,
+                    mBonusInfo.employmentInsuranceFee.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.IncomeTaxInputViewData,
+                    mBonusInfo.incomeTax.toString()
+                ),
+                InputInfoParcel(
+                    InputViewTag.OtherDeductionInputViewData,
+                    mBonusInfo.otherDeduction.toString()
+                )
+            )
+
+            // 更新時にはすべて入力済みとして扱う対応
+            if (mIsNewEntry) {
+                for (parcel in mInputInfoParcelList) {
+                    parcel.mIsComplete = false
+                }
             } else {
-                mIsNewEntry = true
-                BonusInfo(0, mActivity.getYear(), mActivity.getMonth())
+                for (parcel in mInputInfoParcelList) {
+                    parcel.mIsComplete = true
+                }
             }
-        }
 
-        mInputInfoParcelList = listOf(
-                InputInfoParcel(InputViewTag.BaseIncomeInputViewData, mBonusInfo.baseIncome.toString()),
-                InputInfoParcel(InputViewTag.OtherIncomeInputViewData, mBonusInfo.otherIncome.toString()),
-                InputInfoParcel(InputViewTag.HealthInsuranceInputViewData, mBonusInfo.healthInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.LongTermCareInsuranceFeeInputViewData, mBonusInfo.longTermCareInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.PensionInsuranceInputViewData, mBonusInfo.pensionFee.toString()),
-                InputInfoParcel(InputViewTag.EmploymentInsuranceInputViewData, mBonusInfo.employmentInsuranceFee.toString()),
-                InputInfoParcel(InputViewTag.IncomeTaxInputViewData, mBonusInfo.incomeTax.toString()),
-                InputInfoParcel(InputViewTag.OtherDeductionInputViewData, mBonusInfo.otherDeduction.toString())
-        )
+            // バックアップデータ
+            mBackup = mBonusInfo
 
-        // 更新時にはすべて入力済みとして扱う対応
-        if(mIsNewEntry){
-            for (parcel in mInputInfoParcelList) {
-                parcel.mIsComplete = false
-            }
         } else {
-            for (parcel in mInputInfoParcelList) {
-                parcel.mIsComplete = true
-            }
+            // Activityが取得できない場合はエラーとみなし、ダミーデータをセットする
+            mBonusInfo = dummyInfo
+            mIsNewEntry = false
+            mInputInfoParcelList = listOf()
+            mBackup = dummyInfo
         }
-
-        mBackup = mBonusInfo
 
     }
 
@@ -75,6 +119,11 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
     }
 
     override fun updateItem(aParcel: InputInfoParcel) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         var isSuccess = true
         when(aParcel.mTag){
             InputViewTag.BaseIncomeInputViewData -> {
@@ -152,10 +201,15 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
             // 給与情報向けのタグが来た場合は何もしない
             else -> {isSuccess = false}
         }
-        mActivity.onInputItem(isSuccess)
+        mActivity.get()?.onInputItem(isSuccess)
     }
 
     override fun saveData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         if(checkUserInputFinished()) {
             insertOrUpdateData(aContext)
         } else {
@@ -174,6 +228,11 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
     }
 
     override fun deleteData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         AlertDialog.Builder(aContext)
                 .setTitle(R.string.dialog_title_delete)
                 .setMessage(aContext.getString(R.string.dialog_message_delete, getDataDescription()))
@@ -182,7 +241,7 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
                         ModelFacade.deleteBonusInfo(mBackup)
                     }
                     dialog.dismiss()
-                    mActivity.onDeleteData()
+                    mActivity.get()?.onDeleteData()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     dialog.dismiss()
@@ -191,10 +250,19 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
     }
 
     override fun getDataDescription(): String {
-        return MainApplication.getContext().getString(R.string.bonus_description, mActivity.getYear(), mActivity.getMonth())
+        return if (mActivity.get() == null) {
+            ""
+        } else {
+            MainApplication.getContext().getString(R.string.bonus_description, mActivity.get()?.getYear(), mActivity.get()?.getMonth())
+        }
     }
 
     private fun insertOrUpdateData(aContext: Context) {
+        // Activityがnullの場合は何もしない
+        if(mActivity.get() == null) {
+            Log.i("mActivity is null")
+            return
+        }
         AlertDialog.Builder(aContext)
             .setTitle(R.string.dialog_title)
             .setMessage(aContext.getString(R.string.dialog_message_after_tax, (getSumIncome() - getSumDeduction()).toString()))
@@ -203,10 +271,10 @@ class BonusPresenter(var mActivity: IBaseInputView) : IBonusPresenter {
                 mBonusInfo.isComplete = true
                 if(mIsNewEntry) {
                     ModelFacade.insertBonusInfo(mBonusInfo)
-                    mActivity.onInsertData()
+                    mActivity.get()?.onInsertData()
                 } else {
                     ModelFacade.updateBonusInfo(mBonusInfo)
-                    mActivity.onUpdateData()
+                    mActivity.get()?.onUpdateData()
                 }
             }
             .setNegativeButton(R.string.cancel) { dialog, _ ->
