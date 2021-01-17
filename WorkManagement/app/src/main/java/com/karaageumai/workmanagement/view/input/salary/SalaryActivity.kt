@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.input.salary
 
+import android.content.Context
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.presenter.input.salary.ISalaryPresenter
@@ -94,11 +95,11 @@ class SalaryActivity : BaseInputActivity() {
     }
 
     override fun saveData() {
-        mSalaryInfoPresenter?.saveData(this)
+        mSalaryInfoPresenter?.saveData()
     }
 
     override fun deleteData() {
-        mSalaryInfoPresenter?.deleteData(this)
+        mSalaryInfoPresenter?.deleteData()
     }
 
     override fun getInputDataDescription(): String {
@@ -115,5 +116,9 @@ class SalaryActivity : BaseInputActivity() {
 
     override fun getMonth(): Int {
         return mMonth
+    }
+
+    override fun getActivityContext(): Context {
+        return this
     }
 }

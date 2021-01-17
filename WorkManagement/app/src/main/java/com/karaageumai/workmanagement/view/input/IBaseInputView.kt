@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.input
 
+import android.content.Context
 import androidx.annotation.UiThread
 
 interface IBaseInputView {
@@ -42,4 +43,9 @@ interface IBaseInputView {
      * @return 月
      */
     fun getMonth(): Int
+
+    /**
+     * PresenterからContextを取得するためのメソッド
+     */
+    fun getActivityContext(): Context
 }

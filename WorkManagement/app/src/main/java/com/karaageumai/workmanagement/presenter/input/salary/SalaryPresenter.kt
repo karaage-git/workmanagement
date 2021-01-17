@@ -1,7 +1,6 @@
 package com.karaageumai.workmanagement.presenter.input.salary
 
 import android.app.AlertDialog
-import android.content.Context
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
@@ -273,23 +272,21 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
         mActivity.get()?.onInputItem(isSuccess)
     }
 
-    // Todo:contextはmActivityから取得できるのでは？
-
-    override fun saveData(aContext: Context) {
+    override fun saveData() {
         // Activityがnullの場合は何もしない
         if(mActivity.get() == null) {
             Log.i("mActivity is null")
             return
         }
         if(checkUserInputFinished()){
-            insertOrUpdateData(aContext)
+            insertOrUpdateData()
         } else {
-            AlertDialog.Builder(aContext)
+            AlertDialog.Builder(mActivity.get()?.getActivityContext())
                     .setTitle(R.string.dialog_title)
                     .setMessage(R.string.dialog_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->
                         dialog.dismiss()
-                        insertOrUpdateData(aContext)
+                        insertOrUpdateData()
                     }
                     .setNegativeButton(R.string.cancel) { dialog, _ ->
                         dialog.dismiss()
@@ -298,15 +295,18 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
         }
     }
 
-    override fun deleteData(aContext: Context) {
+    override fun deleteData() {
         // Activityがnullの場合は何もしない
         if(mActivity.get() == null) {
             Log.i("mActivity is null")
             return
         }
-        AlertDialog.Builder(aContext)
+        AlertDialog.Builder(mActivity.get()?.getActivityContext())
                 .setTitle(R.string.dialog_title_delete)
-                .setMessage(aContext.getString(R.string.dialog_message_delete, getDataDescription()))
+                .setMessage(mActivity.get()?.getActivityContext()?.getString(
+                        R.string.dialog_message_delete,
+                        getDataDescription())
+                )
                 .setPositiveButton(R.string.ok) { dialog, _ ->
                     if (!mIsNewEntry) {
                         ModelFacade.deleteSalaryInfo(mBackup)
@@ -328,15 +328,18 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
         }
     }
 
-    private fun insertOrUpdateData(aContext: Context) {
+    private fun insertOrUpdateData() {
         // Activityがnullの場合は何もしない
         if(mActivity.get() == null) {
             Log.i("mActivity is null")
             return
         }
-        AlertDialog.Builder(aContext)
+        AlertDialog.Builder(mActivity.get()?.getActivityContext())
             .setTitle(R.string.dialog_title)
-            .setMessage(aContext.getString(R.string.dialog_message_after_tax, (getSumIncome() - getSumDeduction()).toString()))
+            .setMessage(mActivity.get()?.getActivityContext()?.getString(
+                    R.string.dialog_message_after_tax,
+                    (getSumIncome() - getSumDeduction()).toString())
+            )
             .setPositiveButton(R.string.ok) { dialog, _ ->
                 dialog.dismiss()
                 mSalaryInfo.isComplete = true

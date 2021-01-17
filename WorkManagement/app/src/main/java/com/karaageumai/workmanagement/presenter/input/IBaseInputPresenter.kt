@@ -1,6 +1,5 @@
 package com.karaageumai.workmanagement.presenter.input
 
-import android.content.Context
 import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
@@ -72,17 +71,13 @@ interface IBaseInputPresenter {
 
     /**
      * データをDBに保存する
-     *
-     * @param aContext ダイアログ表示に使用するContext
      */
-    fun saveData(aContext: Context)
+    fun saveData()
 
     /**
      * 画面上に表示しているデータをDBから削除する
-     *
-     * @param aContext ダイアログ表示に使用するContext
      */
-    fun deleteData(aContext: Context)
+    fun deleteData()
 
     /**
      * データの説明を取得する

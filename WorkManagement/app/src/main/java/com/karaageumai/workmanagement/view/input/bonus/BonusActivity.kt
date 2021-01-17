@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.input.bonus
 
+import android.content.Context
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.presenter.input.bonus.BonusPresenter
@@ -84,11 +85,11 @@ class BonusActivity : BaseInputActivity() {
     }
 
     override fun saveData() {
-        mBonusInfoPresenter?.saveData(this)
+        mBonusInfoPresenter?.saveData()
     }
 
     override fun deleteData() {
-        mBonusInfoPresenter?.deleteData(this)
+        mBonusInfoPresenter?.deleteData()
     }
 
     override fun getInputDataDescription(): String {
@@ -105,5 +106,9 @@ class BonusActivity : BaseInputActivity() {
 
     override fun getMonth(): Int {
         return mMonth
+    }
+
+    override fun getActivityContext(): Context {
+        return this
     }
 }
