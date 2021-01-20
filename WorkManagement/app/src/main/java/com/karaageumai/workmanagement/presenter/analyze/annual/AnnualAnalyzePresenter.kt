@@ -7,26 +7,32 @@ import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.analyze.annual.top.IAnnualAnalyze
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
+import java.lang.ref.WeakReference
 
 // 年度の開始月
 const val WORK_YEAR_START_MONTH = 4
 // 年度の終了月
 const val WORK_YEAR_END_MONTH = 3
 
-class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePresenter {
+class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresenter {
+    // Activity
+    private val mActivity: WeakReference<IAnnualAnalyze> = WeakReference(aActivity)
     // 年モード用のデータ管理マップ
     private val mAnnualDataMapForYear: MutableMap<Int, AnnualData> = mutableMapOf()
     // 年度モード用のデータ管理マップ
     private val mAnnualDataMapForWorkYear:  MutableMap<Int, AnnualData> = mutableMapOf()
     // 年or年度を示すフラグ
-    private var mIsWorkYearMode = mActivity.getIsWorkYearMode()
+    private var mIsWorkYearMode = mActivity.get()?.getIsWorkYearMode() ?: false
 
     init {
         // 初期表示用のデータを取得
-        if(mIsWorkYearMode) {
-            mAnnualDataMapForWorkYear[mActivity.getYear()] = getAnnualData(mActivity.getYear())
-        } else {
-            mAnnualDataMapForYear[mActivity.getYear()] = getAnnualData(mActivity.getYear())
+        val activity = mActivity.get()
+        if (activity != null) {
+            if(mIsWorkYearMode) {
+                mAnnualDataMapForWorkYear[activity.getYear()] = getAnnualData(activity.getYear())
+            } else {
+                mAnnualDataMapForYear[activity.getYear()] = getAnnualData(activity.getYear())
+            }
         }
     }
 
@@ -101,7 +107,7 @@ class AnnualAnalyzePresenter(var mActivity: IAnnualAnalyze) : IAnnualAnalyzePres
         dataRowList.add(createSumResidentTaxDataRow(aYear))
         dataRowList.add(createSumOtherDeductionDataRow(aYear))
         dataRowList.add(createSumAfterTaxIncomeDataRow(aYear))
-        mActivity.onLoadedData(dataRowList)
+        mActivity.get()?.onLoadedData(dataRowList)
     }
 
     override fun changeMode(aIsWorkYearMode: Boolean) {
