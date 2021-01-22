@@ -4,11 +4,10 @@ import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.util.Constants.INPUT_MAX_VALUE
+import com.karaageumai.workmanagement.util.Constants.MAX_DAYS_PER_MONTH
+import com.karaageumai.workmanagement.util.Constants.MAX_TIME_PER_MONTH
 import java.lang.NumberFormatException
-
-private const val MAX_DAYS_PER_MONTH = 31.0
-private const val MAX_TIME_PER_MONTH = 24.0 * 31.0
-private const val INPUT_MAX_VALUE = 1000000000
 
 interface IBaseInputPresenter {
     /**

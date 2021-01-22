@@ -9,9 +9,9 @@ import androidx.annotation.IntDef
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.MAX_YEAR
-import com.karaageumai.workmanagement.MIN_YEAR
 import com.karaageumai.workmanagement.model.ModelFacade
+import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
+import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.bonus.BonusActivity
 import com.karaageumai.workmanagement.view.input.salary.SalaryActivity

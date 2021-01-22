@@ -7,12 +7,9 @@ import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.view.analyze.annual.top.IAnnualAnalyze
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
+import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_END_MONTH
+import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_START_MONTH
 import java.lang.ref.WeakReference
-
-// 年度の開始月
-const val WORK_YEAR_START_MONTH = 4
-// 年度の終了月
-const val WORK_YEAR_END_MONTH = 3
 
 class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresenter {
     // Activity

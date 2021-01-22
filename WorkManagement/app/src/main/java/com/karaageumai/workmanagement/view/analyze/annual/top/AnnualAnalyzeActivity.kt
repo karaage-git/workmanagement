@@ -9,12 +9,12 @@ import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.MAX_YEAR
-import com.karaageumai.workmanagement.MIN_YEAR
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.analyze.annual.AnnualAnalyzePresenter
 import com.karaageumai.workmanagement.presenter.analyze.annual.IAnnualAnalyzePresenter
 import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRow
+import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
+import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import java.util.*
 

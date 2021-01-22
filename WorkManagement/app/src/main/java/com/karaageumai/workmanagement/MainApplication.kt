@@ -4,9 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 
-const val MIN_YEAR = 2000
-const val MAX_YEAR = 2050
-
 class MainApplication : Application() {
 
     override fun onCreate() {

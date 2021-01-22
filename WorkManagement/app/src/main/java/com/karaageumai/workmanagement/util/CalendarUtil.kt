@@ -1,8 +1,8 @@
 package com.karaageumai.workmanagement.util
 
 import com.karaageumai.workmanagement.Log
-import com.karaageumai.workmanagement.MAX_YEAR
-import com.karaageumai.workmanagement.MIN_YEAR
+import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
+import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import kotlin.IllegalArgumentException
 import kotlin.NumberFormatException
 
