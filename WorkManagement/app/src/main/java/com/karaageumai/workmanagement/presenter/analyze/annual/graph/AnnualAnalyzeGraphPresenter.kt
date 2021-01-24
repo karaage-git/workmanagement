@@ -56,7 +56,7 @@ class AnnualAnalyzeGraphPresenter(aActivity: IAnnualAnalyzeGraph) : IAnnualAnaly
         val retList: MutableList<SalaryInfo> = mutableListOf()
 
         if (mIsWorkYearMode) {
-            val dataList = ModelFacade.selectSalaryInfoForWorkYear(
+            val dataList = ModelFacade.selectSalaryInfo(
                     mYear,
                     WORK_YEAR_START_MONTH,
                     mYear + 1,
@@ -99,7 +99,7 @@ class AnnualAnalyzeGraphPresenter(aActivity: IAnnualAnalyzeGraph) : IAnnualAnaly
     private fun createBonusInfoList(): List<BonusInfo> {
         val retList: MutableList<BonusInfo> = mutableListOf()
         if (mIsWorkYearMode) {
-            val dataList = ModelFacade.selectBonusInfoForWorkYear(
+            val dataList = ModelFacade.selectBonusInfo(
                     mYear,
                     WORK_YEAR_START_MONTH,
                     mYear + 1,

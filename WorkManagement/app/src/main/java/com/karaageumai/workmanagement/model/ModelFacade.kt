@@ -82,7 +82,7 @@ object ModelFacade {
      * @param aEndMonth 終了月
      * @return SalaryInfoのリスト
      */
-    fun selectSalaryInfoForWorkYear(
+    fun selectSalaryInfo(
             aStartYear: Int,
             aStartMonth: Int,
             aEndYear: Int,
@@ -204,7 +204,7 @@ object ModelFacade {
      * @param aEndMonth 終了月
      * @return BonusInfoのリスト
      */
-    fun selectBonusInfoForWorkYear(
+    fun selectBonusInfo(
             aStartYear: Int,
             aStartMonth: Int,
             aEndYear: Int,

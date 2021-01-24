@@ -45,13 +45,13 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
                     it
                 } else {
                     val newData = AnnualData(
-                            ModelFacade.selectSalaryInfoForWorkYear(
+                            ModelFacade.selectSalaryInfo(
                                     aYear,
                                     WORK_YEAR_START_MONTH,
                                     aYear + 1,
                                     WORK_YEAR_END_MONTH
                             ),
-                            ModelFacade.selectBonusInfoForWorkYear(
+                            ModelFacade.selectBonusInfo(
                                     aYear,
                                     WORK_YEAR_START_MONTH,
                                     aYear + 1,
