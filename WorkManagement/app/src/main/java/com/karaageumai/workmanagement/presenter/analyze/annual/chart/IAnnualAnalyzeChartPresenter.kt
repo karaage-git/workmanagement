@@ -1,6 +1,6 @@
 package com.karaageumai.workmanagement.presenter.analyze.annual.chart
 
-interface IAnnualAnalyzeGraphPresenter {
+interface IAnnualAnalyzeChartPresenter {
     /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *

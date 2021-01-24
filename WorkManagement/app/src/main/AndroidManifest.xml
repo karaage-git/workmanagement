@@ -32,7 +32,7 @@
             android:name=".view.analyze.annual.top.AnnualAnalyzeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.analyze.annual.chart.AnnualAnalyzeGraphActivity"
+            android:name=".view.analyze.annual.chart.AnnualAnalyzeChartActivity"
             android:screenOrientation="portrait" />
     </application>
 

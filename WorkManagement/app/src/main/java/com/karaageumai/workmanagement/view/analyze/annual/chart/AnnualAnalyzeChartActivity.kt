@@ -13,16 +13,16 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.presenter.analyze.annual.chart.AnnualAnalyzeGraphPresenter
-import com.karaageumai.workmanagement.presenter.analyze.annual.chart.IAnnualAnalyzeGraphPresenter
+import com.karaageumai.workmanagement.presenter.analyze.annual.chart.AnnualAnalyzeChartPresenter
+import com.karaageumai.workmanagement.presenter.analyze.annual.chart.IAnnualAnalyzeChartPresenter
 import com.karaageumai.workmanagement.util.Constants.MAX_DAYS_PER_MONTH
 
 const val KEY_YEAR = "KEY_YEAR"
 const val KEY_IS_WORK_YEAR_MODE = "KEY_IS_WORK_YEAR_MODE"
 
-class AnnualAnalyzeGraphActivity : AppCompatActivity(), IAnnualAnalyzeGraph {
+class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
     // Presenter
-    private lateinit var mPresenter: IAnnualAnalyzeGraphPresenter
+    private lateinit var mPresenter: IAnnualAnalyzeChartPresenter
     // 表示年
     private var mYear: Int = 0
     // 年or年度を示すフラグ
@@ -45,7 +45,7 @@ class AnnualAnalyzeGraphActivity : AppCompatActivity(), IAnnualAnalyzeGraph {
             finish()
         }
 
-        mPresenter = AnnualAnalyzeGraphPresenter(this)
+        mPresenter = AnnualAnalyzeChartPresenter(this)
 
         showWorkingDayChart()
 
@@ -93,12 +93,12 @@ class AnnualAnalyzeGraphActivity : AppCompatActivity(), IAnnualAnalyzeGraph {
 
         // 年or年度で分かれる処理
         if (mIsWorkYearMode) {
-            x = AnnualAnalyzeGraphPresenter.mMonthListForWorkYear
-            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeGraphPresenter.mAxisListForWorkYear)
+            x = AnnualAnalyzeChartPresenter.mMonthListForWorkYear
+            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisListForWorkYear)
             title.text = getString(R.string.bar_chart_description_working_day_for_work_year, mYear)
         } else {
-            x = AnnualAnalyzeGraphPresenter.mMonthList
-            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeGraphPresenter.mAxisList)
+            x = AnnualAnalyzeChartPresenter.mMonthList
+            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisList)
             title.text = getString(R.string.bar_chart_description_working_day, mYear)
         }
 

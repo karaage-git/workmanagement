@@ -17,7 +17,7 @@ import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRo
 import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
 import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.analyze.annual.chart.AnnualAnalyzeGraphActivity
+import com.karaageumai.workmanagement.view.analyze.annual.chart.AnnualAnalyzeChartActivity
 import com.karaageumai.workmanagement.view.analyze.annual.chart.KEY_IS_WORK_YEAR_MODE
 import com.karaageumai.workmanagement.view.analyze.annual.chart.KEY_YEAR
 import java.util.*
@@ -93,7 +93,7 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
 
         val comparisonButton: Button = findViewById(R.id.btn_comparison)
         comparisonButton.setOnClickListener {
-            val intent = Intent(this, AnnualAnalyzeGraphActivity::class.java)
+            val intent = Intent(this, AnnualAnalyzeChartActivity::class.java)
             intent.putExtra(KEY_YEAR, mYear)
             intent.putExtra(KEY_IS_WORK_YEAR_MODE, mIsWorkYearMode)
             startActivity(intent)

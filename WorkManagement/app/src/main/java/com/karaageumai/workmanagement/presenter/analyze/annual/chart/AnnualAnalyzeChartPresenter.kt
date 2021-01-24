@@ -5,12 +5,12 @@ import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_END_MONTH
 import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_START_MONTH
-import com.karaageumai.workmanagement.view.analyze.annual.chart.IAnnualAnalyzeGraph
+import com.karaageumai.workmanagement.view.analyze.annual.chart.IAnnualAnalyzeChart
 import java.lang.ref.WeakReference
 
-class AnnualAnalyzeGraphPresenter(aActivity: IAnnualAnalyzeGraph) : IAnnualAnalyzeGraphPresenter {
+class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnalyzeChartPresenter {
     // Activity
-    private val mActivity: WeakReference<IAnnualAnalyzeGraph> = WeakReference(aActivity)
+    private val mActivity: WeakReference<IAnnualAnalyzeChart> = WeakReference(aActivity)
     // SalaryInfoのリスト
     private val mSalaryInfoList: List<SalaryInfo>
     // BonusInfoのリスト

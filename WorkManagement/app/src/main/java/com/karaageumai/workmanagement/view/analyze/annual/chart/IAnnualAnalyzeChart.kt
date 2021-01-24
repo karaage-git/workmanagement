@@ -1,6 +1,6 @@
 package com.karaageumai.workmanagement.view.analyze.annual.chart
 
-interface IAnnualAnalyzeGraph {
+interface IAnnualAnalyzeChart {
     /**
      * 表示対象の年を取得する
      *
