@@ -32,8 +32,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_annual_analyze_graph)
-        mScrollView = findViewById(R.id.sv_graph)
+        setContentView(R.layout.activity_annual_analyze_chart)
+        mScrollView = findViewById(R.id.sv_chart)
 
         // 全画面から受けたデータを取得
         mYear = intent.getIntExtra(KEY_YEAR, 0)
@@ -53,7 +53,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
     private fun showWorkingDayChart() {
         // Viewの取得
-        val view = layoutInflater.inflate(R.layout.layout_bar_graph, mScrollView, false)
+        val view = layoutInflater.inflate(R.layout.layout_bar_chart, mScrollView, false)
         // タイトル
         val title: TextView = view.findViewById(R.id.tv_description)
         // チャート表示部分
