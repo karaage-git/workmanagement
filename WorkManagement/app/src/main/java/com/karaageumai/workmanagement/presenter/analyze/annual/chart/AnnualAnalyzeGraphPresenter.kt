@@ -1,11 +1,11 @@
-package com.karaageumai.workmanagement.presenter.analyze.annual.graph
+package com.karaageumai.workmanagement.presenter.analyze.annual.chart
 
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_END_MONTH
 import com.karaageumai.workmanagement.util.Constants.WORK_YEAR_START_MONTH
-import com.karaageumai.workmanagement.view.analyze.annual.graph.IAnnualAnalyzeGraph
+import com.karaageumai.workmanagement.view.analyze.annual.chart.IAnnualAnalyzeGraph
 import java.lang.ref.WeakReference
 
 class AnnualAnalyzeGraphPresenter(aActivity: IAnnualAnalyzeGraph) : IAnnualAnalyzeGraphPresenter {

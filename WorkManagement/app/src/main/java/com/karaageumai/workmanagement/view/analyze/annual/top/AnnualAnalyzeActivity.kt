@@ -17,9 +17,9 @@ import com.karaageumai.workmanagement.presenter.analyze.annual.util.AnnualDataRo
 import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
 import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import com.karaageumai.workmanagement.util.NumberFormatUtil
-import com.karaageumai.workmanagement.view.analyze.annual.graph.AnnualAnalyzeGraphActivity
-import com.karaageumai.workmanagement.view.analyze.annual.graph.KEY_IS_WORK_YEAR_MODE
-import com.karaageumai.workmanagement.view.analyze.annual.graph.KEY_YEAR
+import com.karaageumai.workmanagement.view.analyze.annual.chart.AnnualAnalyzeGraphActivity
+import com.karaageumai.workmanagement.view.analyze.annual.chart.KEY_IS_WORK_YEAR_MODE
+import com.karaageumai.workmanagement.view.analyze.annual.chart.KEY_YEAR
 import java.util.*
 
 class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {

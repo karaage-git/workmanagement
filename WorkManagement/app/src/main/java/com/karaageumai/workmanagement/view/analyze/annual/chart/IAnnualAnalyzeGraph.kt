@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.analyze.annual.graph
+package com.karaageumai.workmanagement.view.analyze.annual.chart
 
 interface IAnnualAnalyzeGraph {
     /**

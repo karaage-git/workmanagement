@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.view.analyze.annual.graph
+package com.karaageumai.workmanagement.view.analyze.annual.chart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +13,8 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
-import com.karaageumai.workmanagement.presenter.analyze.annual.graph.AnnualAnalyzeGraphPresenter
-import com.karaageumai.workmanagement.presenter.analyze.annual.graph.IAnnualAnalyzeGraphPresenter
+import com.karaageumai.workmanagement.presenter.analyze.annual.chart.AnnualAnalyzeGraphPresenter
+import com.karaageumai.workmanagement.presenter.analyze.annual.chart.IAnnualAnalyzeGraphPresenter
 import com.karaageumai.workmanagement.util.Constants.MAX_DAYS_PER_MONTH
 
 const val KEY_YEAR = "KEY_YEAR"
