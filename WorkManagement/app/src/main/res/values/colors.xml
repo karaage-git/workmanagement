@@ -10,8 +10,11 @@
     <color name="dimgray">#696969</color>
     <color name="red">#FF0000</color>
     <color name="work_status_basic">#E6FFE9</color>
-    <color name="income_basic">#FFEFD5</color>
-    <color name="deduction_basic">#E6E6FA</color>
+    <color name="work_status_chart">#78FF94</color>
+    <color name="income_basic">#FFDBC9</color>
+    <color name="income_chart">#FF8856</color>
+    <color name="deduction_basic">#D9E5FF</color>
+    <color name="deduction_chart">#75A9FF</color>
     <color name="annual_analyze">#9932CC</color>
     <color name="annual_analyze_row_0">#CC99FF</color>
     <color name="annual_analyze_row_1">#CCCCFF</color>
