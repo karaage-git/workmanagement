@@ -2,7 +2,7 @@ package com.karaageumai.workmanagement.view.analyze.annual.chart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ScrollView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -28,12 +28,12 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
     // 年or年度を示すフラグ
     private var mIsWorkYearMode: Boolean = false
     // グラフ表示用のView
-    private lateinit var mScrollView: ScrollView
+    private lateinit var mRoot: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_analyze_chart)
-        mScrollView = findViewById(R.id.sv_chart)
+        mRoot = findViewById(R.id.ll_root)
 
         // 全画面から受けたデータを取得
         mYear = intent.getIntExtra(KEY_YEAR, 0)
@@ -53,7 +53,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
     private fun showWorkingDayChart() {
         // Viewの取得
-        val view = layoutInflater.inflate(R.layout.layout_bar_chart, mScrollView, false)
+        val view = layoutInflater.inflate(R.layout.layout_bar_chart, mRoot, false)
         // タイトル
         val title: TextView = view.findViewById(R.id.tv_description)
         // チャート表示部分
@@ -114,7 +114,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         barDataSets.add(barDataSet)
         val barData = BarData(barDataSets)
         barChartView.data = barData
-        mScrollView.addView(view)
+        mRoot.addView(view)
     }
 
     override fun getYear(): Int {
