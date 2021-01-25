@@ -1,4 +1,4 @@
-package com.karaageumai.workmanagement.presenter.analyze.annual
+package com.karaageumai.workmanagement.presenter.analyze.annual.top
 
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
