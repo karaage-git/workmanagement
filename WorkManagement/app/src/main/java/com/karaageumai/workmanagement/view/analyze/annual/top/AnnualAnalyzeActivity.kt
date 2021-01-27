@@ -113,10 +113,8 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
         // テーブル初期化
         mTableLayout.removeAllViews()
 
-        // 背景切り替え用のカウンタ
-        var countForBackground = 0
         // データを元にテーブルの行を作成
-        for (data in aLoadDataList) {
+        for ((countForBackground, data) in aLoadDataList.withIndex()) {
             val tableRow: View = layoutInflater.inflate(R.layout.layout_annual_analyze_row, mTableLayout, false)
             // タイトル
             val title: TextView = tableRow.findViewById(R.id.tv_row_title)
@@ -141,7 +139,6 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
                 } else {
                     tableRow.background = ContextCompat.getDrawable(this, R.color.annual_analyze_row_1)
                 }
-                countForBackground++
             }
             // 親Viewに追加
             mTableLayout.addView(tableRow)
