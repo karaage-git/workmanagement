@@ -1,6 +1,15 @@
 package com.karaageumai.workmanagement.presenter.analyze.annual.chart
 
+import androidx.annotation.UiThread
+
 interface IAnnualAnalyzeChartPresenter {
+
+    /**
+     * 勤務日数データを表示するダイアログを出力する
+     */
+    @UiThread
+    fun showWorkingDayDataDialog()
+
     /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *
@@ -11,4 +20,20 @@ interface IAnnualAnalyzeChartPresenter {
      * @return 月別の勤務日数データ
      */
     fun getWorkingDayData(): List<Double>
+
+    /**
+     * 所定労働時間のリストを取得する
+     *
+     * @return 所定労働時間のリスト
+     */
+    fun getWorkingBaseTime(): List<Double>
+
+    /**
+     * 残業時間のリストを取得する
+     *
+     * @return 残業時間のリスト
+     */
+    fun getWorkingOverTime(): List<Double>
+
+
 }

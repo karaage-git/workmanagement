@@ -11,6 +11,7 @@
     <color name="red">#FF0000</color>
     <color name="work_status_basic">#E6FFE9</color>
     <color name="work_status_chart">#78FF94</color>
+    <color name="work_status_chart_another">#32CD32</color>
     <color name="income_basic">#FFDBC9</color>
     <color name="income_chart">#FF8856</color>
     <color name="deduction_basic">#D9E5FF</color>
