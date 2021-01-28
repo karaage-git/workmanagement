@@ -120,7 +120,10 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
         barDataSets.add(barDataSet)
         val barData = BarData(barDataSets)
+        // データをセット
         barChartView.data = barData
+        // 拡縮無効
+        barChartView.setScaleEnabled(false)
 
         barChartView.setOnLongClickListener {
             Log.i("working bar chart long touch")
@@ -208,7 +211,10 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
         barDataSets.add(barDataSet)
         val barData = BarData(barDataSets)
+        // データをセット
         barChartView.data = barData
+        // 拡縮無効
+        barChartView.setScaleEnabled(false)
         mRoot.addView(view)
     }
 
