@@ -185,24 +185,21 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         }
 
         // データ
-        val x: List<Int>
         val y1: List<Double> = mPresenter.getWorkingBaseTime()
         val y2: List<Double> = mPresenter.getWorkingOverTime()
 
         // 年or年度で分かれる処理
         if (mIsWorkYearMode) {
-            x = AnnualAnalyzeChartPresenter.mMonthListForWorkYear
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisListForWorkYear)
             title.text = getString(R.string.bar_chart_description_working_time_for_work_year, mYear)
         } else {
-            x = AnnualAnalyzeChartPresenter.mMonthList
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisList)
             title.text = getString(R.string.bar_chart_description_working_time, mYear)
         }
 
         val entryList = mutableListOf<BarEntry>()
-        for (i in x.indices) {
-            entryList.add(BarEntry(x[i].toFloat(), floatArrayOf(y1[i].toFloat(), y2[i].toFloat())))
+        for (i in mDataOrder.indices) {
+            entryList.add(BarEntry(mDataOrder[i].toFloat(), floatArrayOf(y1[i].toFloat(), y2[i].toFloat())))
         }
 
         val barDataSets = mutableListOf<IBarDataSet>()
