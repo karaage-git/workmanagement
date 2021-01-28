@@ -206,6 +206,7 @@
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_month">月</string>
     <string name="chart_dialog_description_working_day">%1$d年の勤務日数</string>
+    <string name="chart_dialog_description_working_day_work_year">%1$d年度の勤務日数</string>
     <string name="chart_dialog_title_working_day">勤務日数</string>
     <string name="chart_dialog_value_month">%1$d月</string>
     <string name="chart_dialog_value_working_day">%1$s日</string>

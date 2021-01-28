@@ -151,10 +151,17 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
             // 説明文をセット
             view.findViewById<TextView>(R.id.tv_title).text =
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_description_working_day,
-                            mYear
-                    )
+                    if (mIsWorkYearMode) {
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_description_working_day_work_year,
+                                mYear
+                        )
+                    } else {
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_description_working_day,
+                                mYear
+                        )
+                    }
 
             // 行を追加するためのテーブル
             val tableLayout: TableLayout = view.findViewById(R.id.table_data)
