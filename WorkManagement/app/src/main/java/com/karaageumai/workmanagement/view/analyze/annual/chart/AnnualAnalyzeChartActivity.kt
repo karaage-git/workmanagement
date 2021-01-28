@@ -31,6 +31,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
     private var mIsWorkYearMode: Boolean = false
     // グラフ表示用のView
     private lateinit var mRoot: LinearLayout
+    // データの順序を示す
+    private val mDataOrder: List<Int> = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,23 +97,21 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         barChartView.legend.isEnabled = false
 
         // データ
-        val x: List<Int>
         val y = mPresenter.getWorkingDayData()
+        Log.i(y.toString())
 
         // 年or年度で分かれる処理
         if (mIsWorkYearMode) {
-            x = AnnualAnalyzeChartPresenter.mMonthListForWorkYear
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisListForWorkYear)
             title.text = getString(R.string.bar_chart_description_working_day_for_work_year, mYear)
         } else {
-            x = AnnualAnalyzeChartPresenter.mMonthList
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisList)
             title.text = getString(R.string.bar_chart_description_working_day, mYear)
         }
 
         val entryList = mutableListOf<BarEntry>()
-        for (i in x.indices) {
-            entryList.add(BarEntry(x[i].toFloat(), y[i].toFloat()))
+        for (i in mDataOrder.indices) {
+            entryList.add(BarEntry(mDataOrder[i].toFloat(), y[i].toFloat()))
         }
 
         val barDataSets = mutableListOf<IBarDataSet>()
