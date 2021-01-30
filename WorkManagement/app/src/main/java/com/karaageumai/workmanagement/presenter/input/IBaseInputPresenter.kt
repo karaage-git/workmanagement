@@ -95,7 +95,8 @@ interface IBaseInputPresenter {
     fun checkInputData(aTag: InputViewTag, aValue: String): Boolean {
         when (aTag) {
             // 0.5単位、最大値は1ヶ月、未入力不可
-            InputViewTag.WorkingDayInputViewData -> {
+            InputViewTag.WorkingDayInputViewData,
+            InputViewTag.PaidHolidaysViewData -> {
                 // 未入力も許可
                 if (aValue.isEmpty()) {
                     return true

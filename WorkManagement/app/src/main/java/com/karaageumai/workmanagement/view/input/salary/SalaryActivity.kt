@@ -51,6 +51,7 @@ class SalaryActivity : BaseInputActivity() {
         return mSalaryInfoPresenter?.getInputInfoParcelList(
             listOf(
                 InputViewTag.WorkingDayInputViewData,
+                InputViewTag.PaidHolidaysViewData,
                 InputViewTag.WorkingTimeInputViewData,
                 InputViewTag.OverTimeInputViewData
             )
