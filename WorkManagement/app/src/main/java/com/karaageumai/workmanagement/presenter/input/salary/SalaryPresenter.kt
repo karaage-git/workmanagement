@@ -48,6 +48,10 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
                     (mSalaryInfo.workingDay / 10.0).toString()
                 ),
                 InputInfoParcel(
+                    InputViewTag.PaidHolidaysViewData,
+                    (mSalaryInfo.paidHolidays / 10.0).toString()
+                ),
+                InputInfoParcel(
                     InputViewTag.WorkingTimeInputViewData,
                     (mSalaryInfo.workingTime / 10.0).toString()
                 ),
@@ -153,6 +157,15 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
         when(aParcel.mTag){
             InputViewTag.WorkingDayInputViewData -> {
                 mSalaryInfo.workingDay = try {
+                    (aParcel.mStrValue.toDouble() * 10).toInt()
+                } catch (e: NumberFormatException) {
+                    isSuccess = false
+                    0
+                }
+            }
+
+            InputViewTag.PaidHolidaysViewData -> {
+                mSalaryInfo.paidHolidays = try {
                     (aParcel.mStrValue.toDouble() * 10).toInt()
                 } catch (e: NumberFormatException) {
                     isSuccess = false

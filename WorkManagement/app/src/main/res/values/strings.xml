@@ -120,6 +120,9 @@
     <string name="layoutitem_workstatus_overtime_title">残業時間</string>
     <string name="edittext_hint_workstatus_overtime">例：19.3</string>
 
+    <string name="layoutitem_workstatus_paid_holiday_title">有給休暇</string>
+    <string name="edittext_hint_workstatus_paid_holiday">例：1.5</string>
+
 
     <!--  収入情報入力フラグメント  -->
     <!--  共通  -->
@@ -178,6 +181,7 @@
     <string name="annual_analyze_row_unit_time">時間</string>
     <string name="annual_analyze_row_unit_money">円</string>
     <string name="annual_analyze_row_working_day">合計勤務日数</string>
+    <string name="annual_analyze_row_paid_holiday">合計有給休暇</string>
     <string name="annual_analyze_row_working_time">合計労働時間</string>
     <string name="annual_analyze_row_base_working_time">所定労働時間</string>
     <string name="annual_analyze_row_over_working_time">残業時間</string>

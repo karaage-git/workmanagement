@@ -44,6 +44,16 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mErrorMessageResId = R.string.layoutitem_workstatus_common_error
             }
 
+            InputViewTag.PaidHolidaysViewData -> {
+                mTitleResId = R.string.layoutitem_workstatus_paid_holiday_title
+                mSubTitleResId = R.string.layoutitem_workstatus_workingday_subtitle
+                mInputHintResId = R.string.edittext_hint_workstatus_paid_holiday
+                mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                mInputMaxLength = 4
+                mUnitResId = R.string.layoutitem_workstatus_workingday_unit
+                mErrorMessageResId = R.string.layoutitem_workstatus_workingday_error
+            }
+
             InputViewTag.BaseIncomeInputViewData -> {
                 mTitleResId = R.string.layoutitem_income_baseincome_title
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle

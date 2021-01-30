@@ -86,6 +86,7 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
     override fun loadData(aYear: Int) {
         val dataRowList: MutableList<AnnualDataRow> = mutableListOf()
         dataRowList.add(createSumWorkingDayDataRow(aYear))
+        dataRowList.add(createSumPaidHolidayDataRow(aYear))
         dataRowList.add(createSumWorkingTimeDataRow(aYear))
         dataRowList.add(createSumBaseWorkingTimeDataRow(aYear))
         dataRowList.add(createSumOverWorkingTimeDataRow(aYear))
@@ -117,6 +118,16 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
     private fun createSumWorkingDayDataRow(aYear: Int): AnnualDataRow {
         return AnnualDataRow(R.string.annual_analyze_row_working_day,
                 (getSumWorkingDay(aYear) / 10.0).toString(),
+                R.string.annual_analyze_row_unit_day,
+                false)
+    }
+
+    /**
+     * 有給休暇の合計を表示するためのデータを作成する
+     */
+    private fun createSumPaidHolidayDataRow(aYear: Int): AnnualDataRow {
+        return AnnualDataRow(R.string.annual_analyze_row_paid_holiday,
+                (getSumPaidHoliday(aYear) / 10.0).toString(),
                 R.string.annual_analyze_row_unit_day,
                 false)
     }
@@ -309,6 +320,19 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
         var value = 0
         for(salary in salaryInfoList) {
             value += salary.workingDay
+        }
+        return value
+    }
+
+    /**
+     * 有給休暇の合計を取得する
+     */
+    private fun getSumPaidHoliday(aYear: Int): Int {
+        val data = getAnnualData(aYear)
+        val salaryInfoList = data.salaryInfoList
+        var value = 0
+        for(salary in salaryInfoList) {
+            value += salary.paidHolidays
         }
         return value
     }
