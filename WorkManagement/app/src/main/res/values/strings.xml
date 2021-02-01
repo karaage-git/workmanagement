@@ -204,15 +204,16 @@
     <!--  グラフ表示  -->
     <string name="bar_chart_description_working_day">%1$d年の勤務日数</string>
     <string name="bar_chart_description_working_day_for_work_year">%1$d年度の勤務日数</string>
+    <string name="bar_chart_description_paid_holiday">%1$d年に取得した有給休暇</string>
+    <string name="bar_chart_description_paid_holiday_for_work_year">%1$d年度に取得した有給休暇</string>
     <string name="bar_chart_description_working_time">%1$d年の労働時間</string>
     <string name="bar_chart_description_working_time_for_work_year">%1$d年度の労働時間</string>
 
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_month">月</string>
-    <string name="chart_dialog_description_working_day">%1$d年の勤務日数</string>
-    <string name="chart_dialog_description_working_day_work_year">%1$d年度の勤務日数</string>
     <string name="chart_dialog_title_working_day">勤務日数</string>
+    <string name="chart_dialog_title_paid_holiday">有給休暇日数</string>
     <string name="chart_dialog_value_month">%1$d月</string>
-    <string name="chart_dialog_value_working_day">%1$s日</string>
+    <string name="chart_dialog_value_day">%1$s日</string>
 
 </resources>

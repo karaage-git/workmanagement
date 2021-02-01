@@ -1,6 +1,8 @@
 package com.karaageumai.workmanagement.presenter.analyze.annual.chart
 
 import android.app.AlertDialog
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TextView
@@ -142,81 +144,164 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showWorkingDayDataDialog() {
         mActivity.get()?.let { activity ->
+            val rowDataList: MutableList<TwoColumnData> = mutableListOf()
+            for (data in mSalaryInfoList) {
+                // データ用の行
+                val rowData = TwoColumnData(
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_month,
+                                data.month
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_day,
+                                (data.workingDay / 10.0).toString()
+                        )
+                )
+                rowDataList.add(rowData)
+            }
+
             // ダイアログ用のViewを取得
-            val view = View.inflate(
+            val view = createTwoRowDataView(
                     activity.getActivityContext(),
-                    R.layout.layout_dialog_chart_data,
-                    null
+                    activity.getLayoutInflater(),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_working_day,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_working_day_for_work_year,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_month),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_working_day),
+                    rowDataList
             )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
 
-            // 説明文をセット
-            view.findViewById<TextView>(R.id.tv_title).text =
-                    if (mIsWorkYearMode) {
+    override fun showPaidHolidayDataDialog() {
+        mActivity.get()?.let { activity ->
+            val rowDataList: MutableList<TwoColumnData> = mutableListOf()
+            for (data in mSalaryInfoList) {
+                // データ用の行
+                val rowData = TwoColumnData(
                         activity.getActivityContext().getString(
-                                R.string.chart_dialog_description_working_day_work_year,
-                                mYear
-                        )
-                    } else {
+                                R.string.chart_dialog_value_month,
+                                data.month
+                        ),
                         activity.getActivityContext().getString(
-                                R.string.chart_dialog_description_working_day,
-                                mYear
+                                R.string.chart_dialog_value_day,
+                                (data.paidHolidays / 10.0).toString()
                         )
-                    }
+                )
+                rowDataList.add(rowData)
+            }
 
-            // 行を追加するためのテーブル
-            val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-            // タイトル行
-            val titleRow = activity.getLayoutInflater().inflate(
-                    R.layout.layout_dialog_chart_working_time_row,
+            // ダイアログ用のViewを取得
+            val view = createTwoRowDataView(
+                    activity.getActivityContext(),
+                    activity.getLayoutInflater(),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_paid_holiday,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_paid_holiday_for_work_year,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_month),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_paid_holiday),
+                    rowDataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
+    private fun createTwoRowDataView(
+            aContext: Context,
+            aLayoutInflater: LayoutInflater,
+            aTitle: String,
+            aTitleForWorkYear: String,
+            aFirstColumnTitle: String,
+            aSecondColumnTitle: String,
+            aDataList: List<TwoColumnData>
+    ): View {
+        // ダイアログ用のViewを取得
+        val view = View.inflate(aContext, R.layout.layout_dialog_chart_data, null)
+
+        // タイトルをセット
+        view.findViewById<TextView>(R.id.tv_title).text =
+                if (mIsWorkYearMode) {
+                    aTitleForWorkYear
+                } else {
+                    aTitle
+                }
+        // 行を追加するためのテーブル
+        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
+        // タイトル行
+        val titleRow = aLayoutInflater.inflate(
+                R.layout.layout_dialog_chart_two_column,
+                tableLayout,
+                false
+        ).apply {
+            findViewById<TextView>(R.id.tv_row_month).apply {
+                text = aFirstColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_value).apply {
+                text = aSecondColumnTitle
+            }
+        }
+        // タイトル追加
+        tableLayout.addView(titleRow)
+
+        // データをセット
+        for ((count, data) in aDataList.withIndex()) {
+            // データ用の行
+            val dataRow = aLayoutInflater.inflate(
+                    R.layout.layout_dialog_chart_two_column,
                     tableLayout,
                     false
             ).apply {
-                val month: TextView = findViewById(R.id.tv_row_month)
-                month.setText(R.string.chart_dialog_title_month)
-                val value: TextView = findViewById(R.id.tv_row_value)
-                value.setText(R.string.chart_dialog_title_working_day)
-            }
-            // タイトル追加
-            tableLayout.addView(titleRow)
-
-            // 行の色切り替え用のカウンタ
-            for ((count, data) in mSalaryInfoList.withIndex()) {
-                // データ用の行
-                val dataRow = activity.getLayoutInflater().inflate(
-                        R.layout.layout_dialog_chart_working_time_row,
-                        tableLayout,
-                        false
-                ).apply {
-                    val month: TextView = findViewById(R.id.tv_row_month)
-                    month.text = activity.getActivityContext().getString(
-                            R.string.chart_dialog_value_month,
-                            data.month
-                    )
-                    val value: TextView = findViewById(R.id.tv_row_value)
-                    value.text = activity.getActivityContext().getString(
-                            R.string.chart_dialog_value_working_day,
-                            (data.workingDay / 10.0).toString()
-                    )
-                    if ((count % 2) == 0) {
-                        setBackgroundColor(activity.getActivityContext().getColor(R.color.work_status_basic))
-                    }
+                findViewById<TextView>(R.id.tv_row_month).apply {
+                    text = data.firstColumnValue
                 }
-                tableLayout.addView(dataRow)
+                findViewById<TextView>(R.id.tv_row_value).apply {
+                    text = data.secondColumnValue
+                }
+                if ((count % 2) == 0) {
+                    setBackgroundColor(aContext.getColor(R.color.work_status_basic))
+                }
             }
-
-            AlertDialog.Builder(activity.getActivityContext())
-                    .setView(view)
-                    .setPositiveButton(R.string.ok) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
+            tableLayout.addView(dataRow)
         }
+        return view
+    }
+
+    /**
+     * Dialog表示
+     */
+    private fun showDialog(aContext: Context, aView: View) {
+        AlertDialog.Builder(aContext)
+                .setView(aView)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 
     override fun getWorkingDayData(): List<Double> {
         val retList: MutableList<Double> = mutableListOf()
         for (data in mSalaryInfoList) {
             retList.add(data.workingDay / 10.0)
+        }
+        return retList
+    }
+
+    override fun getPaidHolidayData(): List<Double> {
+        val retList: MutableList<Double> = mutableListOf()
+        for (data in mSalaryInfoList) {
+            retList.add(data.paidHolidays / 10.0)
         }
         return retList
     }
@@ -237,4 +322,20 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         return retList
     }
 
+    /**
+     * 2列で表せるデータを扱うためのクラス
+     */
+    data class TwoColumnData(
+            val firstColumnValue: String,
+            val secondColumnValue: String
+    )
+
+    /**
+     * 3列で表せるデータを扱うためのクラス
+     */
+    data class ThreeColumnData(
+            val firstColumnValue: String,
+            val secondColumnValue: String,
+            val thirdColumnValue: String
+    )
 }
