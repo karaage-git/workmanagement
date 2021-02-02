@@ -17,6 +17,12 @@ interface IAnnualAnalyzeChartPresenter {
     fun showPaidHolidayDataDialog()
 
     /**
+     * 労働時間データを表示するダイアログを出力する
+     */
+    @UiThread
+    fun showWorkingTimeDataDialog()
+
+    /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *
      * データが存在しない月は0を要素に持つ

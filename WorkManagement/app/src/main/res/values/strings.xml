@@ -213,7 +213,10 @@
     <string name="chart_dialog_title_month">月</string>
     <string name="chart_dialog_title_working_day">勤務日数</string>
     <string name="chart_dialog_title_paid_holiday">有給休暇日数</string>
+    <string name="chart_dialog_title_working_time">所定労働時間</string>
+    <string name="chart_dialog_title_overtime">残業時間</string>
     <string name="chart_dialog_value_month">%1$d月</string>
     <string name="chart_dialog_value_day">%1$s日</string>
+    <string name="chart_dialog_value_time">%1$s時間</string>
 
 </resources>

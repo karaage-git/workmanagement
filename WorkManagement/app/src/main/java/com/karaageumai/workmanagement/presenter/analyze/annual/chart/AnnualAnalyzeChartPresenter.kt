@@ -218,6 +218,49 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         }
     }
 
+    override fun showWorkingTimeDataDialog() {
+        mActivity.get()?.let { activity ->
+            val rowDataList: MutableList<ThreeColumnData> = mutableListOf()
+            for (data in mSalaryInfoList) {
+                // データ用の行
+                val rowData = ThreeColumnData(
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_month,
+                                data.month
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_time,
+                                (data.workingTime / 10.0).toString()
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_time,
+                                (data.overtime / 10.0).toString()
+                        )
+                )
+                rowDataList.add(rowData)
+            }
+
+            // ダイアログ用のViewを取得
+            val view = createThreeRowDataView(
+                    activity.getActivityContext(),
+                    activity.getLayoutInflater(),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_working_time,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_working_time_for_work_year,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_month),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_working_time),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_overtime),
+                    rowDataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
     private fun createTwoRowDataView(
             aContext: Context,
             aLayoutInflater: LayoutInflater,
@@ -245,10 +288,10 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                 tableLayout,
                 false
         ).apply {
-            findViewById<TextView>(R.id.tv_row_month).apply {
+            findViewById<TextView>(R.id.tv_row_first).apply {
                 text = aFirstColumnTitle
             }
-            findViewById<TextView>(R.id.tv_row_value).apply {
+            findViewById<TextView>(R.id.tv_row_second).apply {
                 text = aSecondColumnTitle
             }
         }
@@ -263,11 +306,78 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                     tableLayout,
                     false
             ).apply {
-                findViewById<TextView>(R.id.tv_row_month).apply {
+                findViewById<TextView>(R.id.tv_row_first).apply {
                     text = data.firstColumnValue
                 }
-                findViewById<TextView>(R.id.tv_row_value).apply {
+                findViewById<TextView>(R.id.tv_row_second).apply {
                     text = data.secondColumnValue
+                }
+                if ((count % 2) == 0) {
+                    setBackgroundColor(aContext.getColor(R.color.work_status_basic))
+                }
+            }
+            tableLayout.addView(dataRow)
+        }
+        return view
+    }
+
+    private fun createThreeRowDataView(
+            aContext: Context,
+            aLayoutInflater: LayoutInflater,
+            aTitle: String,
+            aTitleForWorkYear: String,
+            aFirstColumnTitle: String,
+            aSecondColumnTitle: String,
+            aThirdColumnTitle: String,
+            aDataList: List<ThreeColumnData>
+    ): View {
+        // ダイアログ用のViewを取得
+        val view = View.inflate(aContext, R.layout.layout_dialog_chart_data, null)
+
+        // タイトルをセット
+        view.findViewById<TextView>(R.id.tv_title).text =
+                if (mIsWorkYearMode) {
+                    aTitleForWorkYear
+                } else {
+                    aTitle
+                }
+        // 行を追加するためのテーブル
+        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
+        // タイトル行
+        val titleRow = aLayoutInflater.inflate(
+                R.layout.layout_dialog_chart_three_column,
+                tableLayout,
+                false
+        ).apply {
+            findViewById<TextView>(R.id.tv_row_first).apply {
+                text = aFirstColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_second).apply {
+                text = aSecondColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_third).apply {
+                text = aThirdColumnTitle
+            }
+        }
+        // タイトル追加
+        tableLayout.addView(titleRow)
+
+        // データをセット
+        for ((count, data) in aDataList.withIndex()) {
+            // データ用の行
+            val dataRow = aLayoutInflater.inflate(
+                    R.layout.layout_dialog_chart_three_column,
+                    tableLayout,
+                    false
+            ).apply {
+                findViewById<TextView>(R.id.tv_row_first).apply {
+                    text = data.firstColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_second).apply {
+                    text = data.secondColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_third).apply {
+                    text = data.thirdColumnValue
                 }
                 if ((count % 2) == 0) {
                     setBackgroundColor(aContext.getColor(R.color.work_status_basic))

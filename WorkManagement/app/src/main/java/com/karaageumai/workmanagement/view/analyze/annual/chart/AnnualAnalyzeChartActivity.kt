@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -79,11 +78,11 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         barDataSets.add(barDataSet)
 
         // チャート作成
-        val chartView = createBasicSingleDataBarChart(
+        val chartView = createBasicBarChart(
                 0f,
                 MAX_DAYS_PER_MONTH.toFloat(),
-                R.string.bar_chart_description_working_day,
-                R.string.bar_chart_description_working_day_for_work_year,
+                getString(R.string.bar_chart_description_working_day, mYear),
+                getString(R.string.bar_chart_description_working_day_for_work_year, mYear),
                 BarData(barDataSets)
         ) {
             Log.i("working bar chart long touch")
@@ -113,11 +112,11 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         barDataSets.add(barDataSet)
 
         // チャート作成
-        val chartView = createBasicSingleDataBarChart(
+        val chartView = createBasicBarChart(
                 0f,
                 MAX_DAYS_PER_MONTH.toFloat(),
-                R.string.bar_chart_description_paid_holiday,
-                R.string.bar_chart_description_paid_holiday_for_work_year,
+                getString(R.string.bar_chart_description_paid_holiday, mYear),
+                getString(R.string.bar_chart_description_paid_holiday_for_work_year, mYear),
                 BarData(barDataSets)
         ) {
             Log.i("paidHoliday bar chart long touch")
@@ -128,72 +127,10 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         mRoot.addView(chartView)
     }
 
-
     private fun showWorkingTimeChart() {
-        // Viewの取得
-        val view = layoutInflater.inflate(R.layout.layout_bar_chart, mRoot, false)
-        // タイトル
-        val title: TextView = view.findViewById(R.id.tv_description)
-        // チャート表示部分
-        val barChartView: BarChart = view.findViewById(R.id.bar_chart)
-
-        // x軸の設定
-        val xAxis = barChartView.xAxis.apply {
-            // 底辺に表示
-            position = XAxis.XAxisPosition.BOTTOM
-            // 格子線を消す
-            setDrawGridLines(false)
-            // ラベル名を表示
-            setDrawLabels(true)
-        }
-
-        // y軸（左）の設定
-        barChartView.axisLeft.apply {
-            // 最小/最大値
-            axisMinimum = 0f
-        }
-
-        // y軸（右）の設定
-        barChartView.axisRight.apply {
-            // ラベル名非表示
-            setDrawLabels(false)
-            // 格子線非表示
-            setDrawGridLines(false)
-        }
-
-        // Description
-        barChartView.description.isEnabled = false
-
-        // 凡例
-        val legend = barChartView.legend
-        legend.apply {
-            isEnabled = true
-            // 所定労働時間用のエントリー
-            val entry1 = LegendEntry().apply {
-                label = getString(R.string.layoutitem_workstatus_workingtime_title)
-                formColor = getColor(R.color.work_status_chart)
-            }
-            // 残業時間用のエントリー
-            val entry2 = LegendEntry().apply {
-                label = getString(R.string.layoutitem_workstatus_overtime_title)
-                formColor = getColor(R.color.work_status_chart_another)
-            }
-            setCustom(listOf(entry1, entry2))
-            setDrawInside(false)
-        }
-
         // データ
         val y1: List<Double> = mPresenter.getWorkingBaseTime()
         val y2: List<Double> = mPresenter.getWorkingOverTime()
-
-        // 年or年度で分かれる処理
-        if (mIsWorkYearMode) {
-            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisListForWorkYear)
-            title.text = getString(R.string.bar_chart_description_working_time_for_work_year, mYear)
-        } else {
-            xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisList)
-            title.text = getString(R.string.bar_chart_description_working_time, mYear)
-        }
 
         val entryList = mutableListOf<BarEntry>()
         for (i in mDataOrder.indices) {
@@ -203,21 +140,29 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         val barDataSets = mutableListOf<IBarDataSet>()
         val barDataSet = BarDataSet(entryList, "label")
         barDataSet.colors = listOf(getColor(R.color.work_status_chart), getColor(R.color.work_status_chart_another))
-
         barDataSets.add(barDataSet)
-        val barData = BarData(barDataSets)
-        // データをセット
-        barChartView.data = barData
-        // 拡縮無効
-        barChartView.setScaleEnabled(false)
-        mRoot.addView(view)
+
+        // チャート作成
+        val chartView = createBasicBarChart(
+                0f,
+                0f,
+                getString(R.string.bar_chart_description_working_time, mYear),
+                getString(R.string.bar_chart_description_working_time_for_work_year, mYear),
+                BarData(barDataSets)
+        ) {
+            Log.i("working time bar chart long touch")
+            mPresenter.showWorkingTimeDataDialog()
+            true
+        }
+
+        mRoot.addView(chartView)
     }
 
-    private fun createBasicSingleDataBarChart(
+    private fun createBasicBarChart(
             aMinValue: Float,
             aMaxValue: Float,
-            aTitleResId: Int,
-            aTitleForWorkYearResId: Int,
+            aTitle: String,
+            aTitleForWorkYear: String,
             aData: BarData,
             aLongClickListener: View.OnLongClickListener
     ): View {
@@ -242,7 +187,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         barChartView.axisLeft.apply {
             // 最小/最大値
             axisMinimum = aMinValue
-            if (aMaxValue > 0.0) {
+            if ((aMaxValue > 0.0) and (aMaxValue > aMinValue)) {
                 axisMaximum = aMaxValue
             }
         }
@@ -269,10 +214,10 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         // 年or年度で分かれる処理
         if (mIsWorkYearMode) {
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisListForWorkYear)
-            title.text = getString(aTitleForWorkYearResId, mYear)
+            title.text = aTitleForWorkYear
         } else {
             xAxis.valueFormatter = IndexAxisValueFormatter(AnnualAnalyzeChartPresenter.mAxisList)
-            title.text = getString(aTitleResId, mYear)
+            title.text = aTitle
         }
 
         // リスナーセット
