@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -153,6 +154,25 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
             Log.i("working time bar chart long touch")
             mPresenter.showWorkingTimeDataDialog()
             true
+        }
+
+        // 凡例を追加で設定
+        chartView.findViewById<BarChart>(R.id.bar_chart).apply {
+            legend.apply {
+                isEnabled = true
+                // 所定労働時間用のエントリー
+                val entry1 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_workstatus_workingtime_title)
+                    formColor = getColor(R.color.work_status_chart)
+                }
+                // 残業時間用のエントリー
+                val entry2 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_workstatus_overtime_title)
+                    formColor = getColor(R.color.work_status_chart_another)
+                }
+                setCustom(listOf(entry1, entry2))
+                setDrawInside(false)
+            }
         }
 
         mRoot.addView(chartView)
