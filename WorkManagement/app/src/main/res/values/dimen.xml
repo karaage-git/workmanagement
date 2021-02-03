@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_top_menu_side">30dp</dimen>
+    <dimen name="chart_dialog_column_padding">10dp</dimen>
 </resources>
