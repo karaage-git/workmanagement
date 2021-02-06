@@ -23,6 +23,12 @@ interface IAnnualAnalyzeChartPresenter {
     fun showWorkingTimeDataDialog()
 
     /**
+     * 控除前の月収データを表示するためのダイアログを出力する
+     */
+    @UiThread
+    fun showIncomePerMonthBeforeDeductionDataDialog()
+
+    /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *
      * データが存在しない月は0を要素に持つ
@@ -49,14 +55,35 @@ interface IAnnualAnalyzeChartPresenter {
      *
      * @return 所定労働時間のリスト
      */
-    fun getWorkingBaseTime(): List<Double>
+    fun getWorkingBaseTimeData(): List<Double>
 
     /**
      * 残業時間のリストを取得する
      *
      * @return 残業時間のリスト
      */
-    fun getWorkingOverTime(): List<Double>
+    fun getWorkingOverTimeData(): List<Double>
+
+    /**
+     * 基本給のリストを取得する
+     *
+     * @return 基本給のリスト
+     */
+    fun getBaseIncomeData(): List<Int>
+
+    /**
+     * 残業代のリストを取得する
+     *
+     * @return 残業代のリスト
+     */
+    fun getOvertimeIncomeData(): List<Int>
+
+    /**
+     * その他収入のリストを取得する
+     *
+     * @return 残業代のリスト
+     */
+    fun getOtherIncomeData(): List<Int>
 
 
 }

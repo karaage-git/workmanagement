@@ -13,11 +13,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"/>
 
-    <TableLayout
-        android:id="@+id/table_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="15dp"
-        android:layout_gravity="center"/>
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
+        <TableLayout
+            android:id="@+id/table_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"/>
+
+   </HorizontalScrollView>
 </LinearLayout>

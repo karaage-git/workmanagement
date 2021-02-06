@@ -34,6 +34,7 @@
     <string name="zero">0</string>
     <string name="ok">OK</string>
     <string name="cancel">キャンセル</string>
+    <string name="empty" />
 
     <!--  ツールバー  -->
 
@@ -208,13 +209,19 @@
     <string name="bar_chart_description_paid_holiday_for_work_year">%1$d年度に取得した有給休暇</string>
     <string name="bar_chart_description_working_time">%1$d年の労働時間</string>
     <string name="bar_chart_description_working_time_for_work_year">%1$d年度の労働時間</string>
+    <string name="bar_chart_description_salary">%1$d年の月収（控除前）</string>
+    <string name="bar_chart_description_salary_for_work_year">%1$d年度の月収（控除前）</string>
 
     <!--  グラフ長押しダイアログ  -->
-    <string name="chart_dialog_title_month">月</string>
-    <string name="chart_dialog_title_working_day">勤務日数</string>
-    <string name="chart_dialog_title_paid_holiday">有給休暇日数</string>
-    <string name="chart_dialog_title_working_time">所定労働時間</string>
-    <string name="chart_dialog_title_overtime">残業時間</string>
+    <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
+    <string name="chart_dialog_title_paid_holiday">有給休暇日数\n単位：日</string>
+    <string name="chart_dialog_title_working_time">所定労働時間\n単位：時間</string>
+    <string name="chart_dialog_title_overtime">残業時間\n単位：時間</string>
+    <string name="chart_dialog_title_base_income">基本支給額\n単位：円</string>
+    <string name="chart_dialog_title_overtime_income">残業手当\n単位：円</string>
+    <string name="chart_dialog_title_other_income">その他\n単位：円</string>
+    <string name="chart_dialog_title_sum_time_per_month">月別合計\n単位：時間</string>
+    <string name="chart_dialog_title_sum_money_per_month">月別合計\n単位：円</string>
     <string name="chart_dialog_value_month">%1$d月</string>
     <string name="chart_dialog_value_day">%1$s日</string>
     <string name="chart_dialog_value_time">%1$s時間</string>

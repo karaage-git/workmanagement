@@ -32,4 +32,22 @@
         android:textSize="18sp"
         android:paddingHorizontal="@dimen/chart_dialog_column_padding"/>
 
+    <TextView
+        android:id="@+id/tv_row_fourth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:paddingHorizontal="@dimen/chart_dialog_column_padding"/>
+
+    <TextView
+        android:id="@+id/tv_row_fifth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:paddingHorizontal="@dimen/chart_dialog_column_padding"/>
+
 </TableRow>

@@ -58,6 +58,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         showPaidHolidayChart()
         // 労働時間のチャート
         showWorkingTimeChart()
+        // 月給（控除前）のチャート
+        showIncomePerMonthBeforeDeductionChart()
     }
 
     /**
@@ -76,6 +78,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         val barDataSets = mutableListOf<IBarDataSet>()
         val barDataSet = BarDataSet(entryList, "label")
         barDataSet.color = getColor(R.color.work_status_chart)
+        // 値の描画が重なる場合があるため、非表示にしておく
+        barDataSet.setDrawValues(false)
         barDataSets.add(barDataSet)
 
         // チャート作成
@@ -130,8 +134,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
     private fun showWorkingTimeChart() {
         // データ
-        val y1: List<Double> = mPresenter.getWorkingBaseTime()
-        val y2: List<Double> = mPresenter.getWorkingOverTime()
+        val y1: List<Double> = mPresenter.getWorkingBaseTimeData()
+        val y2: List<Double> = mPresenter.getWorkingOverTimeData()
 
         val entryList = mutableListOf<BarEntry>()
         for (i in mDataOrder.indices) {
@@ -141,6 +145,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         val barDataSets = mutableListOf<IBarDataSet>()
         val barDataSet = BarDataSet(entryList, "label")
         barDataSet.colors = listOf(getColor(R.color.work_status_chart), getColor(R.color.work_status_chart_another))
+        // 値の描画が重なる場合があるため、非表示にしておく
+        barDataSet.setDrawValues(false)
         barDataSets.add(barDataSet)
 
         // チャート作成
@@ -171,6 +177,73 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     formColor = getColor(R.color.work_status_chart_another)
                 }
                 setCustom(listOf(entry1, entry2))
+                setDrawInside(false)
+            }
+        }
+
+        mRoot.addView(chartView)
+    }
+
+    private fun showIncomePerMonthBeforeDeductionChart() {
+        // データ
+        val y1: List<Int> = mPresenter.getBaseIncomeData()
+        val y2: List<Int> = mPresenter.getOvertimeIncomeData()
+        val y3: List<Int> = mPresenter.getOtherIncomeData()
+
+        val entryList = mutableListOf<BarEntry>()
+        for (i in mDataOrder.indices) {
+            entryList.add(
+                    BarEntry(
+                            mDataOrder[i].toFloat(),
+                            floatArrayOf(y1[i].toFloat(), y2[i].toFloat(), y3[i].toFloat())
+                    )
+            )
+        }
+
+        val barDataSets = mutableListOf<IBarDataSet>()
+        val barDataSet = BarDataSet(entryList, "label")
+        barDataSet.colors = listOf(
+                getColor(R.color.income_chart),
+                getColor(R.color.income_chart_another),
+                getColor(R.color.income_chart_other)
+        )
+        // 値の描画が重なる場合があるため、非表示にしておく
+        barDataSet.setDrawValues(false)
+        barDataSets.add(barDataSet)
+
+        // チャート作成
+        val chartView = createBasicBarChart(
+                0f,
+                0f,
+                getString(R.string.bar_chart_description_salary, mYear),
+                getString(R.string.bar_chart_description_salary_for_work_year, mYear),
+                BarData(barDataSets)
+        ) {
+            Log.i("incomePerMonthBeforeDeduction bar chart long touch")
+            mPresenter.showIncomePerMonthBeforeDeductionDataDialog()
+            true
+        }
+
+        // 凡例を追加で設定
+        chartView.findViewById<BarChart>(R.id.bar_chart).apply {
+            legend.apply {
+                isEnabled = true
+                // 基本給のエントリー
+                val entry1 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_income_baseincome_title)
+                    formColor = getColor(R.color.income_chart)
+                }
+                // 残業代のエントリー
+                val entry2 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_income_overtime_title)
+                    formColor = getColor(R.color.income_chart_another)
+                }
+                // その他収入ののエントリー
+                val entry3 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_income_other_title)
+                    formColor = getColor(R.color.income_chart_other)
+                }
+                setCustom(listOf(entry1, entry2, entry3))
                 setDrawInside(false)
             }
         }
