@@ -248,7 +248,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     barData
             ) {
                 Log.i("bonusPerMonthBeforeDeduction bar chart long touch")
-                //mPresenter.showBonusPerMonthBeforeDeductionDataDialog()
+                mPresenter.showBonusPerMonthBeforeDeductionDataDialog()
                 true
             }
 

@@ -310,7 +310,52 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
     }
 
     override fun showBonusPerMonthBeforeDeductionDataDialog() {
-        TODO("Not yet implemented")
+        mActivity.get()?.let { activity ->
+            val rowDataList: MutableList<FourColumnData> = mutableListOf()
+            for (data in mBonusInfoList) {
+                // データ用の行
+                val rowData = FourColumnData(
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_month,
+                                data.month
+                        ),
+                        NumberFormatUtil.separateThousand(data.baseIncome.toString()),
+                        NumberFormatUtil.separateThousand(data.otherIncome.toString()),
+                        NumberFormatUtil.separateThousand(
+                                (data.baseIncome + data.otherIncome).toString()
+                        )
+                )
+                rowDataList.add(rowData)
+            }
+
+            // ダイアログ用のViewを取得
+            val view = createFourColumnDataView(
+                    activity.getActivityContext(),
+                    activity.getLayoutInflater(),
+                    true,
+                    R.color.income_basic,
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus_for_work_year,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(R.string.empty),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_base_income
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_other_income
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_sum_money_per_month
+                    ),
+                    rowDataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
     }
 
     /**
