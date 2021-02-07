@@ -60,6 +60,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         showWorkingTimeChart()
         // 月給（控除前）のチャート
         showIncomePerMonthBeforeDeductionChart()
+        // ボーナス（控除前）のチャート
+        showBonusPerMonthBeforeDeductionChart()
     }
 
     /**
@@ -238,12 +240,72 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     label = getString(R.string.layoutitem_income_overtime_title)
                     formColor = getColor(R.color.income_chart_another)
                 }
-                // その他収入ののエントリー
+                // その他収入のエントリー
                 val entry3 = LegendEntry().apply {
                     label = getString(R.string.layoutitem_income_other_title)
                     formColor = getColor(R.color.income_chart_other)
                 }
                 setCustom(listOf(entry1, entry2, entry3))
+                setDrawInside(false)
+            }
+        }
+
+        mRoot.addView(chartView)
+    }
+
+    private fun showBonusPerMonthBeforeDeductionChart() {
+        // データ
+        val y1: List<Int> = mPresenter.getBonusIncomeData()
+        val y2: List<Int> = mPresenter.getOtherBonusIncomeData()
+
+        val entryList = mutableListOf<BarEntry>()
+        for (i in mDataOrder.indices) {
+            entryList.add(
+                    BarEntry(
+                            mDataOrder[i].toFloat(),
+                            floatArrayOf(y1[i].toFloat(), y2[i].toFloat())
+                    )
+            )
+        }
+
+        val barDataSets = mutableListOf<IBarDataSet>()
+        val barDataSet = BarDataSet(entryList, "label")
+        barDataSet.colors = listOf(
+                getColor(R.color.income_chart),
+                getColor(R.color.income_chart_other)
+        )
+        // 値の描画が重なる場合があるため、非表示にしておく
+        barDataSet.setDrawValues(false)
+        barDataSets.add(barDataSet)
+
+        // チャート作成
+        val chartView = createBasicBarChart(
+                0f,
+                0f,
+                getString(R.string.bar_chart_description_bonus, mYear),
+                getString(R.string.bar_chart_description_bonus_for_work_year, mYear),
+                BarData(barDataSets)
+        ) {
+            Log.i("bonusPerMonthBeforeDeduction bar chart long touch")
+            //mPresenter.showBonusPerMonthBeforeDeductionDataDialog()
+            true
+        }
+
+        // 凡例を追加で設定
+        chartView.findViewById<BarChart>(R.id.bar_chart).apply {
+            legend.apply {
+                isEnabled = true
+                // 基本支給のエントリー
+                val entry1 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_income_baseincome_title)
+                    formColor = getColor(R.color.income_chart)
+                }
+                // その他収入のエントリー
+                val entry2 = LegendEntry().apply {
+                    label = getString(R.string.layoutitem_income_other_title)
+                    formColor = getColor(R.color.income_chart_other)
+                }
+                setCustom(listOf(entry1, entry2))
                 setDrawInside(false)
             }
         }

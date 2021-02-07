@@ -309,6 +309,10 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         }
     }
 
+    override fun showBonusPerMonthBeforeDeductionDataDialog() {
+        TODO("Not yet implemented")
+    }
+
     /**
      * 2列データ表示用のView作成メソッド
      *
@@ -720,6 +724,22 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
     override fun getOtherIncomeData(): List<Int> {
         val retList: MutableList<Int> = mutableListOf()
         for (data in mSalaryInfoList) {
+            retList.add(data.otherIncome)
+        }
+        return retList
+    }
+
+    override fun getBonusIncomeData(): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        for (data in mBonusInfoList) {
+            retList.add(data.baseIncome)
+        }
+        return retList
+    }
+
+    override fun getOtherBonusIncomeData(): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        for (data in mBonusInfoList) {
             retList.add(data.otherIncome)
         }
         return retList

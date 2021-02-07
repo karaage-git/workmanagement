@@ -211,6 +211,8 @@
     <string name="bar_chart_description_working_time_for_work_year">%1$d年度の労働時間</string>
     <string name="bar_chart_description_salary">%1$d年の月収（控除前）</string>
     <string name="bar_chart_description_salary_for_work_year">%1$d年度の月収（控除前）</string>
+    <string name="bar_chart_description_bonus">%1$d年のボーナス（控除前）</string>
+    <string name="bar_chart_description_bonus_for_work_year">%1$d年度のボーナス（控除前）</string>
 
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
