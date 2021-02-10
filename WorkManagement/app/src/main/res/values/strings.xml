@@ -213,6 +213,21 @@
     <string name="bar_chart_description_salary_for_work_year">%1$d年度の月収（控除前）</string>
     <string name="bar_chart_description_bonus">%1$d年のボーナス（控除前）</string>
     <string name="bar_chart_description_bonus_for_work_year">%1$d年度のボーナス（控除前）</string>
+    <string name="bar_chart_description_deduction">%1$d年の月別控除</string>
+    <string name="bar_chart_description_deduction_for_work_year">%1$d年度の月別控除</string>
+
+    <!--  凡例用のラベル  -->
+    <string name="bar_chart_label_work_time">所定労働時間</string>
+    <string name="bar_chart_label_overtime">残業時間</string>
+    <string name="bar_chart_label_base">基本支給</string>
+    <string name="bar_chart_label_overtime_salary">残業手当</string>
+    <string name="bar_chart_label_health_insurance">健保</string>
+    <string name="bar_chart_label_long_term_care_insurance">介保</string>
+    <string name="bar_chart_label_pension">年保</string>
+    <string name="bar_chart_label_employment_insurance">雇保</string>
+    <string name="bar_chart_label_income_tax">所得税</string>
+    <string name="bar_chart_label_resident_tax">住民税</string>
+    <string name="bar_chart_label_other">その他</string>
 
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
@@ -221,7 +236,13 @@
     <string name="chart_dialog_title_overtime">残業時間\n単位：時間</string>
     <string name="chart_dialog_title_base_income">基本支給額\n単位：円</string>
     <string name="chart_dialog_title_overtime_income">残業手当\n単位：円</string>
-    <string name="chart_dialog_title_other_income">その他\n単位：円</string>
+    <string name="chart_dialog_title_health_insurance">健康保険\n単位：円</string>
+    <string name="chart_dialog_title_long_term_care_insurance">介護保険\n単位：円</string>
+    <string name="chart_dialog_title_pension">年金保険\n単位：円</string>
+    <string name="chart_dialog_title_employment_insurance">雇用保険\n単位：円</string>
+    <string name="chart_dialog_title_income_tax">所得税\n単位：円</string>
+    <string name="chart_dialog_title_resident_tax">住民税\n単位：円</string>
+    <string name="chart_dialog_title_other">その他\n単位：円</string>
     <string name="chart_dialog_title_sum_time_per_month">月別合計\n単位：時間</string>
     <string name="chart_dialog_title_sum_money_per_month">月別合計\n単位：円</string>
     <string name="chart_dialog_value_month">%1$d月</string>

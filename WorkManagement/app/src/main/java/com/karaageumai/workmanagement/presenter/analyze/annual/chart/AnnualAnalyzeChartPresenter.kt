@@ -301,7 +301,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                     activity.getActivityContext().getString(R.string.empty),
                     activity.getActivityContext().getString(R.string.chart_dialog_title_base_income),
                     activity.getActivityContext().getString(R.string.chart_dialog_title_overtime_income),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_other_income),
+                    activity.getActivityContext().getString(R.string.chart_dialog_title_other),
                     activity.getActivityContext().getString(R.string.chart_dialog_title_sum_money_per_month),
                     rowDataList
             )
@@ -347,7 +347,82 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.chart_dialog_title_base_income
                     ),
                     activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_other_income
+                            R.string.chart_dialog_title_other
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_sum_money_per_month
+                    ),
+                    rowDataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
+    override fun showDeductionDataDialog() {
+        mActivity.get()?.let { activity ->
+            val rowDataList: MutableList<NineColumnData> = mutableListOf()
+            for (data in mSalaryInfoList) {
+                // データ用の行
+                val rowData = NineColumnData(
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_value_month,
+                                data.month
+                        ),
+                        NumberFormatUtil.separateThousand(data.healthInsuranceFee.toString()),
+                        NumberFormatUtil.separateThousand(data.longTermCareInsuranceFee.toString()),
+                        NumberFormatUtil.separateThousand(data.pensionFee.toString()),
+                        NumberFormatUtil.separateThousand(data.employmentInsuranceFee.toString()),
+                        NumberFormatUtil.separateThousand(data.incomeTax.toString()),
+                        NumberFormatUtil.separateThousand(data.residentTax.toString()),
+                        NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
+                        NumberFormatUtil.separateThousand(
+                                (data.healthInsuranceFee
+                                        + data.longTermCareInsuranceFee
+                                        + data.pensionFee
+                                        + data.employmentInsuranceFee
+                                        + data.incomeTax
+                                        + data.residentTax
+                                        + data.otherDeduction).toString()
+                        )
+                )
+                rowDataList.add(rowData)
+            }
+
+            // ダイアログ用のViewを取得
+            val view = createNineColumnDataView(
+                    activity.getActivityContext(),
+                    activity.getLayoutInflater(),
+                    true,
+                    R.color.deduction_basic,
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_deduction,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_deduction_for_work_year,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(R.string.empty),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_health_insurance
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_long_term_care_insurance
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_pension
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_employment_insurance
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_income_tax
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_resident_tax
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.chart_dialog_title_other
                     ),
                     activity.getActivityContext().getString(
                             R.string.chart_dialog_title_sum_money_per_month
@@ -707,6 +782,137 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
     }
 
     /**
+     * 9列データ表示用のView作成メソッド
+     *
+     * @param aContext
+     * @param aLayoutInflater
+     * @param aIsScrollable
+     * @param aSeparateColor 表の偶数行に使用する背景色
+     * @param aTitle 表のタイトル
+     * @param aTitleForWorkYear 表のタイトル（年度用）
+     * @param aFirstColumnTitle 1列目のColumn名
+     * @param aSecondColumnTitle  2列目のColumn名
+     * @param aThirdColumnTitle  3列目のColumn名
+     * @param aFourthColumnTitle  4列目のColumn名
+     * @param aFifthColumnTitle 5列目のColumn名
+     * @param aSixthColumnTitle 6列目のColumn名
+     * @param aSeventhColumnTitle 7列目のColumn名
+     * @param aEighthColumnTitle 8列目のColumn名
+     * @param aNinthColumnTitle 9列目のColumn名
+     * @param aDataList データリスト
+     */
+    private fun createNineColumnDataView(
+            aContext: Context,
+            aLayoutInflater: LayoutInflater,
+            aIsScrollable: Boolean,
+            aSeparateColor: Int,
+            aTitle: String,
+            aTitleForWorkYear: String,
+            aFirstColumnTitle: String,
+            aSecondColumnTitle: String,
+            aThirdColumnTitle: String,
+            aFourthColumnTitle: String,
+            aFifthColumnTitle: String,
+            aSixthColumnTitle: String,
+            aSeventhColumnTitle: String,
+            aEighthColumnTitle: String,
+            aNinthColumnTitle: String,
+            aDataList: List<NineColumnData>
+    ): View {
+        // ダイアログ用のViewを取得
+        val view = createDialogView(aContext, aIsScrollable)
+
+        // タイトルをセット
+        view.findViewById<TextView>(R.id.tv_title).text =
+                if (mIsWorkYearMode) {
+                    aTitleForWorkYear
+                } else {
+                    aTitle
+                }
+        // 行を追加するためのテーブル
+        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
+        // タイトル行
+        val titleRow = aLayoutInflater.inflate(
+                R.layout.layout_dialog_chart_nine_column,
+                tableLayout,
+                false
+        ).apply {
+            findViewById<TextView>(R.id.tv_row_first).apply {
+                text = aFirstColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_second).apply {
+                text = aSecondColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_third).apply {
+                text = aThirdColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_fourth).apply {
+                text = aFourthColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_fifth).apply {
+                text = aFifthColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_sixth).apply {
+                text = aSixthColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_seventh).apply {
+                text = aSeventhColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_eighth).apply {
+                text = aEighthColumnTitle
+            }
+            findViewById<TextView>(R.id.tv_row_ninth).apply {
+                text = aNinthColumnTitle
+            }
+        }
+        // タイトル追加
+        tableLayout.addView(titleRow)
+
+        // データをセット
+        for ((count, data) in aDataList.withIndex()) {
+            // データ用の行
+            val dataRow = aLayoutInflater.inflate(
+                    R.layout.layout_dialog_chart_nine_column,
+                    tableLayout,
+                    false
+            ).apply {
+                findViewById<TextView>(R.id.tv_row_first).apply {
+                    text = data.firstColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_second).apply {
+                    text = data.secondColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_third).apply {
+                    text = data.thirdColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_fourth).apply {
+                    text = data.fourthColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_fifth).apply {
+                    text = data.fifthColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_sixth).apply {
+                    text = data.sixthColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_seventh).apply {
+                    text = data.seventhColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_eighth).apply {
+                    text = data.eighthColumnValue
+                }
+                findViewById<TextView>(R.id.tv_row_ninth).apply {
+                    text = data.ninthColumnValue
+                }
+                if ((count % 2) == 0) {
+                    setBackgroundColor(aContext.getColor(aSeparateColor))
+                }
+            }
+            tableLayout.addView(dataRow)
+        }
+        return view
+    }
+
+    /**
      * Dialog表示
      */
     private fun showDialog(aContext: Context, aView: View) {
@@ -750,10 +956,16 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         return retList
     }
 
-    override fun getBaseIncomeData(): List<Int> {
+    override fun getBaseIncomeData(aIsBonus: Boolean): List<Int> {
         val retList: MutableList<Int> = mutableListOf()
-        for (data in mSalaryInfoList) {
-            retList.add(data.baseIncome)
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.baseIncome)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.baseIncome)
+            }
         }
         return retList
     }
@@ -766,26 +978,108 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         return retList
     }
 
-    override fun getOtherIncomeData(): List<Int> {
+    override fun getOtherIncomeData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.otherIncome)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.otherIncome)
+            }
+        }
+        return retList
+    }
+
+    override fun getHealthInsuranceFeeData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.healthInsuranceFee)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.healthInsuranceFee)
+            }
+        }
+        return retList
+    }
+
+    override fun getLongTermCareInsuranceFeeData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.longTermCareInsuranceFee)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.longTermCareInsuranceFee)
+            }
+        }
+        return retList
+    }
+
+    override fun getPensionFeeData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.pensionFee)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.pensionFee)
+            }
+        }
+        return retList
+    }
+
+    override fun getEmploymentInsuranceFeeData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.employmentInsuranceFee)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.employmentInsuranceFee)
+            }
+        }
+        return retList
+    }
+
+    override fun getIncomeTaxData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.incomeTax)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.incomeTax)
+            }
+        }
+        return retList
+    }
+
+    override fun getResidentTaxData(): List<Int> {
         val retList: MutableList<Int> = mutableListOf()
         for (data in mSalaryInfoList) {
-            retList.add(data.otherIncome)
+            retList.add(data.residentTax)
         }
         return retList
     }
 
-    override fun getBonusIncomeData(): List<Int> {
+    override fun getOtherDeductionData(aIsBonus: Boolean): List<Int> {
         val retList: MutableList<Int> = mutableListOf()
-        for (data in mBonusInfoList) {
-            retList.add(data.baseIncome)
-        }
-        return retList
-    }
-
-    override fun getOtherBonusIncomeData(): List<Int> {
-        val retList: MutableList<Int> = mutableListOf()
-        for (data in mBonusInfoList) {
-            retList.add(data.otherIncome)
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                retList.add(data.otherDeduction)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                retList.add(data.otherDeduction)
+            }
         }
         return retList
     }
@@ -837,5 +1131,20 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
             val thirdColumnValue: String,
             val fourthColumnValue: String,
             val fifthColumnValue: String
+    )
+
+    /**
+     * 9列で表せるデータを扱うためのクラス
+     */
+    data class NineColumnData(
+            val firstColumnValue: String,
+            val secondColumnValue: String,
+            val thirdColumnValue: String,
+            val fourthColumnValue: String,
+            val fifthColumnValue: String,
+            val sixthColumnValue: String,
+            val seventhColumnValue: String,
+            val eighthColumnValue: String,
+            val ninthColumnValue: String
     )
 }

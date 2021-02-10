@@ -10,15 +10,16 @@
     <color name="dimgray">#696969</color>
     <color name="red">#FF0000</color>
     <color name="work_status_basic">#E6FFE9</color>
-    <color name="work_status_chart">#78FF94</color>
-    <color name="work_status_chart_another">#FF78E3</color>
     <color name="income_basic">#FFDBC9</color>
-    <color name="income_chart">#FF8856</color>
-    <color name="income_chart_another">#56CDFF</color>
-    <color name="income_chart_other">#C0C0C0</color>
     <color name="deduction_basic">#D9E5FF</color>
-    <color name="deduction_chart">#75A9FF</color>
     <color name="annual_analyze">#9932CC</color>
     <color name="annual_analyze_row_0">#CC99FF</color>
     <color name="annual_analyze_row_1">#CCCCFF</color>
+    <color name="chart_0">#A178DE</color>
+    <color name="chart_1">#51B7E7</color>
+    <color name="chart_2">#A9CE80</color>
+    <color name="chart_3">#FBDD04</color>
+    <color name="chart_4">#FDA477</color>
+    <color name="chart_5">#FC7679</color>
+    <color name="chart_other">#C0C0C0</color>
 </resources>

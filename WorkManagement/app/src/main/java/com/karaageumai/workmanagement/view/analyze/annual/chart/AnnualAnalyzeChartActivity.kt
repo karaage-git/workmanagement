@@ -62,6 +62,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         showIncomePerMonthBeforeDeductionChart()
         // ボーナス（控除前）のチャート
         showBonusPerMonthBeforeDeductionChart()
+        // 月別控除のチャート
+        showDeductionChart()
     }
 
     /**
@@ -71,7 +73,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         // データ
         val barData = createBarData(
                 listOf(mPresenter.getWorkingDayData()),
-                listOf(getColor(R.color.work_status_chart))
+                listOf(getColor(R.color.chart_0))
         )
 
         barData?.let {
@@ -99,7 +101,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         // データ
         val barData = createBarData(
                 listOf(mPresenter.getPaidHolidayData()),
-                listOf(getColor(R.color.work_status_chart))
+                listOf(getColor(R.color.chart_0))
         )
 
         barData?.let {
@@ -127,8 +129,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                         mPresenter.getWorkingOverTimeData()
                 ),
                 listOf(
-                        getColor(R.color.work_status_chart),
-                        getColor(R.color.work_status_chart_another)
+                        getColor(R.color.chart_0),
+                        getColor(R.color.chart_1)
                 )
         )
 
@@ -152,13 +154,13 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     isEnabled = true
                     // 所定労働時間用のエントリー
                     val entry1 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_workstatus_workingtime_title)
-                        formColor = getColor(R.color.work_status_chart)
+                        label = getString(R.string.bar_chart_label_work_time)
+                        formColor = getColor(R.color.chart_0)
                     }
                     // 残業時間用のエントリー
                     val entry2 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_workstatus_overtime_title)
-                        formColor = getColor(R.color.work_status_chart_another)
+                        label = getString(R.string.bar_chart_label_overtime)
+                        formColor = getColor(R.color.chart_1)
                     }
                     setCustom(listOf(entry1, entry2))
                     setDrawInside(false)
@@ -172,14 +174,14 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         // データ
         val barData = createBarData(
                 listOf(
-                        mPresenter.getBaseIncomeData(),
+                        mPresenter.getBaseIncomeData(false),
                         mPresenter.getOvertimeIncomeData(),
-                        mPresenter.getOtherIncomeData()
+                        mPresenter.getOtherIncomeData(false)
                 ),
                 listOf(
-                        getColor(R.color.income_chart),
-                        getColor(R.color.income_chart_another),
-                        getColor(R.color.income_chart_other)
+                        getColor(R.color.chart_0),
+                        getColor(R.color.chart_1),
+                        getColor(R.color.chart_other)
                 )
         )
 
@@ -203,18 +205,18 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     isEnabled = true
                     // 基本給のエントリー
                     val entry1 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_income_baseincome_title)
-                        formColor = getColor(R.color.income_chart)
+                        label = getString(R.string.bar_chart_label_base)
+                        formColor = getColor(R.color.chart_0)
                     }
                     // 残業代のエントリー
                     val entry2 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_income_overtime_title)
-                        formColor = getColor(R.color.income_chart_another)
+                        label = getString(R.string.bar_chart_label_overtime_salary)
+                        formColor = getColor(R.color.chart_1)
                     }
                     // その他収入のエントリー
                     val entry3 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_income_other_title)
-                        formColor = getColor(R.color.income_chart_other)
+                        label = getString(R.string.bar_chart_label_other)
+                        formColor = getColor(R.color.chart_other)
                     }
                     setCustom(listOf(entry1, entry2, entry3))
                     setDrawInside(false)
@@ -229,12 +231,12 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         // データ
         val barData = createBarData(
                 listOf(
-                        mPresenter.getBonusIncomeData(),
-                        mPresenter.getOtherBonusIncomeData()
+                        mPresenter.getBaseIncomeData(true),
+                        mPresenter.getOtherIncomeData(true)
                 ),
                 listOf(
-                        getColor(R.color.income_chart),
-                        getColor(R.color.income_chart_other)
+                        getColor(R.color.chart_0),
+                        getColor(R.color.chart_other)
                 )
         )
 
@@ -258,15 +260,93 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     isEnabled = true
                     // 基本支給のエントリー
                     val entry1 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_income_baseincome_title)
-                        formColor = getColor(R.color.income_chart)
+                        label = getString(R.string.bar_chart_label_base)
+                        formColor = getColor(R.color.chart_0)
                     }
                     // その他収入のエントリー
                     val entry2 = LegendEntry().apply {
-                        label = getString(R.string.layoutitem_income_other_title)
-                        formColor = getColor(R.color.income_chart_other)
+                        label = getString(R.string.bar_chart_label_other)
+                        formColor = getColor(R.color.chart_other)
                     }
                     setCustom(listOf(entry1, entry2))
+                    setDrawInside(false)
+                }
+            }
+            mRoot.addView(chartView)
+        }
+    }
+
+    private fun showDeductionChart() {
+        // データ
+        val barData = createBarData(
+                listOf(
+                        mPresenter.getHealthInsuranceFeeData(false),
+                        mPresenter.getLongTermCareInsuranceFeeData(false),
+                        mPresenter.getPensionFeeData(false),
+                        mPresenter.getEmploymentInsuranceFeeData(false),
+                        mPresenter.getIncomeTaxData(false),
+                        mPresenter.getResidentTaxData(),
+                        mPresenter.getOtherDeductionData(false)
+                ),
+                listOf(
+                        getColor(R.color.chart_0),
+                        getColor(R.color.chart_1),
+                        getColor(R.color.chart_2),
+                        getColor(R.color.chart_3),
+                        getColor(R.color.chart_4),
+                        getColor(R.color.chart_5),
+                        getColor(R.color.chart_other),
+                )
+        )
+
+        barData?.let {
+            // チャート作成
+            val chartView = createBasicBarChart(
+                    0f,
+                    0f,
+                    getString(R.string.bar_chart_description_deduction, mYear),
+                    getString(R.string.bar_chart_description_deduction_for_work_year, mYear),
+                    barData
+            ) {
+                Log.i("deductionPerMonth bar chart long touch")
+                mPresenter.showDeductionDataDialog()
+                true
+            }
+
+            // 凡例を追加で設定
+            chartView.findViewById<BarChart>(R.id.bar_chart).apply {
+                legend.apply {
+                    isEnabled = true
+                    // 健康保険のエントリー
+                    val entry1 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_health_insurance)
+                        formColor = getColor(R.color.chart_0)
+                    }
+                    val entry2 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_long_term_care_insurance)
+                        formColor = getColor(R.color.chart_1)
+                    }
+                    val entry3 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_pension)
+                        formColor = getColor(R.color.chart_2)
+                    }
+                    val entry4 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_employment_insurance)
+                        formColor = getColor(R.color.chart_3)
+                    }
+                    val entry5 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_income_tax)
+                        formColor = getColor(R.color.chart_4)
+                    }
+                    val entry6 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_resident_tax)
+                        formColor = getColor(R.color.chart_5)
+                    }
+                    val entry7 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_other)
+                        formColor = getColor(R.color.chart_other)
+                    }
+                    setCustom(listOf(entry1, entry2, entry3, entry4, entry5, entry6, entry7))
                     setDrawInside(false)
                 }
             }
