@@ -2,9 +2,10 @@ package com.karaageumai.workmanagement.presenter.analyze.annual.chart
 
 import android.app.AlertDialog
 import android.content.Context
-import android.view.LayoutInflater
+import android.view.Gravity
 import android.view.View
 import android.widget.TableLayout
+import android.widget.TableRow
 import android.widget.TextView
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
@@ -145,26 +146,30 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showWorkingDayDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<TwoColumnData> = mutableListOf()
-            for (data in mSalaryInfoList) {
-                // データ用の行
-                val rowData = TwoColumnData(
-                        activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
-                        ),
-                        activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_day,
-                                (data.workingDay / 10.0).toString()
-                        )
-                )
-                rowDataList.add(rowData)
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_working_day)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 勤務日数
+                            (data.workingDay / 10.0).toString()
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createTwoColumnRowDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     false,
                     R.color.work_status_basic,
                     activity.getActivityContext().getString(
@@ -175,9 +180,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_working_day_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_working_day),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
@@ -185,26 +188,30 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showPaidHolidayDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<TwoColumnData> = mutableListOf()
-            for (data in mSalaryInfoList) {
-                // データ用の行
-                val rowData = TwoColumnData(
-                        activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
-                        ),
-                        activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_day,
-                                (data.paidHolidays / 10.0).toString()
-                        )
-                )
-                rowDataList.add(rowData)
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_paid_holiday)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 有給取得数
+                            (data.paidHolidays / 10.0).toString()
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createTwoColumnRowDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     false,
                     R.color.work_status_basic,
                     activity.getActivityContext().getString(
@@ -215,9 +222,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_paid_holiday_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_paid_holiday),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
@@ -225,25 +230,36 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showWorkingTimeDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<FourColumnData> = mutableListOf()
-            for (data in mSalaryInfoList) {
-                // データ用の行
-                val rowData = FourColumnData(
-                        activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
-                        ),
-                        (data.workingTime / 10.0).toString(),
-                        (data.overtime / 10.0).toString(),
-                        ((data.workingTime + data.overtime) / 10.0).toString()
-                )
-                rowDataList.add(rowData)
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_working_time),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_overtime),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_sum_time_per_month)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 所定労働時間
+                            (data.workingTime / 10.0).toString(),
+                            // 残業時間
+                            (data.overtime / 10.0).toString(),
+                            // 月別の合計労働時間
+                            ((data.workingTime + data.overtime) / 10.0).toString()
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createFourColumnDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     true,
                     R.color.work_status_basic,
                     activity.getActivityContext().getString(
@@ -254,11 +270,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_working_time_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_working_time),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_overtime),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_sum_time_per_month),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
@@ -266,28 +278,51 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showIncomePerMonthBeforeDeductionDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<FiveColumnData> = mutableListOf()
-            for (data in mSalaryInfoList) {
-                // データ用の行
-                val rowData = FiveColumnData(
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
                         activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
+                                R.string.chart_dialog_title_base_income
                         ),
-                        NumberFormatUtil.separateThousand(data.baseIncome.toString()),
-                        NumberFormatUtil.separateThousand(data.overtimeIncome.toString()),
-                        NumberFormatUtil.separateThousand(data.otherIncome.toString()),
-                        NumberFormatUtil.separateThousand(
-                                (data.baseIncome + data.overtimeIncome + data.otherIncome).toString()
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_overtime_income
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_other
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_sum_money_per_month
                         )
-                )
-                rowDataList.add(rowData)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 基本給
+                            NumberFormatUtil.separateThousand(data.baseIncome.toString()),
+                            // 残業手当
+                            NumberFormatUtil.separateThousand(data.overtimeIncome.toString()),
+                            // その他
+                            NumberFormatUtil.separateThousand(data.otherIncome.toString()),
+                            // 合計
+                            NumberFormatUtil.separateThousand(
+                                    (data.baseIncome
+                                            + data.overtimeIncome
+                                            + data.otherIncome).toString()
+                            )
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createFiveColumnDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     true,
                     R.color.income_basic,
                     activity.getActivityContext().getString(
@@ -298,12 +333,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_salary_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_base_income),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_overtime_income),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_other),
-                    activity.getActivityContext().getString(R.string.chart_dialog_title_sum_money_per_month),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
@@ -311,27 +341,44 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showBonusPerMonthBeforeDeductionDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<FourColumnData> = mutableListOf()
-            for (data in mBonusInfoList) {
-                // データ用の行
-                val rowData = FourColumnData(
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
                         activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
+                                R.string.chart_dialog_title_base_income
                         ),
-                        NumberFormatUtil.separateThousand(data.baseIncome.toString()),
-                        NumberFormatUtil.separateThousand(data.otherIncome.toString()),
-                        NumberFormatUtil.separateThousand(
-                                (data.baseIncome + data.otherIncome).toString()
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_other
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_sum_money_per_month
                         )
-                )
-                rowDataList.add(rowData)
+                ))
+                // データ行
+                for (data in mBonusInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 基本支給
+                            NumberFormatUtil.separateThousand(data.baseIncome.toString()),
+                            // その他
+                            NumberFormatUtil.separateThousand(data.otherIncome.toString()),
+                            // 合計
+                            NumberFormatUtil.separateThousand(
+                                    (data.baseIncome + data.otherIncome).toString()
+                            )
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createFourColumnDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     true,
                     R.color.income_basic,
                     activity.getActivityContext().getString(
@@ -342,17 +389,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_bonus_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_base_income
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_other
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_sum_money_per_month
-                    ),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
@@ -360,38 +397,75 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
 
     override fun showDeductionDataDialog() {
         mActivity.get()?.let { activity ->
-            val rowDataList: MutableList<NineColumnData> = mutableListOf()
-            for (data in mSalaryInfoList) {
-                // データ用の行
-                val rowData = NineColumnData(
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
                         activity.getActivityContext().getString(
-                                R.string.chart_dialog_value_month,
-                                data.month
+                                R.string.chart_dialog_title_health_insurance
                         ),
-                        NumberFormatUtil.separateThousand(data.healthInsuranceFee.toString()),
-                        NumberFormatUtil.separateThousand(data.longTermCareInsuranceFee.toString()),
-                        NumberFormatUtil.separateThousand(data.pensionFee.toString()),
-                        NumberFormatUtil.separateThousand(data.employmentInsuranceFee.toString()),
-                        NumberFormatUtil.separateThousand(data.incomeTax.toString()),
-                        NumberFormatUtil.separateThousand(data.residentTax.toString()),
-                        NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
-                        NumberFormatUtil.separateThousand(
-                                (data.healthInsuranceFee
-                                        + data.longTermCareInsuranceFee
-                                        + data.pensionFee
-                                        + data.employmentInsuranceFee
-                                        + data.incomeTax
-                                        + data.residentTax
-                                        + data.otherDeduction).toString()
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_long_term_care_insurance
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_pension
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_employment_insurance
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_income_tax
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_resident_tax
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_other
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_sum_money_per_month
                         )
-                )
-                rowDataList.add(rowData)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 健康保険
+                            NumberFormatUtil.separateThousand(data.healthInsuranceFee.toString()),
+                            // 介護保険
+                            NumberFormatUtil.separateThousand(data.longTermCareInsuranceFee.toString()),
+                            // 年金保険
+                            NumberFormatUtil.separateThousand(data.pensionFee.toString()),
+                            // 雇用保険
+                            NumberFormatUtil.separateThousand(data.employmentInsuranceFee.toString()),
+                            // 所得税
+                            NumberFormatUtil.separateThousand(data.incomeTax.toString()),
+                            // 住民税
+                            NumberFormatUtil.separateThousand(data.residentTax.toString()),
+                            // その他
+                            NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
+                            // 合計
+                            NumberFormatUtil.separateThousand(
+                                    (data.healthInsuranceFee
+                                            + data.longTermCareInsuranceFee
+                                            + data.pensionFee
+                                            + data.employmentInsuranceFee
+                                            + data.incomeTax
+                                            + data.residentTax
+                                            + data.otherDeduction).toString()
+                            )
+                    ))
+                }
             }
 
-            // ダイアログ用のViewを取得
-            val view = createNineColumnDataView(
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
                     activity.getActivityContext(),
-                    activity.getLayoutInflater(),
                     true,
                     R.color.deduction_basic,
                     activity.getActivityContext().getString(
@@ -402,63 +476,26 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             R.string.bar_chart_description_deduction_for_work_year,
                             mYear
                     ),
-                    activity.getActivityContext().getString(R.string.empty),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_health_insurance
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_long_term_care_insurance
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_pension
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_employment_insurance
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_income_tax
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_resident_tax
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_other
-                    ),
-                    activity.getActivityContext().getString(
-                            R.string.chart_dialog_title_sum_money_per_month
-                    ),
-                    rowDataList
+                    dataList
             )
             showDialog(activity.getActivityContext(), view)
         }
     }
 
-    /**
-     * 2列データ表示用のView作成メソッド
-     *
-     * @param aContext
-     * @param aLayoutInflater
-     * @param aIsScrollable
-     * @param aSeparateColor 表の偶数行に使用する背景色
-     * @param aTitle 表のタイトル
-     * @param aTitleForWorkYear 表のタイトル（年度用）
-     * @param aFirstColumnTitle 1列目のColumn名
-     * @param aSecondColumnTitle  2列目のColumn名
-     * @param aDataList データリスト
-     */
-    private fun createTwoColumnRowDataView(
+    private fun createDataDetailsView(
             aContext: Context,
-            aLayoutInflater: LayoutInflater,
             aIsScrollable: Boolean,
             aSeparateColor: Int,
             aTitle: String,
             aTitleForWorkYear: String,
-            aFirstColumnTitle: String,
-            aSecondColumnTitle: String,
-            aDataList: List<TwoColumnData>
+            aDataList: List<List<String>>
     ): View {
         // ダイアログ用のViewを取得
-        val view = createDialogView(aContext, aIsScrollable)
+        val view = if (aIsScrollable) {
+            View.inflate(aContext, R.layout.layout_dialog_chart_data_scrollable, null)
+        } else {
+            View.inflate(aContext, R.layout.layout_dialog_chart_data, null)
+        }
 
         // タイトルをセット
         view.findViewById<TextView>(R.id.tv_title).text =
@@ -469,445 +506,32 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                 }
         // 行を追加するためのテーブル
         val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-        // タイトル行
-        val titleRow = aLayoutInflater.inflate(
-                R.layout.layout_dialog_chart_two_column,
-                tableLayout,
-                false
-        ).apply {
-            findViewById<TextView>(R.id.tv_row_first).apply {
-                text = aFirstColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_second).apply {
-                text = aSecondColumnTitle
-            }
-        }
-        // タイトル追加
-        tableLayout.addView(titleRow)
 
         // データをセット
-        for ((count, data) in aDataList.withIndex()) {
-            // データ用の行
-            val dataRow = aLayoutInflater.inflate(
-                    R.layout.layout_dialog_chart_two_column,
-                    tableLayout,
-                    false
-            ).apply {
-                findViewById<TextView>(R.id.tv_row_first).apply {
-                    text = data.firstColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_second).apply {
-                    text = data.secondColumnValue
-                }
-                if ((count % 2) == 0) {
-                    setBackgroundColor(aContext.getColor(aSeparateColor))
-                }
-            }
-            tableLayout.addView(dataRow)
-        }
-        return view
-    }
+        for ((count, rowData) in aDataList.withIndex()) {
+            val tableRowLayout = View.inflate(
+                    aContext,
+                    R.layout.layout_dialog_chart_table_row,
+                    null
+            )
+            val tableRow: TableRow = tableRowLayout.findViewById(R.id.tr_chart)
+            for (data in rowData) {
+                val column = View.inflate(aContext, R.layout.layout_dialog_chart_table_column, null)
+                val textView: TextView = column.findViewById(R.id.tv_column)
+                textView.text = data
 
-    /**
-     * 3列データ表示用のView作成メソッド
-     *
-     * @param aContext
-     * @param aLayoutInflater
-     * @param aIsScrollable
-     * @param aSeparateColor 表の偶数行に使用する背景色
-     * @param aTitle 表のタイトル
-     * @param aTitleForWorkYear 表のタイトル（年度用）
-     * @param aFirstColumnTitle 1列目のColumn名
-     * @param aSecondColumnTitle  2列目のColumn名
-     * @param aThirdColumnTitle  3列目のColumn名
-     * @param aDataList データリスト
-     */
-    private fun createThreeColumnDataView(
-            aContext: Context,
-            aLayoutInflater: LayoutInflater,
-            aIsScrollable: Boolean,
-            aSeparateColor: Int,
-            aTitle: String,
-            aTitleForWorkYear: String,
-            aFirstColumnTitle: String,
-            aSecondColumnTitle: String,
-            aThirdColumnTitle: String,
-            aDataList: List<ThreeColumnData>
-    ): View {
-        // ダイアログ用のViewを取得
-        val view = createDialogView(aContext, aIsScrollable)
+                // タイトル行（最上段の行）は中央寄せ
+                if (count == 0) {
+                    textView.gravity = Gravity.CENTER
+                }
 
-        // タイトルをセット
-        view.findViewById<TextView>(R.id.tv_title).text =
-                if (mIsWorkYearMode) {
-                    aTitleForWorkYear
-                } else {
-                    aTitle
-                }
-        // 行を追加するためのテーブル
-        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-        // タイトル行
-        val titleRow = aLayoutInflater.inflate(
-                R.layout.layout_dialog_chart_three_column,
-                tableLayout,
-                false
-        ).apply {
-            findViewById<TextView>(R.id.tv_row_first).apply {
-                text = aFirstColumnTitle
+                tableRow.addView(column)
             }
-            findViewById<TextView>(R.id.tv_row_second).apply {
-                text = aSecondColumnTitle
+            if ((count % 2) == 1) {
+                tableRow.setBackgroundColor(aContext.getColor(aSeparateColor))
             }
-            findViewById<TextView>(R.id.tv_row_third).apply {
-                text = aThirdColumnTitle
-            }
-        }
-        // タイトル追加
-        tableLayout.addView(titleRow)
 
-        // データをセット
-        for ((count, data) in aDataList.withIndex()) {
-            // データ用の行
-            val dataRow = aLayoutInflater.inflate(
-                    R.layout.layout_dialog_chart_three_column,
-                    tableLayout,
-                    false
-            ).apply {
-                findViewById<TextView>(R.id.tv_row_first).apply {
-                    text = data.firstColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_second).apply {
-                    text = data.secondColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_third).apply {
-                    text = data.thirdColumnValue
-                }
-                if ((count % 2) == 0) {
-                    setBackgroundColor(aContext.getColor(aSeparateColor))
-                }
-            }
-            tableLayout.addView(dataRow)
-        }
-        return view
-    }
-
-    /**
-     * 4列データ表示用のView作成メソッド
-     *
-     * @param aContext
-     * @param aLayoutInflater
-     * @param aIsScrollable
-     * @param aSeparateColor 表の偶数行に使用する背景色
-     * @param aTitle 表のタイトル
-     * @param aTitleForWorkYear 表のタイトル（年度用）
-     * @param aFirstColumnTitle 1列目のColumn名
-     * @param aSecondColumnTitle  2列目のColumn名
-     * @param aThirdColumnTitle  3列目のColumn名
-     * @param aFourthColumnTitle  4列目のColumn名
-     * @param aDataList データリスト
-     */
-    private fun createFourColumnDataView(
-            aContext: Context,
-            aLayoutInflater: LayoutInflater,
-            aIsScrollable: Boolean,
-            aSeparateColor: Int,
-            aTitle: String,
-            aTitleForWorkYear: String,
-            aFirstColumnTitle: String,
-            aSecondColumnTitle: String,
-            aThirdColumnTitle: String,
-            aFourthColumnTitle: String,
-            aDataList: List<FourColumnData>
-    ): View {
-        // ダイアログ用のViewを取得
-        val view = createDialogView(aContext, aIsScrollable)
-
-        // タイトルをセット
-        view.findViewById<TextView>(R.id.tv_title).text =
-                if (mIsWorkYearMode) {
-                    aTitleForWorkYear
-                } else {
-                    aTitle
-                }
-        // 行を追加するためのテーブル
-        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-        // タイトル行
-        val titleRow = aLayoutInflater.inflate(
-                R.layout.layout_dialog_chart_four_column,
-                tableLayout,
-                false
-        ).apply {
-            findViewById<TextView>(R.id.tv_row_first).apply {
-                text = aFirstColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_second).apply {
-                text = aSecondColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_third).apply {
-                text = aThirdColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_fourth).apply {
-                text = aFourthColumnTitle
-            }
-        }
-        // タイトル追加
-        tableLayout.addView(titleRow)
-
-        // データをセット
-        for ((count, data) in aDataList.withIndex()) {
-            // データ用の行
-            val dataRow = aLayoutInflater.inflate(
-                    R.layout.layout_dialog_chart_four_column,
-                    tableLayout,
-                    false
-            ).apply {
-                findViewById<TextView>(R.id.tv_row_first).apply {
-                    text = data.firstColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_second).apply {
-                    text = data.secondColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_third).apply {
-                    text = data.thirdColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_fourth).apply {
-                    text = data.fourthColumnValue
-                }
-                if ((count % 2) == 0) {
-                    setBackgroundColor(aContext.getColor(aSeparateColor))
-                }
-            }
-            tableLayout.addView(dataRow)
-        }
-        return view
-    }
-
-    /**
-     * 5列データ表示用のView作成メソッド
-     *
-     * @param aContext
-     * @param aLayoutInflater
-     * @param aIsScrollable
-     * @param aSeparateColor 表の偶数行に使用する背景色
-     * @param aTitle 表のタイトル
-     * @param aTitleForWorkYear 表のタイトル（年度用）
-     * @param aFirstColumnTitle 1列目のColumn名
-     * @param aSecondColumnTitle  2列目のColumn名
-     * @param aThirdColumnTitle  3列目のColumn名
-     * @param aFourthColumnTitle  4列目のColumn名
-     * @param aFifthColumnTitle 5列目のColumn名
-     * @param aDataList データリスト
-     */
-    private fun createFiveColumnDataView(
-            aContext: Context,
-            aLayoutInflater: LayoutInflater,
-            aIsScrollable: Boolean,
-            aSeparateColor: Int,
-            aTitle: String,
-            aTitleForWorkYear: String,
-            aFirstColumnTitle: String,
-            aSecondColumnTitle: String,
-            aThirdColumnTitle: String,
-            aFourthColumnTitle: String,
-            aFifthColumnTitle: String,
-            aDataList: List<FiveColumnData>
-    ): View {
-        // ダイアログ用のViewを取得
-        val view = createDialogView(aContext, aIsScrollable)
-
-        // タイトルをセット
-        view.findViewById<TextView>(R.id.tv_title).text =
-                if (mIsWorkYearMode) {
-                    aTitleForWorkYear
-                } else {
-                    aTitle
-                }
-        // 行を追加するためのテーブル
-        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-        // タイトル行
-        val titleRow = aLayoutInflater.inflate(
-                R.layout.layout_dialog_chart_five_column,
-                tableLayout,
-                false
-        ).apply {
-            findViewById<TextView>(R.id.tv_row_first).apply {
-                text = aFirstColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_second).apply {
-                text = aSecondColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_third).apply {
-                text = aThirdColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_fourth).apply {
-                text = aFourthColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_fifth).apply {
-                text = aFifthColumnTitle
-            }
-        }
-        // タイトル追加
-        tableLayout.addView(titleRow)
-
-        // データをセット
-        for ((count, data) in aDataList.withIndex()) {
-            // データ用の行
-            val dataRow = aLayoutInflater.inflate(
-                    R.layout.layout_dialog_chart_five_column,
-                    tableLayout,
-                    false
-            ).apply {
-                findViewById<TextView>(R.id.tv_row_first).apply {
-                    text = data.firstColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_second).apply {
-                    text = data.secondColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_third).apply {
-                    text = data.thirdColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_fourth).apply {
-                    text = data.fourthColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_fifth).apply {
-                    text = data.fifthColumnValue
-                }
-                if ((count % 2) == 0) {
-                    setBackgroundColor(aContext.getColor(aSeparateColor))
-                }
-            }
-            tableLayout.addView(dataRow)
-        }
-        return view
-    }
-
-    /**
-     * 9列データ表示用のView作成メソッド
-     *
-     * @param aContext
-     * @param aLayoutInflater
-     * @param aIsScrollable
-     * @param aSeparateColor 表の偶数行に使用する背景色
-     * @param aTitle 表のタイトル
-     * @param aTitleForWorkYear 表のタイトル（年度用）
-     * @param aFirstColumnTitle 1列目のColumn名
-     * @param aSecondColumnTitle  2列目のColumn名
-     * @param aThirdColumnTitle  3列目のColumn名
-     * @param aFourthColumnTitle  4列目のColumn名
-     * @param aFifthColumnTitle 5列目のColumn名
-     * @param aSixthColumnTitle 6列目のColumn名
-     * @param aSeventhColumnTitle 7列目のColumn名
-     * @param aEighthColumnTitle 8列目のColumn名
-     * @param aNinthColumnTitle 9列目のColumn名
-     * @param aDataList データリスト
-     */
-    private fun createNineColumnDataView(
-            aContext: Context,
-            aLayoutInflater: LayoutInflater,
-            aIsScrollable: Boolean,
-            aSeparateColor: Int,
-            aTitle: String,
-            aTitleForWorkYear: String,
-            aFirstColumnTitle: String,
-            aSecondColumnTitle: String,
-            aThirdColumnTitle: String,
-            aFourthColumnTitle: String,
-            aFifthColumnTitle: String,
-            aSixthColumnTitle: String,
-            aSeventhColumnTitle: String,
-            aEighthColumnTitle: String,
-            aNinthColumnTitle: String,
-            aDataList: List<NineColumnData>
-    ): View {
-        // ダイアログ用のViewを取得
-        val view = createDialogView(aContext, aIsScrollable)
-
-        // タイトルをセット
-        view.findViewById<TextView>(R.id.tv_title).text =
-                if (mIsWorkYearMode) {
-                    aTitleForWorkYear
-                } else {
-                    aTitle
-                }
-        // 行を追加するためのテーブル
-        val tableLayout: TableLayout = view.findViewById(R.id.table_data)
-        // タイトル行
-        val titleRow = aLayoutInflater.inflate(
-                R.layout.layout_dialog_chart_nine_column,
-                tableLayout,
-                false
-        ).apply {
-            findViewById<TextView>(R.id.tv_row_first).apply {
-                text = aFirstColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_second).apply {
-                text = aSecondColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_third).apply {
-                text = aThirdColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_fourth).apply {
-                text = aFourthColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_fifth).apply {
-                text = aFifthColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_sixth).apply {
-                text = aSixthColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_seventh).apply {
-                text = aSeventhColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_eighth).apply {
-                text = aEighthColumnTitle
-            }
-            findViewById<TextView>(R.id.tv_row_ninth).apply {
-                text = aNinthColumnTitle
-            }
-        }
-        // タイトル追加
-        tableLayout.addView(titleRow)
-
-        // データをセット
-        for ((count, data) in aDataList.withIndex()) {
-            // データ用の行
-            val dataRow = aLayoutInflater.inflate(
-                    R.layout.layout_dialog_chart_nine_column,
-                    tableLayout,
-                    false
-            ).apply {
-                findViewById<TextView>(R.id.tv_row_first).apply {
-                    text = data.firstColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_second).apply {
-                    text = data.secondColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_third).apply {
-                    text = data.thirdColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_fourth).apply {
-                    text = data.fourthColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_fifth).apply {
-                    text = data.fifthColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_sixth).apply {
-                    text = data.sixthColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_seventh).apply {
-                    text = data.seventhColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_eighth).apply {
-                    text = data.eighthColumnValue
-                }
-                findViewById<TextView>(R.id.tv_row_ninth).apply {
-                    text = data.ninthColumnValue
-                }
-                if ((count % 2) == 0) {
-                    setBackgroundColor(aContext.getColor(aSeparateColor))
-                }
-            }
-            tableLayout.addView(dataRow)
+            tableLayout.addView(tableRow)
         }
         return view
     }
@@ -1083,68 +707,4 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         }
         return retList
     }
-
-    /**
-     * 引数で与えられたフラグに基づいて、ダイアログ用のViewを作成する
-     */
-    private fun createDialogView(aContext: Context, aIsScrollable: Boolean): View{
-        return if (aIsScrollable) {
-            View.inflate(aContext, R.layout.layout_dialog_chart_data_scrollable, null)
-        } else {
-            View.inflate(aContext, R.layout.layout_dialog_chart_data, null)
-        }
-    }
-
-    /**
-     * 2列で表せるデータを扱うためのクラス
-     */
-    data class TwoColumnData(
-            val firstColumnValue: String,
-            val secondColumnValue: String
-    )
-
-    /**
-     * 3列で表せるデータを扱うためのクラス
-     */
-    data class ThreeColumnData(
-            val firstColumnValue: String,
-            val secondColumnValue: String,
-            val thirdColumnValue: String
-    )
-
-    /**
-     * 4列で表せるデータを扱うためのクラス
-     */
-    data class FourColumnData(
-            val firstColumnValue: String,
-            val secondColumnValue: String,
-            val thirdColumnValue: String,
-            val fourthColumnValue: String
-    )
-
-    /**
-     * 5列で表せるデータを扱うためのクラス
-     */
-    data class FiveColumnData(
-            val firstColumnValue: String,
-            val secondColumnValue: String,
-            val thirdColumnValue: String,
-            val fourthColumnValue: String,
-            val fifthColumnValue: String
-    )
-
-    /**
-     * 9列で表せるデータを扱うためのクラス
-     */
-    data class NineColumnData(
-            val firstColumnValue: String,
-            val secondColumnValue: String,
-            val thirdColumnValue: String,
-            val fourthColumnValue: String,
-            val fifthColumnValue: String,
-            val sixthColumnValue: String,
-            val seventhColumnValue: String,
-            val eighthColumnValue: String,
-            val ninthColumnValue: String
-    )
 }
