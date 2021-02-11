@@ -64,6 +64,8 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         showBonusPerMonthBeforeDeductionChart()
         // 月別控除のチャート
         showDeductionChart()
+        // ボーナス控除のチャート
+        showBonusDeductionChart()
     }
 
     /**
@@ -318,35 +320,107 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                 legend.apply {
                     isEnabled = true
                     // 健康保険のエントリー
-                    val entry1 = LegendEntry().apply {
+                    val entry0 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_health_insurance)
                         formColor = getColor(R.color.chart_0)
                     }
-                    val entry2 = LegendEntry().apply {
+                    val entry1 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_long_term_care_insurance)
                         formColor = getColor(R.color.chart_1)
                     }
-                    val entry3 = LegendEntry().apply {
+                    val entry2 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_pension)
                         formColor = getColor(R.color.chart_2)
                     }
-                    val entry4 = LegendEntry().apply {
+                    val entry3 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_employment_insurance)
                         formColor = getColor(R.color.chart_3)
                     }
-                    val entry5 = LegendEntry().apply {
+                    val entry4 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_income_tax)
                         formColor = getColor(R.color.chart_4)
                     }
-                    val entry6 = LegendEntry().apply {
+                    val entry5 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_resident_tax)
                         formColor = getColor(R.color.chart_5)
                     }
-                    val entry7 = LegendEntry().apply {
+                    val entry6 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_other)
                         formColor = getColor(R.color.chart_other)
                     }
-                    setCustom(listOf(entry1, entry2, entry3, entry4, entry5, entry6, entry7))
+                    setCustom(listOf( entry0, entry1, entry2, entry3, entry4, entry5, entry6))
+                    setDrawInside(false)
+                }
+            }
+            mRoot.addView(chartView)
+        }
+    }
+
+    private fun showBonusDeductionChart() {
+        // データ
+        val barData = createBarData(
+                listOf(
+                        mPresenter.getHealthInsuranceFeeData(true),
+                        mPresenter.getLongTermCareInsuranceFeeData(true),
+                        mPresenter.getPensionFeeData(true),
+                        mPresenter.getEmploymentInsuranceFeeData(true),
+                        mPresenter.getIncomeTaxData(true),
+                        mPresenter.getOtherDeductionData(true)
+                ),
+                listOf(
+                        getColor(R.color.chart_0),
+                        getColor(R.color.chart_1),
+                        getColor(R.color.chart_2),
+                        getColor(R.color.chart_3),
+                        getColor(R.color.chart_4),
+                        getColor(R.color.chart_other),
+                )
+        )
+
+        barData?.let {
+            // チャート作成
+            val chartView = createBasicBarChart(
+                    0f,
+                    0f,
+                    getString(R.string.bar_chart_description_bonus_deduction, mYear),
+                    getString(R.string.bar_chart_description_bonus_deduction_for_work_year, mYear),
+                    barData
+            ) {
+                Log.i("bonusDeduction bar chart long touch")
+                mPresenter.showBonusDeductionDataDialog()
+                true
+            }
+
+            // 凡例を追加で設定
+            chartView.findViewById<BarChart>(R.id.bar_chart).apply {
+                legend.apply {
+                    isEnabled = true
+                    // 健康保険のエントリー
+                    val entry0 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_health_insurance)
+                        formColor = getColor(R.color.chart_0)
+                    }
+                    val entry1 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_long_term_care_insurance)
+                        formColor = getColor(R.color.chart_1)
+                    }
+                    val entry2 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_pension)
+                        formColor = getColor(R.color.chart_2)
+                    }
+                    val entry3 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_employment_insurance)
+                        formColor = getColor(R.color.chart_3)
+                    }
+                    val entry4 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_income_tax)
+                        formColor = getColor(R.color.chart_4)
+                    }
+                    val entry5 = LegendEntry().apply {
+                        label = getString(R.string.bar_chart_label_other)
+                        formColor = getColor(R.color.chart_other)
+                    }
+                    setCustom(listOf(entry0, entry1, entry2, entry3, entry4, entry5))
                     setDrawInside(false)
                 }
             }

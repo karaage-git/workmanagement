@@ -41,6 +41,12 @@ interface IAnnualAnalyzeChartPresenter {
     fun showDeductionDataDialog()
 
     /**
+     * ボーナスの控除を表すデータ
+     */
+    @UiThread
+    fun showBonusDeductionDataDialog()
+
+    /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *
      * データが存在しない月は0を要素に持つ

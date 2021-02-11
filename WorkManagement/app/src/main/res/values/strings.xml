@@ -215,6 +215,8 @@
     <string name="bar_chart_description_bonus_for_work_year">%1$d年度のボーナス（控除前）</string>
     <string name="bar_chart_description_deduction">%1$d年の月別控除</string>
     <string name="bar_chart_description_deduction_for_work_year">%1$d年度の月別控除</string>
+    <string name="bar_chart_description_bonus_deduction">%1$d年のボーナス控除</string>
+    <string name="bar_chart_description_bonus_deduction_for_work_year">%1$d年度のボーナス控除</string>
 
     <!--  凡例用のラベル  -->
     <string name="bar_chart_label_work_time">所定労働時間</string>

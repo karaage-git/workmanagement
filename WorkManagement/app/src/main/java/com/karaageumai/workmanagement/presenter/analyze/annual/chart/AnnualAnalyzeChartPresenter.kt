@@ -482,6 +482,87 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         }
     }
 
+    override fun showBonusDeductionDataDialog() {
+        mActivity.get()?.let { activity ->
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_health_insurance
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_long_term_care_insurance
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_pension
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_employment_insurance
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_income_tax
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_other
+                        ),
+                        activity.getActivityContext().getString(
+                                R.string.chart_dialog_title_sum_money_per_month
+                        )
+                ))
+                // データ行
+                for (data in mBonusInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 健康保険
+                            NumberFormatUtil.separateThousand(data.healthInsuranceFee.toString()),
+                            // 介護保険
+                            NumberFormatUtil.separateThousand(data.longTermCareInsuranceFee.toString()),
+                            // 年金保険
+                            NumberFormatUtil.separateThousand(data.pensionFee.toString()),
+                            // 雇用保険
+                            NumberFormatUtil.separateThousand(data.employmentInsuranceFee.toString()),
+                            // 所得税
+                            NumberFormatUtil.separateThousand(data.incomeTax.toString()),
+                            // その他
+                            NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
+                            // 合計
+                            NumberFormatUtil.separateThousand(
+                                    (data.healthInsuranceFee
+                                            + data.longTermCareInsuranceFee
+                                            + data.pensionFee
+                                            + data.employmentInsuranceFee
+                                            + data.incomeTax
+                                            + data.otherDeduction).toString()
+                            )
+                    ))
+                }
+            }
+
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
+                    activity.getActivityContext(),
+                    true,
+                    R.color.deduction_basic,
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus_deduction,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus_deduction_for_work_year,
+                            mYear
+                    ),
+                    dataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
     private fun createDataDetailsView(
             aContext: Context,
             aIsScrollable: Boolean,
