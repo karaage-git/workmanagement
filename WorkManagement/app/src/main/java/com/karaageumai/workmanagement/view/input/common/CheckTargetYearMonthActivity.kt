@@ -12,6 +12,8 @@ import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
 import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
+import com.karaageumai.workmanagement.util.Constants.YEAR_END_MONTH
+import com.karaageumai.workmanagement.util.Constants.YEAR_START_MONTH
 import com.karaageumai.workmanagement.view.*
 import com.karaageumai.workmanagement.view.input.bonus.BonusActivity
 import com.karaageumai.workmanagement.view.input.salary.SalaryActivity
@@ -32,8 +34,6 @@ const val ENTRY_MODE_ERROR = -1
 class CheckTargetYearMonthActivity : AppCompatActivity() {
     // 各View
     private lateinit var mSpinner: Spinner
-    private lateinit var mTextView: TextView
-    private lateinit var mResultTextView: TextView
     private lateinit var mStartButton: Button
 
     // 入力されるYYYYmmを保持するプロパティ
@@ -57,6 +57,11 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.toolbar_title_check_target_year_month)
         setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         // スピナー
         mSpinner = findViewById(R.id.sp_target)
         // スタートボタン
@@ -138,8 +143,6 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
             intent.putExtra(KEY_YEAR, mYear)
             intent.putExtra(KEY_MONTH, mMonth)
             startActivity(intent)
-            // 戻ってこられないようにしておく
-            finish()
         }
 
     }
@@ -158,7 +161,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
     private fun createYearMonthList(): List<Pair<Int, Int>> {
         val ret: MutableList<Pair<Int, Int>> = mutableListOf()
         for(year in MIN_YEAR..MAX_YEAR) {
-            for(month in 1..12) {
+            for(month in YEAR_START_MONTH..YEAR_END_MONTH) {
                 ret.add(Pair(year, month))
             }
         }

@@ -3,9 +3,12 @@ package com.karaageumai.workmanagement.view.analyze.annual.chart
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.LegendEntry
 import com.github.mikephil.charting.components.XAxis
@@ -38,6 +41,16 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_annual_analyze_chart)
+
+        // ツールバー
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.title = getString(R.string.toolbar_title_chart)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         mRoot = findViewById(R.id.ll_root)
 
         // 全画面から受けたデータを取得
@@ -593,6 +606,14 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
 
     override fun getActivityContext(): Context {
         return this
+    }
+
+    // ツールバーのレイアウト反映
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        Log.i("onCreateOptionsMenu()")
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_empty, menu)
+        return true
     }
 
 }

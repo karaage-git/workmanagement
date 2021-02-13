@@ -44,6 +44,10 @@ class AnnualAnalyzeActivity : AppCompatActivity(), IAnnualAnalyze {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.toolbar_title_annual_analyze)
         setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         // Presenter初期化
         mPresenter = AnnualAnalyzePresenter(this)

@@ -1,5 +1,6 @@
 package com.karaageumai.workmanagement.view.input
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
@@ -19,6 +20,7 @@ import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewResData
 import com.karaageumai.workmanagement.presenter.input.viewdata.SumViewTag
+import com.karaageumai.workmanagement.view.TopMenuActivity
 
 /**
  * 情報入力を行うActivityのベース
@@ -348,20 +350,28 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
     override fun onInsertData() {
         Log.i("onInsertData()")
         showInsertToast()
-        finish()
+        goTopMenu()
     }
 
     // SalaryとBonusで共通処理
     override fun onUpdateData() {
         Log.i("onUpdateData()")
         showUpdateToast()
-        finish()
+        goTopMenu()
     }
 
     // SalaryとBonusで共通処理
     override fun onDeleteData() {
         Log.i("onDeleteData()")
         showDeleteToast()
-        finish()
+        goTopMenu()
+    }
+
+    private fun goTopMenu() {
+        // トップへ遷移
+        val intent = Intent(this, TopMenuActivity::class.java)
+        // アクティビティスタックを初期化
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }
