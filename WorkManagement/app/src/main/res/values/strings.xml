@@ -217,6 +217,10 @@
     <string name="bar_chart_description_deduction_for_work_year">%1$d年度の月別控除</string>
     <string name="bar_chart_description_bonus_deduction">%1$d年のボーナス控除</string>
     <string name="bar_chart_description_bonus_deduction_for_work_year">%1$d年度のボーナス控除</string>
+    <string name="bar_chart_description_after_tax">%1$d年の月収（手取り）</string>
+    <string name="bar_chart_description_after_tax_for_work_year">%1$d年度の月収（手取り）</string>
+    <string name="bar_chart_description_bonus_after_tax">%1$d年のボーナス（手取り）</string>
+    <string name="bar_chart_description_bonus_after_tax_for_work_year">%1$d年度のボーナス（手取り）</string>
 
     <!--  凡例用のラベル  -->
     <string name="bar_chart_label_work_time">所定労働時間</string>
@@ -245,6 +249,7 @@
     <string name="chart_dialog_title_income_tax">所得税\n単位：円</string>
     <string name="chart_dialog_title_resident_tax">住民税\n単位：円</string>
     <string name="chart_dialog_title_other">その他\n単位：円</string>
+    <string name="chart_dialog_title_after_tax">手取り\n単位：円</string>
     <string name="chart_dialog_title_sum_time_per_month">月別合計\n単位：時間</string>
     <string name="chart_dialog_title_sum_money_per_month">月別合計\n単位：円</string>
     <string name="chart_dialog_value_month">%1$d月</string>

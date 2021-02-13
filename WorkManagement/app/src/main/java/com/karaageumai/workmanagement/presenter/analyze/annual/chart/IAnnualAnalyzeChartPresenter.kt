@@ -47,6 +47,18 @@ interface IAnnualAnalyzeChartPresenter {
     fun showBonusDeductionDataDialog()
 
     /**
+     * 月収（手取り）データを表示するダイアログを出力する。
+     */
+    @UiThread
+    fun showAfterTaxDataDialog()
+
+    /**
+     * ボーナス（手取り）データを表示するダイアログを出力する。
+     */
+    @UiThread
+    fun showBonusAfterTaxDataDialog()
+
+    /**
      * 勤務日数の月別グラフを表示するために必要なデータを取得する
      *
      * データが存在しない月は0を要素に持つ
@@ -87,37 +99,37 @@ interface IAnnualAnalyzeChartPresenter {
     fun getWorkingOverTimeData(): List<Double>
 
     /**
-     * 基本支給額のリストを取得する
+     * 給与/ボーナスの基本支給額のリストを取得する
      *
      * データが存在しない月は0を要素に持つ
      *
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 基本支給額のリスト
+     * @return 給与/ボーナスの基本支給額のリスト
      */
     fun getBaseIncomeData(aIsBonus: Boolean): List<Int>
 
     /**
-     * 残業代のリストを取得する
+     * 給与の残業代のリストを取得する
      *
      * データが存在しない月は0を要素に持つ
      *
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
-     * @return 残業代のリスト
+     * @return 給与の残業代のリスト
      */
     fun getOvertimeIncomeData(): List<Int>
 
     /**
-     * その他収入のリストを取得する
+     * 給与/ボーナスのその他収入のリストを取得する
      *
      * データが存在しない月は0を要素に持つ
      *
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return その他のリスト
+     * @return 給与/ボーナスのその他のリスト
      */
     fun getOtherIncomeData(aIsBonus: Boolean): List<Int>
 
@@ -129,7 +141,7 @@ interface IAnnualAnalyzeChartPresenter {
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 給与の健康保険リスト
+     * @return 給与/ボーナスの健康保険リスト
      */
     fun getHealthInsuranceFeeData(aIsBonus: Boolean): List<Int>
 
@@ -141,7 +153,7 @@ interface IAnnualAnalyzeChartPresenter {
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 給与の介護保険リスト
+     * @return 給与/ボーナスの介護保険リスト
      */
     fun getLongTermCareInsuranceFeeData(aIsBonus: Boolean): List<Int>
 
@@ -153,7 +165,7 @@ interface IAnnualAnalyzeChartPresenter {
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 給与の年金保険リスト
+     * @return 給与/ボーナスの年金保険リスト
      */
     fun getPensionFeeData(aIsBonus: Boolean): List<Int>
 
@@ -165,7 +177,7 @@ interface IAnnualAnalyzeChartPresenter {
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 給与の雇用保険リスト
+     * @return 給与/ボーナスの雇用保険リスト
      */
     fun getEmploymentInsuranceFeeData(aIsBonus: Boolean): List<Int>
 
@@ -177,7 +189,7 @@ interface IAnnualAnalyzeChartPresenter {
      * リターンされるリストは月でソート（年：1→12、年度：4→3）
      *
      * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
-     * @return 給与の所得税リスト
+     * @return 給与/ボーナスの所得税リスト
      */
     fun getIncomeTaxData(aIsBonus: Boolean): List<Int>
 
@@ -203,4 +215,16 @@ interface IAnnualAnalyzeChartPresenter {
      * @return 給与のその他控除リスト
      */
     fun getOtherDeductionData(aIsBonus: Boolean): List<Int>
+
+    /**
+     * 給与/ボーナスの手取りリストを取得する
+     *
+     * データが存在しない月は0を要素に持つ
+     *
+     * リターンされるリストは月でソート（年：1→12、年度：4→3）
+     *
+     * @param aIsBonus 給料 or ボーナスを判定するためのフラグ
+     * @return 給与のその他控除リスト
+     */
+    fun getAfterTaxData(aIsBonus: Boolean): List<Int>
 }

@@ -563,6 +563,94 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
         }
     }
 
+    override fun showAfterTaxDataDialog() {
+        mActivity.get()?.let { activity ->
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_after_tax)
+                ))
+                // データ行
+                for (data in mSalaryInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 手取り
+                            NumberFormatUtil.separateThousand(
+                                    (getSumIncome(data) - getSumDeduction(data)).toString()
+                            )
+                    ))
+                }
+            }
+
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
+                    activity.getActivityContext(),
+                    false,
+                    R.color.income_basic,
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_after_tax,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_after_tax_for_work_year,
+                            mYear
+                    ),
+                    dataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
+    override fun showBonusAfterTaxDataDialog() {
+        mActivity.get()?.let { activity ->
+            val dataList: MutableList<List<String>> = mutableListOf()
+            dataList.apply {
+                // タイトル行
+                add(listOf(
+                        activity.getActivityContext().getString(R.string.empty),
+                        activity.getActivityContext().getString(R.string.chart_dialog_title_after_tax)
+                ))
+                // データ行
+                for (data in mBonusInfoList) {
+                    add(listOf(
+                            // 月
+                            activity.getActivityContext().getString(
+                                    R.string.chart_dialog_value_month,
+                                    data.month
+                            ),
+                            // 手取り
+                            NumberFormatUtil.separateThousand(
+                                    (getSumIncome(data) - getSumDeduction(data)).toString()
+                            )
+                    ))
+                }
+            }
+
+            // ダイアログ用のViewにデータをセット
+            val view = createDataDetailsView(
+                    activity.getActivityContext(),
+                    false,
+                    R.color.income_basic,
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus_after_tax,
+                            mYear
+                    ),
+                    activity.getActivityContext().getString(
+                            R.string.bar_chart_description_bonus_after_tax_for_work_year,
+                            mYear
+                    ),
+                    dataList
+            )
+            showDialog(activity.getActivityContext(), view)
+        }
+    }
+
     private fun createDataDetailsView(
             aContext: Context,
             aIsScrollable: Boolean,
@@ -787,5 +875,50 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
             }
         }
         return retList
+    }
+
+    override fun getAfterTaxData(aIsBonus: Boolean): List<Int> {
+        val retList: MutableList<Int> = mutableListOf()
+        if (aIsBonus) {
+            for (data in mBonusInfoList) {
+                val income = getSumIncome(data)
+                val deduction = getSumDeduction(data)
+                retList.add(income - deduction)
+            }
+        } else {
+            for (data in mSalaryInfoList) {
+                val income = getSumIncome(data)
+                val deduction = getSumDeduction(data)
+                retList.add(income - deduction)
+            }
+        }
+        return retList
+    }
+
+    private fun getSumIncome(aData: SalaryInfo): Int {
+        return aData.baseIncome + aData.overtimeIncome + aData.otherIncome
+    }
+
+    private fun getSumIncome(aData: BonusInfo): Int {
+        return aData.baseIncome + aData.otherIncome
+    }
+
+    private fun getSumDeduction(aData: SalaryInfo): Int {
+        return aData.healthInsuranceFee +
+                aData.longTermCareInsuranceFee +
+                aData.pensionFee +
+                aData.employmentInsuranceFee +
+                aData.incomeTax +
+                aData.residentTax +
+                aData.otherDeduction
+    }
+
+    private fun getSumDeduction(aData: BonusInfo): Int {
+        return aData.healthInsuranceFee +
+                aData.longTermCareInsuranceFee +
+                aData.pensionFee +
+                aData.employmentInsuranceFee +
+                aData.incomeTax +
+                aData.otherDeduction
     }
 }

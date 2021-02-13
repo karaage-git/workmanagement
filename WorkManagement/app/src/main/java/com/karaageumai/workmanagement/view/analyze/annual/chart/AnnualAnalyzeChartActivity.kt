@@ -66,6 +66,10 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         showDeductionChart()
         // ボーナス控除のチャート
         showBonusDeductionChart()
+        // 月給（手取り）のチャート
+        showAfterTaxChart()
+        // ボーナス（手取り）のチャート
+        showBonusAfterTaxChart()
     }
 
     /**
@@ -424,6 +428,56 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
                     setDrawInside(false)
                 }
             }
+            mRoot.addView(chartView)
+        }
+    }
+
+    private fun showAfterTaxChart() {
+        // データ
+        val barData = createBarData(
+                listOf(mPresenter.getAfterTaxData(false)),
+                listOf(getColor(R.color.chart_0))
+        )
+
+        barData?.let {
+            // チャート作成
+            val chartView = createBasicBarChart(
+                    0f,
+                    0f,
+                    getString(R.string.bar_chart_description_after_tax, mYear),
+                    getString(R.string.bar_chart_description_after_tax_for_work_year, mYear),
+                    barData
+            ) {
+                Log.i("after tax bar chart long touch")
+                mPresenter.showAfterTaxDataDialog()
+                true
+            }
+
+            mRoot.addView(chartView)
+        }
+    }
+
+    private fun showBonusAfterTaxChart() {
+        // データ
+        val barData = createBarData(
+                listOf(mPresenter.getAfterTaxData(true)),
+                listOf(getColor(R.color.chart_0))
+        )
+
+        barData?.let {
+            // チャート作成
+            val chartView = createBasicBarChart(
+                    0f,
+                    0f,
+                    getString(R.string.bar_chart_description_bonus_after_tax, mYear),
+                    getString(R.string.bar_chart_description_bonus_after_tax_for_work_year, mYear),
+                    barData
+            ) {
+                Log.i("bonus after tax bar chart long touch")
+                mPresenter.showBonusAfterTaxDataDialog()
+                true
+            }
+
             mRoot.addView(chartView)
         }
     }
