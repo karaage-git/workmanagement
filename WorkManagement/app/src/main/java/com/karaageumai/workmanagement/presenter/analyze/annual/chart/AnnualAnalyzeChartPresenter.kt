@@ -311,11 +311,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             // その他
                             NumberFormatUtil.separateThousand(data.otherIncome.toString()),
                             // 合計
-                            NumberFormatUtil.separateThousand(
-                                    (data.baseIncome
-                                            + data.overtimeIncome
-                                            + data.otherIncome).toString()
-                            )
+                            NumberFormatUtil.separateThousand(getSumIncome(data).toString())
                     ))
                 }
             }
@@ -369,9 +365,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             // その他
                             NumberFormatUtil.separateThousand(data.otherIncome.toString()),
                             // 合計
-                            NumberFormatUtil.separateThousand(
-                                    (data.baseIncome + data.otherIncome).toString()
-                            )
+                            NumberFormatUtil.separateThousand(getSumIncome(data).toString())
                     ))
                 }
             }
@@ -450,15 +444,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             // その他
                             NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
                             // 合計
-                            NumberFormatUtil.separateThousand(
-                                    (data.healthInsuranceFee
-                                            + data.longTermCareInsuranceFee
-                                            + data.pensionFee
-                                            + data.employmentInsuranceFee
-                                            + data.incomeTax
-                                            + data.residentTax
-                                            + data.otherDeduction).toString()
-                            )
+                            NumberFormatUtil.separateThousand(getSumDeduction(data).toString())
                     ))
                 }
             }
@@ -532,14 +518,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                             // その他
                             NumberFormatUtil.separateThousand(data.otherDeduction.toString()),
                             // 合計
-                            NumberFormatUtil.separateThousand(
-                                    (data.healthInsuranceFee
-                                            + data.longTermCareInsuranceFee
-                                            + data.pensionFee
-                                            + data.employmentInsuranceFee
-                                            + data.incomeTax
-                                            + data.otherDeduction).toString()
-                            )
+                            NumberFormatUtil.separateThousand(getSumDeduction(data).toString())
                     ))
                 }
             }
