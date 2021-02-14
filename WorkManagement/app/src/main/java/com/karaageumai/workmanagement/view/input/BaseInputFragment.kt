@@ -128,7 +128,12 @@ class BaseInputFragment : Fragment() {
 
                                         dialog.dismiss()
 
-                                        targetParcel.mStrValue = strValue
+                                        targetParcel.mStrValue = if (strValue.isNotBlank()) {
+                                            strValue
+                                        } else {
+                                            // 未入力でOKされた場合は0を入力したことにする
+                                            "0"
+                                        }
                                         targetParcel.mIsComplete = true
 
                                         // itemが変更されたことをAdapterに通知し、再描画する

@@ -104,8 +104,11 @@ object NumberFormatUtil {
      * @return 末尾の小数点が取り除かれた文字列
      */
     fun trimLastDot(aSting: String): String {
-        if (aSting.last() == '.') {
-            return aSting.replace(".", "")
+        // 文字列が空の場合は何もしないでリターン
+        if (aSting.isNotBlank()) {
+            if (aSting.last() == '.') {
+                return aSting.replace(".", "")
+            }
         }
         return aSting
     }

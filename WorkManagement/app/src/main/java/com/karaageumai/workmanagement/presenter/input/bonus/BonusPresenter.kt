@@ -123,6 +123,12 @@ class BonusPresenter(aActivity: IBaseInputView) : IBonusPresenter {
             Log.i("mActivity is null")
             return
         }
+
+        // 念の為、空チェックしておく
+        if (aParcel.mStrValue.isBlank()) {
+            aParcel.mStrValue = "0"
+        }
+
         var isSuccess = true
         when(aParcel.mTag){
             InputViewTag.BaseIncomeInputViewData -> {
