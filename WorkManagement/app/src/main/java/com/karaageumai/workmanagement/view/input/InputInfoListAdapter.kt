@@ -1,59 +1,55 @@
 package com.karaageumai.workmanagement.view.input
 
-import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewResData
+import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 
 class InputInfoListAdapter(
-    private val mContext: Context,
-    private val mInputInfoParcelList: List<InputInfoParcel>,
-) : BaseAdapter() {
+    private val mInputInfoParcelList: List<InputInfoParcel>
+) : RecyclerView.Adapter<InputItemViewHolder>() {
 
-    data class ViewHolder(
-        val titleText: TextView,
-        val valueText: TextView,
-        val unitText: TextView
-    )
+    private lateinit var mListener: OnItemClickListener
 
-    override fun getCount(): Int {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InputItemViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val itemView = layoutInflater.inflate(R.layout.layout_salary_row_item, parent, false)
+        return InputItemViewHolder(itemView)
+    }
+
+    override fun onBindViewHolder(holder: InputItemViewHolder, position: Int) {
+        val parcel: InputInfoParcel = mInputInfoParcelList[position]
+        Log.i("onBindViewHolder : $parcel")
+        InputViewResData(parcel.mTag).let {
+            holder.title.setText(it.mTitleResId)
+            holder.value.text = NumberFormatUtil.separateThousand(parcel.mStrValue)
+            holder.unit.setText(it.mUnitResId)
+            holder.itemView.setOnClickListener { view ->
+                mListener.onItemClickListener(view, position)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
         return mInputInfoParcelList.size
     }
 
-    override fun getItem(position: Int): Any {
+    interface OnItemClickListener {
+        fun onItemClickListener(view: View, position: Int)
+    }
+
+    fun setOnItemClickListener(aListener: OnItemClickListener) {
+        Log.i("set listener")
+        mListener = aListener
+    }
+
+    fun getItem(position: Int): InputViewTag {
         return mInputInfoParcelList[position].mTag
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
-        val (viewHolder, view) = if (convertView == null) {
-            val itemView = View.inflate(mContext, R.layout.layout_salary_row_item, null)
-            val title: TextView = itemView.findViewById(R.id.tv_title)
-            val value: TextView = itemView.findViewById(R.id.tv_input_value)
-            val unit: TextView = itemView.findViewById(R.id.tv_sum_unit)
-            val viewHolder = ViewHolder(title, value, unit)
-            itemView.tag = viewHolder
-            viewHolder to itemView
-        } else {
-            convertView.tag as ViewHolder to convertView
-        }
-        val parcel: InputInfoParcel = mInputInfoParcelList[position]
-        InputViewResData(parcel.mTag).let {
-            viewHolder.titleText.setText(it.mTitleResId)
-            viewHolder.valueText.text = NumberFormatUtil.separateThousand(parcel.mStrValue)
-            viewHolder.unitText.setText(it.mUnitResId)
-        }
-
-
-        return view
     }
 }

@@ -10,6 +10,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
@@ -80,17 +82,20 @@ class BaseInputFragment : Fragment() {
 
         val rootView: LinearLayout = view.findViewById(R.id.ll_root)
         rootView.setBackgroundResource(mBackgroundResId)
-        val listView: ListView = view.findViewById(R.id.lv_item)
+        val recyclerView: RecyclerView = view.findViewById(R.id.rv_item)
         val activity = activity
-        if(activity != null) {
-            // リストは参照渡しなので、要注意。（SalaryInfoListAdapter内でのリスト操作がここに影響します。）
-            val adapter = InputInfoListAdapter(activity, mInputInfoParcelList)
-            listView.adapter = adapter
-            listView.setOnItemClickListener { _, _, position, _ ->
-                Log.i("item is clicked")
-                val tag = adapter.getItem(position)
-                Log.i(tag.toString())
-                if(tag is InputViewTag){
+        activity?.let {
+            // Layout Managerをセット
+            recyclerView.layoutManager = LinearLayoutManager(activity)
+            // Adapter作成
+            val adapter = InputInfoListAdapter(mInputInfoParcelList)
+            adapter.setOnItemClickListener(object: InputInfoListAdapter.OnItemClickListener{
+                override fun onItemClickListener(view: View, position: Int) {
+                    Log.i("item is clicked. position : $position")
+
+                    val tag = adapter.getItem(position)
+                    Log.i(tag.toString())
+
                     createInputItemView(tag).let {
                         val targetParcel: InputInfoParcel? = mInputInfoParcelList.let{ list ->
                             var ret: InputInfoParcel? = null
@@ -114,30 +119,37 @@ class BaseInputFragment : Fragment() {
 
                             editText.addTextChangedListener(textWatcher)
                             mAlertDialog = alertDialog
-                                .setView(it)
-                                .setPositiveButton(R.string.ok) { dialog, _ ->
-                                    editText.removeTextChangedListener(textWatcher)
-                                    val userInput = editText.text.toString()
-                                    val strValue = NumberFormatUtil.trimLastDot(userInput)
-                                    Log.i(strValue)
+                                    .setView(it)
+                                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                                        editText.removeTextChangedListener(textWatcher)
+                                        val userInput = editText.text.toString()
+                                        val strValue = NumberFormatUtil.trimLastDot(userInput)
+                                        Log.i(strValue)
 
-                                    dialog.dismiss()
+                                        dialog.dismiss()
 
-                                    targetParcel.mStrValue = strValue
-                                    targetParcel.mIsComplete = true
+                                        targetParcel.mStrValue = strValue
+                                        targetParcel.mIsComplete = true
 
-                                    mInputPresenter?.updateItem(targetParcel)
-                                }
-                                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                                    editText.removeTextChangedListener(textWatcher)
-                                    dialog.dismiss()
-                                }
-                                .setCancelable(false)
-                                .show()
+                                        // itemが変更されたことをAdapterに通知し、再描画する
+                                        adapter.notifyItemChanged(position)
+
+                                        mInputPresenter?.updateItem(targetParcel)
+                                    }
+                                    .setNegativeButton(R.string.cancel) { dialog, _ ->
+                                        editText.removeTextChangedListener(textWatcher)
+                                        dialog.dismiss()
+                                    }
+                                    .setCancelable(false)
+                                    .show()
                         }
                     }
                 }
-            }
+            })
+            Log.i("adapter is created")
+
+            // RecyclerViewにAdapterをセット
+            recyclerView.adapter = adapter
         }
         return view
     }
