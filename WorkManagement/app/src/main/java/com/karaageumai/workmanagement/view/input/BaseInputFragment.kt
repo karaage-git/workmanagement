@@ -80,15 +80,13 @@ class BaseInputFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_salary_info_input, container, false)
 
-        val rootView: LinearLayout = view.findViewById(R.id.ll_root)
-        rootView.setBackgroundResource(mBackgroundResId)
         val recyclerView: RecyclerView = view.findViewById(R.id.rv_item)
         val activity = activity
         activity?.let {
             // Layout Managerをセット
             recyclerView.layoutManager = LinearLayoutManager(activity)
             // Adapter作成
-            val adapter = InputInfoListAdapter(mInputInfoParcelList)
+            val adapter = InputInfoListAdapter(mInputInfoParcelList, mBackgroundResId)
             adapter.setOnItemClickListener(object: InputInfoListAdapter.OnItemClickListener{
                 override fun onItemClickListener(view: View, position: Int) {
                     Log.i("item is clicked. position : $position")

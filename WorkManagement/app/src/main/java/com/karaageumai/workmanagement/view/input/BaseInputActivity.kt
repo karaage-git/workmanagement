@@ -154,7 +154,7 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
                     // フラグメント生成
                     val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
-                            R.color.work_status_basic
+                            R.drawable.layout_input_item_work_status
                     )
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.WorkStatus)] = fragment
@@ -167,7 +167,7 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
                     // フラグメント生成
                     val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
-                            R.color.income_basic
+                            R.drawable.layout_input_item_income
                     )
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.Income)] = fragment
@@ -181,7 +181,7 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
                     // フラグメント生成
                     val fragment: BaseInputFragment = BaseInputFragment.newInstance(
                             inputInfoParcelArrayList,
-                            R.color.deduction_basic
+                            R.drawable.layout_input_item_deduction
                     )
                     // マップにフラグメントを紐付け
                     mChildFragmentMap[mTabPageList.indexOf(TabPage.Deduction)] = fragment
