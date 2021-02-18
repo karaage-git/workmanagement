@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="TopMenuButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_top_menu_side</item>
+        <item name="android:layout_marginEnd">@dimen/margin_top_menu_side</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:textSize">20sp</item>
+    </style>
 
     <!--  ツールバー  -->
     <style name="MyToolBar">

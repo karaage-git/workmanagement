@@ -22,4 +22,12 @@
     <color name="chart_4">#FDA477</color>
     <color name="chart_5">#FC7679</color>
     <color name="chart_other">#C0C0C0</color>
+    <color name="button_top_salary">#FBDD04</color>
+    <color name="button_top_salary_pressed">#776802</color>
+    <color name="button_top_bonus">#ABBFFF</color>
+    <color name="button_top_bonus_pressed">#4B5570</color>
+    <color name="button_top_analyze">#E8BEFA</color>
+    <color name="button_top_analyze_pressed">#65536C</color>
+    <color name="button_top_next">#BBF3C0</color>
+    <color name="button_top_next_pressed">#577059</color>
 </resources>

@@ -16,36 +16,30 @@
 
     <Button
         android:id="@+id/btn_input_salary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TopMenuButton"
         android:text="@string/btn_topmenu_input_salary"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        app:layout_constraintTop_toTopOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="@id/btn_input_bonus"
+        android:background="@drawable/selector_top_salary"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/btn_input_bonus"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/btn_input_bonus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TopMenuButton"
         android:text="@string/btn_topmenu_input_bonus"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        app:layout_constraintTop_toTopOf="@id/btn_input_salary"
-        app:layout_constraintBottom_toBottomOf="@id/btn_annual_data"
+        android:background="@drawable/selector_top_bonus"
+        app:layout_constraintTop_toBottomOf="@id/btn_input_salary"
+        app:layout_constraintBottom_toTopOf="@id/btn_annual_data"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
         android:id="@+id/btn_annual_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/TopMenuButton"
         android:text="@string/btn_topmenu_analyze_annual_data"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        app:layout_constraintTop_toTopOf="@id/btn_input_bonus"
+        android:background="@drawable/selector_top_analyze"
+        app:layout_constraintTop_toBottomOf="@id/btn_input_bonus"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

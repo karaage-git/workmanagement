@@ -1,29 +1,6 @@
 <resources>
     <string name="app_name">WorkManagement</string>
 
-    <!--
-        ■命名規則
-            0.画面名
-                Activity、Fragmentのフルネームor略称
-            1.ツールバーに表示する画面タイトル
-                toolbar_title_<画面名>
-            2.ユーザに表示するメッセージ
-                message_<メッセージ概要>
-            3.ボタンに表示するテキスト
-                btn_<画面名>_<テキスト概要>
-            4.タブタイトル
-                tab_title_<画面名>
-            5.共通（「保存」とか「スタート」とか）
-                短い英単語で表現
-                例：save, start
-            6.EditTextのヒント等
-                edittext_hint_<画面名>_<ヒントの内容>
-            7.レイアウトファイルに存在する項目名など
-                layoutitem_<画面名>_<アイテムの説明>
-
-            追加があれば足していく...
-    -->
-
     <!--  ログ向けのタグ  -->
     <string name="log_tag">WM</string>
 
@@ -41,8 +18,8 @@
 
     <!--  トップメニュー  -->
     <string name="toolbar_title_topmenu">トップメニュー</string>
-    <string name="btn_topmenu_input_salary">給与情報の登録/修正</string>
-    <string name="btn_topmenu_input_bonus">ボーナス情報の登録/修正</string>
+    <string name="btn_topmenu_input_salary">給与情報\n登録/編集/削除</string>
+    <string name="btn_topmenu_input_bonus">ボーナス情報\n登録/編集/削除</string>
     <string name="btn_topmenu_analyze_annual_data">年間データの閲覧</string>
 
     <!--  登録トップメニュー  -->
