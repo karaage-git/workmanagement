@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.annotation.IntDef
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
@@ -23,13 +22,8 @@ const val KEY_ENTRY_MODE = "KEY_ENTRY_MODE"
 const val KEY_YEAR = "KEY_YEAR"
 const val KEY_MONTH = "KEY_MONTH"
 
-@IntDef(ENTRY_MODE_NEW, ENTRY_MODE_ALREADY_EXIST, ENTRY_MODE_ERROR)
-@Retention(AnnotationRetention.SOURCE)
-annotation class EntryMode
 const val ENTRY_MODE_NEW = 0
 const val ENTRY_MODE_ALREADY_EXIST = 1
-const val ENTRY_MODE_ERROR = -1
-
 
 class CheckTargetYearMonthActivity : AppCompatActivity() {
     // 各View
@@ -99,6 +93,13 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
             ) {
                 mYear = mYearMonthList[position].first
                 mMonth = mYearMonthList[position].second
+
+                mStartButton.text = if (isExistData()) {
+                    getString(R.string.button_check_target_year_month_exist)
+                } else {
+                    getString(R.string.button_check_target_year_month_new)
+                }
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

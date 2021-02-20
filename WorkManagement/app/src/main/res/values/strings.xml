@@ -31,6 +31,8 @@
     <string name="toolbar_title_check_target_year_month">対象年月選択</string>
     <string name="message_check_target_year_month_1">入力対象の年月を選択してください</string>
     <string name="message_check_target_year_month_2">(入力済みデータにはアイコンが付いています)</string>
+    <string name="button_check_target_year_month_new">新規登録</string>
+    <string name="button_check_target_year_month_exist">編集/削除</string>
 
     <string name="salary_description">%1$d年%2$02d月分の給与</string>
     <string name="bonus_description">%1$d年%2$02d月分のボーナス</string>
