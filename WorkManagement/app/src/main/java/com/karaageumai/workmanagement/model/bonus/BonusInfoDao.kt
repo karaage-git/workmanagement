@@ -1,7 +1,6 @@
 package com.karaageumai.workmanagement.model.bonus
 
 import androidx.room.*
-import com.karaageumai.workmanagement.model.salary.SalaryInfo
 
 @Dao
 interface BonusInfoDao {
@@ -22,6 +21,12 @@ interface BonusInfoDao {
 
     @Query("select * from bonus_table")
     suspend fun selectAllData(): List<BonusInfo>
+
+    @Query("delete from bonus_table")
+    suspend fun deleteAllData()
+
+    @Query("delete from bonus_table where year = :aYear")
+    suspend fun deleteWithYear(aYear: Int)
 
     @Query("""
         select * from bonus_table 

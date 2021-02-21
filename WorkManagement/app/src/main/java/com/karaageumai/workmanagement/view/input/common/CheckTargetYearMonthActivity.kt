@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
 import com.karaageumai.workmanagement.model.ModelFacade
+import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.util.Constants.MAX_YEAR
 import com.karaageumai.workmanagement.util.Constants.MIN_YEAR
 import com.karaageumai.workmanagement.util.Constants.YEAR_END_MONTH
@@ -108,9 +109,9 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
 
         }
 
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH) + 1
+        val yearMonthPair = CalendarUtil.getCurrentYearMonth()
+        val year = yearMonthPair.first
+        val month = yearMonthPair.second
         Log.i("current : $year/$month")
         val position = mYearMonthList.indexOf(Pair(year, month))
         if(position >= 0) {

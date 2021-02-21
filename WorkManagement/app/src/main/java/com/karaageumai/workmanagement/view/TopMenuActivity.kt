@@ -6,9 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.karaageumai.workmanagement.BuildConfig
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.Log
+import com.karaageumai.workmanagement.model.ModelFacade
+import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.view.analyze.annual.top.AnnualAnalyzeActivity
 import com.karaageumai.workmanagement.view.input.common.CheckTargetYearMonthActivity
 
@@ -57,6 +61,29 @@ class TopMenuActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // デバッグビルド時はボタン長押しでテストデータを登録する
+        if (BuildConfig.DEBUG) {
+            val currentYear = CalendarUtil.getCurrentYear()
+            val lastYear = currentYear - 1
+            val nextYear = currentYear + 1
+            salaryButton.setOnLongClickListener{
+                ModelFacade.crateTestData(lastYear)
+                Toast.makeText(this, "create test data at $lastYear", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            bonusButton.setOnLongClickListener{
+                ModelFacade.crateTestData(currentYear)
+                Toast.makeText(this, "create test data at $currentYear", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            displayAnnualDataButton.setOnLongClickListener{
+                ModelFacade.crateTestData(nextYear)
+                Toast.makeText(this, "create test data at $nextYear", Toast.LENGTH_SHORT).show()
+                true
+            }
+        }
     }
 
     // ツールバーのレイアウト反映

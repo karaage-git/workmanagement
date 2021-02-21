@@ -22,6 +22,12 @@ interface SalaryInfoDao {
     @Query("select * from salary_table")
     suspend fun selectAllData(): List<SalaryInfo>
 
+    @Query("delete from salary_table")
+    suspend fun deleteAllData()
+
+    @Query("delete from salary_table where year = :aYear")
+    suspend fun deleteWithYear(aYear: Int)
+
     @Query("""
         select * from salary_table 
         where

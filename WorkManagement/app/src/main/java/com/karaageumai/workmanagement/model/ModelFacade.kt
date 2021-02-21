@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
+import com.karaageumai.workmanagement.util.Constants
 import kotlinx.coroutines.runBlocking
 
 // 各APIの入り口を管理するクラス
@@ -250,6 +251,57 @@ object ModelFacade {
     fun deleteBonusInfo(aBonusInfo: BonusInfo) {
         return runBlocking {
             mBonusInfoDao.delete(aBonusInfo)
+        }
+    }
+
+    /**
+     * テストデータを仕込むメソッド
+     */
+    fun crateTestData(aYear: Int) {
+        return runBlocking {
+            // DB初期化
+            mSalaryInfoDao.deleteWithYear(aYear)
+            mBonusInfoDao.deleteWithYear(aYear)
+
+            for (month in Constants.YEAR_START_MONTH .. Constants.YEAR_END_MONTH) {
+                val salary = SalaryInfo(
+                    0,
+                    aYear,
+                    month,
+                    (20 - month) * 10,
+                    (150 - (month * 10)) * 10,
+                    (50 - month) * 10,
+                    month * 10,
+                    250000,
+                    month * 10000,
+                    month * 10000,
+                    month * 1000,
+                    month * 1000,
+                    month * 1000,
+                    month * 1000,
+                    month * 1000,
+                    month * 1000,
+                    month * 1000
+                )
+                mSalaryInfoDao.insert(salary)
+
+                if ((month == 6) or (month == 12)) {
+                    val bonus = BonusInfo(
+                            0,
+                            aYear,
+                            month,
+                            500000 + month * 10000,
+                            100000,
+                            month * 1000,
+                            month * 1000,
+                            month * 1000,
+                            month * 1000,
+                            month * 1000,
+                            month * 1000
+                    )
+                    mBonusInfoDao.insert(bonus)
+                }
+            }
         }
     }
 
