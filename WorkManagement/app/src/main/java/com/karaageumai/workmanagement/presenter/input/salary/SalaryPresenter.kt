@@ -6,9 +6,12 @@ import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.IBaseInputView
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.util.CalendarUtil
+import com.karaageumai.workmanagement.util.Constants
 import java.lang.ref.WeakReference
 
 class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
@@ -341,32 +344,84 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
         }
     }
 
+    override fun checkDataConsistency(): IBaseInputPresenter.DataConsistency {
+        val dayOfMonth = CalendarUtil.getDaysOfMonth(getYear(), getMonth())
+        // 勤務日数と有給取得数のチェック（データとしては10倍で保持しているため注意）
+        if ((mSalaryInfo.workingDay + mSalaryInfo.paidHolidays) > dayOfMonth * 10) {
+            Log.i("ERROR_SUM_WORKING_DAY_EXCESS")
+            return IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_DAY_EXCESS
+        }
+
+        // 所定労働時間と残業時間のチェック（データとしては10倍で保持しているため注意）
+        if ((mSalaryInfo.workingTime + mSalaryInfo.overtime) > dayOfMonth * Constants.MAX_TIME_PER_DAY * 10) {
+            Log.i("ERROR_SUM_WORKING_TIME_EXCESS")
+            return IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_TIME_EXCESS
+        }
+
+        // 収入と控除のチェック
+        if ((getSumIncome() - getSumDeduction()) < 0) {
+            Log.i("ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME")
+            return IBaseInputPresenter.DataConsistency.ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME
+        }
+        Log.i("data : $mSalaryInfo, dayOfMonth : $dayOfMonth")
+        return IBaseInputPresenter.DataConsistency.OK
+    }
+
+    override fun getYear(): Int {
+        mActivity.get()?.let {
+            return it.getYear()
+        }
+        return -1
+    }
+
+    override fun getMonth(): Int {
+        mActivity.get()?.let {
+            return it.getMonth()
+        }
+        return -1
+    }
+
     private fun insertOrUpdateData() {
         // Activityがnullの場合は何もしない
-        if(mActivity.get() == null) {
+        val activity = mActivity.get()
+        if(activity == null) {
             Log.i("mActivity is null")
             return
         }
-        AlertDialog.Builder(mActivity.get()?.getActivityContext())
-            .setTitle(R.string.dialog_title)
-            .setMessage(mActivity.get()?.getActivityContext()?.getString(
-                    R.string.dialog_message_after_tax,
-                    (getSumIncome() - getSumDeduction()).toString())
-            )
-            .setPositiveButton(R.string.ok) { dialog, _ ->
-                dialog.dismiss()
-                mSalaryInfo.isComplete = true
-                if(mIsNewEntry) {
-                    ModelFacade.insertSalaryInfo(mSalaryInfo)
-                    mActivity.get()?.onInsertData()
-                } else {
-                    ModelFacade.updateSalaryInfo(mSalaryInfo)
-                    mActivity.get()?.onUpdateData()
-                }
+        val context = activity.getActivityContext()
+        when (checkDataConsistency()) {
+            IBaseInputPresenter.DataConsistency.OK -> {
+                AlertDialog.Builder(mActivity.get()?.getActivityContext())
+                        .setTitle(R.string.dialog_title)
+                        .setMessage(mActivity.get()?.getActivityContext()?.getString(
+                                R.string.dialog_message_after_tax,
+                                (getSumIncome() - getSumDeduction()).toString())
+                        )
+                        .setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            mSalaryInfo.isComplete = true
+                            if(mIsNewEntry) {
+                                ModelFacade.insertSalaryInfo(mSalaryInfo)
+                                mActivity.get()?.onInsertData()
+                            } else {
+                                ModelFacade.updateSalaryInfo(mSalaryInfo)
+                                mActivity.get()?.onUpdateData()
+                            }
+                        }
+                        .setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
             }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+
+            IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_DAY_EXCESS ->
+                showErrorDialog(context, R.string.dialog_message_error_working_day)
+
+            IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_TIME_EXCESS ->
+                showErrorDialog(context, R.string.dialog_message_error_working_time)
+
+            IBaseInputPresenter.DataConsistency.ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME ->
+                showErrorDialog(context, R.string.dialog_message_error_money)
+        }
     }
 }

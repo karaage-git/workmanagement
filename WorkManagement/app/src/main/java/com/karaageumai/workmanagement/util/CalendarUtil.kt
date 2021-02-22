@@ -38,4 +38,17 @@ object CalendarUtil {
     private fun getMonth(aCalendar: Calendar): Int {
         return aCalendar.get(Calendar.MONTH) + 1
     }
+
+    /**
+     * 指定した月の日数を取得する
+     */
+    fun getDaysOfMonth(aYear: Int, aMonth: Int): Int {
+        if ((aYear < 0) or (aMonth < 0)) {
+            return 0
+        }
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, aYear)
+        calendar.set(Calendar.MONTH, aMonth - 1)
+        return calendar.getActualMaximum(Calendar.DATE)
+    }
 }

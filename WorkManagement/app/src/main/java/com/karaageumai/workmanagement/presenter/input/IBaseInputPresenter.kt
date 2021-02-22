@@ -1,12 +1,15 @@
 package com.karaageumai.workmanagement.presenter.input
 
+import android.app.AlertDialog
+import android.content.Context
+import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.exception.SalaryInfoTagNotFoundException
 import com.karaageumai.workmanagement.util.NumberFormatUtil
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
+import com.karaageumai.workmanagement.util.CalendarUtil
 import com.karaageumai.workmanagement.util.Constants.INPUT_MAX_VALUE
-import com.karaageumai.workmanagement.util.Constants.MAX_DAYS_PER_MONTH
-import com.karaageumai.workmanagement.util.Constants.MAX_TIME_PER_MONTH
+import com.karaageumai.workmanagement.util.Constants.MAX_TIME_PER_DAY
 import java.lang.NumberFormatException
 
 interface IBaseInputPresenter {
@@ -104,7 +107,8 @@ interface IBaseInputPresenter {
                     return try {
                         val temp: Double = aValue.toDouble()
                         if (NumberFormatUtil.checkNumberFormat05(aValue)) {
-                            temp <= MAX_DAYS_PER_MONTH
+                            // 当該月の日数以下の場合に有効とみなす
+                            temp <= CalendarUtil.getDaysOfMonth(getYear(), getMonth())
                         } else {
                             // 0.5単位でなければ無効
                             false
@@ -126,7 +130,8 @@ interface IBaseInputPresenter {
                     return try {
                         val temp: Double = aValue.toDouble()
                         if (NumberFormatUtil.checkNumberFormat01(aValue)) {
-                            temp <= MAX_TIME_PER_MONTH
+                            // 当該月の最大時間以下の場合に有効とみなす
+                            temp <= CalendarUtil.getDaysOfMonth(getYear(), getMonth()) * MAX_TIME_PER_DAY
                         } else {
                             // 0.1単位でなければ無効
                             false
@@ -168,5 +173,51 @@ interface IBaseInputPresenter {
                 }
             }
         }
+    }
+
+    /**
+     * 整合性チェックの結果
+     */
+    enum class DataConsistency {
+        // 整合性OK
+        OK,
+        // 勤務日数と有給の合計が1月の最大日数を超えている
+        ERROR_SUM_WORKING_DAY_EXCESS,
+        // 勤務時間、残業時間の合計値が、1ヶ月の最大時間を超えている
+        ERROR_SUM_WORKING_TIME_EXCESS,
+        // 収入よりも控除が多い（手取りがマイナスになっている）
+        ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME
+    }
+
+    /**
+     * データの整合性をチェックする
+     */
+    fun checkDataConsistency(): DataConsistency
+
+    /**
+     * 対象年を取得する
+     *
+     * @return 年（取得できない場合は負の値を返す）
+     */
+    fun getYear(): Int
+
+    /**
+     * 対象月を取得する
+     *
+     * @return 月（取得できない場合は負の値を返す）
+     */
+    fun getMonth(): Int
+
+    /**
+     * OKボタンがあるダイアログを表示するための共通メソッド
+     */
+    fun showErrorDialog(aContext: Context, aMessageResId: Int) {
+        AlertDialog.Builder(aContext)
+                .setTitle(R.string.dialog_title)
+                .setMessage(aMessageResId)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 }

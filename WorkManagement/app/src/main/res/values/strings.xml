@@ -51,6 +51,9 @@
     <string name="dialog_title">下記の項目を確認してください</string>
     <string name="dialog_message">未入力の項目があります。\n未入力項目は値が0で登録されますが、よろしいですか？</string>
     <string name="dialog_message_after_tax">手取り金額（収入総額から控除総額を引いた金額）は\n%1$s円\nです。</string>
+    <string name="dialog_message_error_working_day">勤務日数と有給取得数の合計が、当月の最大日数を超えています。入力済みデータを見直してください。</string>
+    <string name="dialog_message_error_working_time">所定労働時間と残業時間の合計が、当月の最大時間を超えています。入力済みデータを見直してください。</string>
+    <string name="dialog_message_error_money">控除の合計が、収入の合計を超えています。入力済みデータを見直してください。</string>
 
     <string name="dialog_title_delete">削除しますか？</string>
     <string name="dialog_message_delete">データ「%1$s」を削除します。</string>
@@ -71,13 +74,13 @@
     <!--  共通  -->
     <string name="layoutitem_workstatus_common_subtitle">0.1時間単位で入力可能です。</string>
     <string name="layoutitem_workstatus_common_unit">時間</string>
-    <string name="layoutitem_workstatus_common_error">入力形式が正しくありません。\n0.1時間単位で入力してください。(最大は744です。)</string>
+    <string name="layoutitem_workstatus_common_error">入力形式が正しくありません。\n0.1時間単位で入力してください。\nまた、当月の最大時間（日数×24時間）を超えて入力することはできません。</string>
 
     <string name="layoutitem_workstatus_workingday_title">勤務日数</string>
     <string name="layoutitem_workstatus_workingday_subtitle">0.5日単位で入力可能です。</string>
     <string name="edittext_hint_workstatus_workingday">例：18.5</string>
     <string name="layoutitem_workstatus_workingday_unit">日</string>
-    <string name="layoutitem_workstatus_workingday_error">入力形式が正しくありません。\n0.5日単位で入力してください。(最大は31です。)</string>
+    <string name="layoutitem_workstatus_workingday_error">入力形式が正しくありません。\n0.5日単位で入力してください。\nまた、当月の日数を超えて入力することはできません。</string>
 
     <string name="layoutitem_workstatus_workingtime_title">所定労働時間</string>
     <string name="edittext_hint_workstatus_workingtime">例：150</string>

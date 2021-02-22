@@ -15,6 +15,8 @@ object Constants {
     const val MAX_YEAR = 2050
     // 1月の最大日数
     const val MAX_DAYS_PER_MONTH = 31.0
+    // 1日の最大時間
+    const val MAX_TIME_PER_DAY = 24
     // 1月の合計最大時間
     const val MAX_TIME_PER_MONTH = 24.0 * 31.0
     // 入力可能最大値

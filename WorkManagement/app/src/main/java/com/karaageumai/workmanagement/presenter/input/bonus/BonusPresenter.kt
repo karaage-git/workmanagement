@@ -6,6 +6,7 @@ import com.karaageumai.workmanagement.MainApplication
 import com.karaageumai.workmanagement.R
 import com.karaageumai.workmanagement.model.ModelFacade
 import com.karaageumai.workmanagement.model.bonus.BonusInfo
+import com.karaageumai.workmanagement.presenter.input.IBaseInputPresenter
 import com.karaageumai.workmanagement.presenter.input.util.InputInfoParcel
 import com.karaageumai.workmanagement.view.input.IBaseInputView
 import com.karaageumai.workmanagement.presenter.input.viewdata.InputViewTag
@@ -211,14 +212,17 @@ class BonusPresenter(aActivity: IBaseInputView) : IBonusPresenter {
 
     override fun saveData() {
         // Activityがnullの場合は何もしない
-        if(mActivity.get() == null) {
+        val activity = mActivity.get()
+        if(activity == null) {
             Log.i("mActivity is null")
             return
         }
+
+        val context = activity.getActivityContext()
         if(checkUserInputFinished()) {
             insertOrUpdateData()
         } else {
-            AlertDialog.Builder(mActivity.get()?.getActivityContext())
+            AlertDialog.Builder(context)
                     .setTitle(R.string.dialog_title)
                     .setMessage(R.string.dialog_message)
                     .setPositiveButton(R.string.ok) { dialog, _ ->
@@ -265,32 +269,68 @@ class BonusPresenter(aActivity: IBaseInputView) : IBonusPresenter {
         }
     }
 
+    override fun checkDataConsistency(): IBaseInputPresenter.DataConsistency {
+        // 収入と控除のチェック
+        if ((getSumIncome() - getSumDeduction()) < 0) {
+            Log.i("ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME")
+            return IBaseInputPresenter.DataConsistency.ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME
+        }
+        Log.i("data : $mBonusInfo")
+        return IBaseInputPresenter.DataConsistency.OK
+    }
+
+    override fun getYear(): Int {
+        mActivity.get()?.let {
+            return it.getYear()
+        }
+        return -1
+    }
+
+    override fun getMonth(): Int {
+        mActivity.get()?.let {
+            return it.getMonth()
+        }
+        return -1
+    }
+
     private fun insertOrUpdateData() {
         // Activityがnullの場合は何もしない
-        if(mActivity.get() == null) {
+        val activity = mActivity.get()
+        if(activity == null) {
             Log.i("mActivity is null")
             return
         }
-        AlertDialog.Builder(mActivity.get()?.getActivityContext())
-            .setTitle(R.string.dialog_title)
-            .setMessage(mActivity.get()?.getActivityContext()?.getString(
-                    R.string.dialog_message_after_tax,
-                    (getSumIncome() - getSumDeduction()).toString())
-            )
-            .setPositiveButton(R.string.ok) { dialog, _ ->
-                dialog.dismiss()
-                mBonusInfo.isComplete = true
-                if(mIsNewEntry) {
-                    ModelFacade.insertBonusInfo(mBonusInfo)
-                    mActivity.get()?.onInsertData()
-                } else {
-                    ModelFacade.updateBonusInfo(mBonusInfo)
-                    mActivity.get()?.onUpdateData()
-                }
+        val context = activity.getActivityContext()
+        when (checkDataConsistency()) {
+            IBaseInputPresenter.DataConsistency.OK -> {
+                AlertDialog.Builder(mActivity.get()?.getActivityContext())
+                        .setTitle(R.string.dialog_title)
+                        .setMessage(mActivity.get()?.getActivityContext()?.getString(
+                                R.string.dialog_message_after_tax,
+                                (getSumIncome() - getSumDeduction()).toString())
+                        )
+                        .setPositiveButton(R.string.ok) { dialog, _ ->
+                            dialog.dismiss()
+                            mBonusInfo.isComplete = true
+                            if(mIsNewEntry) {
+                                ModelFacade.insertBonusInfo(mBonusInfo)
+                                mActivity.get()?.onInsertData()
+                            } else {
+                                ModelFacade.updateBonusInfo(mBonusInfo)
+                                mActivity.get()?.onUpdateData()
+                            }
+                        }
+                        .setNegativeButton(R.string.cancel) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .show()
             }
-            .setNegativeButton(R.string.cancel) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+
+            IBaseInputPresenter.DataConsistency.ERROR_DEDUCTION_IS_HIGHER_THAN_INCOME ->
+                showErrorDialog(context, R.string.dialog_message_error_money)
+
+            // 通常はありえないフロー（金額の整合性エラーに倒しておく）
+            else -> showErrorDialog(context, R.string.dialog_message_error_money)
+        }
     }
 }
