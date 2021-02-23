@@ -21,6 +21,10 @@
     <string name="btn_topmenu_input_salary">給与情報\n登録/編集/削除</string>
     <string name="btn_topmenu_input_bonus">ボーナス情報\n登録/編集/削除</string>
     <string name="btn_topmenu_analyze_annual_data">年間データの閲覧</string>
+    <string name="btn_topmenu_licenses"><u>ライセンス情報</u></string>
+
+    <!--  ライセンス情報  -->
+    <string name="toolbar_title_licenses">ライセンス情報</string>
 
     <!--  登録トップメニュー  -->
     <string name="toolbar_title_resistermenu">登録トップ</string>

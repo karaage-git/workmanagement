@@ -35,6 +35,14 @@ class TopMenuActivity : AppCompatActivity() {
         toolbar.title = getString(R.string.toolbar_title_topmenu)
         setSupportActionBar(toolbar)
 
+        // ライセンスボタン
+        val licensesButton: Button = findViewById(R.id.btn_licenses)
+        licensesButton.setOnClickListener {
+            Log.i("Licenses")
+            val intent = Intent(this, LicensesActivity::class.java)
+            startActivity(intent)
+        }
+
         // 給与情報の登録
         val salaryButton: Button = findViewById(R.id.btn_input_salary)
         salaryButton.setOnClickListener {
