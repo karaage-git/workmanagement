@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- とりあえずデフォルト（独自指定を行わない）の設定で運用する -->
+    <!-- Exclude specific shared preferences that contain GCM registration Id -->
+</full-backup-content>
