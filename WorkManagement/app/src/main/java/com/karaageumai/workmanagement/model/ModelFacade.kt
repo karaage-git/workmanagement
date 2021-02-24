@@ -16,20 +16,6 @@ object ModelFacade {
     private val mBonusInfoDao = mDb.bonusInfoDao()
 
     /**
-     * 年、月の情報から、DBにデータが存在するかチェックする
-     * 
-     * @param aYear
-     * @param aMonth
-     * @return 存在する:true, 存在しない:false
-     */
-    fun isExistSalaryInfo(aYear: Int, aMonth: Int): Boolean {
-        val salaryInfoList = runBlocking {
-            mSalaryInfoDao.selectSalaryWithYearMonth(aYear, aMonth)
-        }
-        return salaryInfoList.isNotEmpty()
-    }
-
-    /**
      * 新規にSalaryInfoをDBに挿入する
      * 
      * @param aSalaryInfo
@@ -130,23 +116,6 @@ object ModelFacade {
         return runBlocking {
             mSalaryInfoDao.delete(aSalaryInfo)
         }
-    }
-
-
-    /**
-     * 年、月の情報から、DBにデータが存在するかチェックする
-     *
-     * @param aYear
-     * @param aMonth
-     * @return 存在する:true, 存在しない:false
-     */
-    fun isExistBonusInfo(aYear: Int, aMonth: Int): Boolean {
-        val bonusInfoList = runBlocking {
-            mBonusInfoDao.selectBonusWithYearMonth(aYear, aMonth)
-        }
-
-        return bonusInfoList.isNotEmpty()
-
     }
 
     /**

@@ -572,16 +572,19 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
         for (i in mDataOrder.indices) {
             val dataParMonth: MutableList<Float> = mutableListOf()
             for (targetDataList in aDataList) {
-                val value = targetDataList[i]
-                if (value is Int) {
-                    // Intの場合はFloatに変換
-                    dataParMonth.add(value.toFloat())
-                } else if(value is Double) {
-                    // Doubleの場合はFloatに変換
-                    dataParMonth.add(value.toFloat())
-                } else {
-                    // 値がInt or Doubleでなかったら終了
-                    return null
+                when (val value = targetDataList[i]) {
+                    is Int -> {
+                        // Intの場合はFloatに変換
+                        dataParMonth.add(value.toFloat())
+                    }
+                    is Double -> {
+                        // Doubleの場合はFloatに変換
+                        dataParMonth.add(value.toFloat())
+                    }
+                    else -> {
+                        // 値がInt or Doubleでなかったら終了
+                        return null
+                    }
                 }
             }
             entryList.add(BarEntry(mDataOrder[i].toFloat(), dataParMonth.toFloatArray()))

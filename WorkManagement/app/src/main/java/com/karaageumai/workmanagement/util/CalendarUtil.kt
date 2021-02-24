@@ -26,13 +26,6 @@ object CalendarUtil {
     }
 
     /**
-     * 実行時タイミングにおける月を取得する
-     */
-    fun getCurrentMonth(): Int {
-        return getMonth(Calendar.getInstance())
-    }
-
-    /**
      * 指定されたタイミングにおける月を取得する
      */
     private fun getMonth(aCalendar: Calendar): Int {

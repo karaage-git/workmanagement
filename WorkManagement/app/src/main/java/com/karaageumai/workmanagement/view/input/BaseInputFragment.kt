@@ -160,8 +160,6 @@ class BaseInputFragment : Fragment() {
     // カスタムTextWatcher
     inner class SalaryInfoTextWatcher(private val mView: View) : TextWatcher {
 
-        private val mEditText: EditText = mView.findViewById(R.id.et_data)
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             // 何もしない
         }
@@ -174,18 +172,6 @@ class BaseInputFragment : Fragment() {
             // 入力値のチェック及びダイアログのOKボタンの活性状態を制御
             mAlertDialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = checkAndShowIcon(mView)
         }
-    }
-
-    /**
-     * 入力項目のチェックを行う
-     *
-     * @param aView チェック対象のEditTextが含まれるView
-     * @return true:チェックOK ,false:チェックNG
-     */
-    private fun checkInputFormat(aView: View) :Boolean {
-        val et: EditText = aView.findViewById(R.id.et_data)
-        val value: String = et.text.toString()
-        return checkInputFormat(aView, value)
     }
 
     /**

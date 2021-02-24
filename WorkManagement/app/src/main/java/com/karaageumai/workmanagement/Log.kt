@@ -30,7 +30,7 @@ class Log {
         fun version() {
             val versionCode: Int = BuildConfig.VERSION_CODE
             val versionName: String = BuildConfig.VERSION_NAME
-            val message: String = "versionCode:$versionCode, versionName:$versionName"
+            val message = "versionCode:$versionCode, versionName:$versionName"
             Log.i(MainApplication.getContext().getString(R.string.log_tag), message)
         }
 

@@ -239,21 +239,21 @@ abstract class BaseInputActivity : AppCompatActivity(), IBaseInputView {
     /**
      * 保存完了時のトーストを表示する
      */
-    protected fun showInsertToast() {
+    private fun showInsertToast() {
         showToast(getString(R.string.toast_save))
     }
 
     /**
      * 更新完了時のトーストを表示する
      */
-    protected fun showUpdateToast() {
+    private fun showUpdateToast() {
         showToast(getString(R.string.toast_update))
     }
 
     /**
      * 削除完了時のトーストを表示する
      */
-    protected fun showDeleteToast() {
+    private fun showDeleteToast() {
         showToast(getString(R.string.toast_delete))
     }
 
