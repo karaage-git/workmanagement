@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WorkManagement</string>
+    <string name="app_name">給料レコーダー</string>
 
     <!--  ログ向けのタグ  -->
     <string name="log_tag">WM</string>
