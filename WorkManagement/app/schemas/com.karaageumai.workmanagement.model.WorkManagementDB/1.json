@@ -1,0 +1,222 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6ec478da32a05b01193bd992f6255f2c",
+    "entities": [
+      {
+        "tableName": "salary_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `year` INTEGER NOT NULL, `month` INTEGER NOT NULL, `workingDay` INTEGER NOT NULL, `workingTime` INTEGER NOT NULL, `overtime` INTEGER NOT NULL, `paidHolidays` INTEGER NOT NULL, `baseIncome` INTEGER NOT NULL, `overtimeIncome` INTEGER NOT NULL, `otherIncome` INTEGER NOT NULL, `healthInsuranceFee` INTEGER NOT NULL, `longTermCareInsuranceFee` INTEGER NOT NULL, `pensionFee` INTEGER NOT NULL, `employmentInsuranceFee` INTEGER NOT NULL, `incomeTax` INTEGER NOT NULL, `residentTax` INTEGER NOT NULL, `otherDeduction` INTEGER NOT NULL, `isComplete` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "month",
+            "columnName": "month",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "workingDay",
+            "columnName": "workingDay",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "workingTime",
+            "columnName": "workingTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "overtime",
+            "columnName": "overtime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "paidHolidays",
+            "columnName": "paidHolidays",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseIncome",
+            "columnName": "baseIncome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "overtimeIncome",
+            "columnName": "overtimeIncome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "otherIncome",
+            "columnName": "otherIncome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "healthInsuranceFee",
+            "columnName": "healthInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longTermCareInsuranceFee",
+            "columnName": "longTermCareInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pensionFee",
+            "columnName": "pensionFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "employmentInsuranceFee",
+            "columnName": "employmentInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeTax",
+            "columnName": "incomeTax",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "residentTax",
+            "columnName": "residentTax",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "otherDeduction",
+            "columnName": "otherDeduction",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isComplete",
+            "columnName": "isComplete",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "bonus_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `year` INTEGER NOT NULL, `month` INTEGER NOT NULL, `baseIncome` INTEGER NOT NULL, `otherIncome` INTEGER NOT NULL, `healthInsuranceFee` INTEGER NOT NULL, `longTermCareInsuranceFee` INTEGER NOT NULL, `pensionFee` INTEGER NOT NULL, `employmentInsuranceFee` INTEGER NOT NULL, `incomeTax` INTEGER NOT NULL, `otherDeduction` INTEGER NOT NULL, `isComplete` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "month",
+            "columnName": "month",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "baseIncome",
+            "columnName": "baseIncome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "otherIncome",
+            "columnName": "otherIncome",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "healthInsuranceFee",
+            "columnName": "healthInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longTermCareInsuranceFee",
+            "columnName": "longTermCareInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pensionFee",
+            "columnName": "pensionFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "employmentInsuranceFee",
+            "columnName": "employmentInsuranceFee",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "incomeTax",
+            "columnName": "incomeTax",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "otherDeduction",
+            "columnName": "otherDeduction",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isComplete",
+            "columnName": "isComplete",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6ec478da32a05b01193bd992f6255f2c')"
+    ]
+  }
+}

@@ -7,7 +7,7 @@ import com.karaageumai.workmanagement.model.bonus.BonusInfoDao
 import com.karaageumai.workmanagement.model.salary.SalaryInfo
 import com.karaageumai.workmanagement.model.salary.SalaryInfoDao
 
-@Database(entities = [SalaryInfo::class, BonusInfo::class], version = 1)
+@Database(entities = [SalaryInfo::class, BonusInfo::class], version = 1, exportSchema = true)
 abstract class WorkManagementDB : RoomDatabase() {
 
     abstract fun salaryInfoDao(): SalaryInfoDao

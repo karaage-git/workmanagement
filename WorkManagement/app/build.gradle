@@ -29,6 +29,14 @@ android {
         versionName getVersionName(VERSION_CODE_MAJOR, VERSION_CODE_MINOR, VERSION_CODE_PATCH)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // DBのスキーマをエクスポートしておく
+                arguments += ["room.schemaLocation":"$projectDir/schemas".toString()]
+            }
+        }
+
     }
 
     buildTypes {
