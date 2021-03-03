@@ -1,53 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <!--  何も無いと見辛いので、基本給をプレースホルダとして入れておく  -->
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginHorizontal="5dp"
+        android:text="@string/layoutitem_income_baseincome_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_subtitle"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/InputItemTitle"
-            android:text="@string/layoutitem_income_baseincome_title"/>
-        <ImageView
-            android:id="@+id/iv_check_ic"
-            android:src="@drawable/ic_baseline_check_circle_24"
-            style="@style/InputFieldIcon" />
-
-    </LinearLayout>
-
+    <ImageView
+        android:id="@+id/iv_check_ic"
+        android:src="@drawable/ic_baseline_check_circle_24"
+        style="@style/InputFieldIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_subtitle"
+        app:layout_constraintStart_toEndOf="@id/tv_title" />
 
     <TextView
         android:id="@+id/tv_subtitle"
-        style="@style/InputItemSubTitle"
-        android:text="@string/layoutitem_income_common_subtitle"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/dimgray"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:text="@string/layoutitem_income_common_subtitle"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toTopOf="@id/tv_error"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_error"
-        style="@style/InputItemErrorText"
-        android:text="@string/layoutitem_income_common_error" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/layoutitem_income_common_error"
+        android:textSize="12sp"
+        android:textColor="@color/red"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+        app:layout_constraintBottom_toTopOf="@id/et_data"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <LinearLayout
-        style="@style/InputFieldLinearLayout" >
+    <EditText
+        android:id="@+id/et_data"
+        style="@style/InputFieldEditText"
+        android:hint="@string/edittext_hint_income_baseincome"
+        android:autofillHints="no"
+        app:layout_constraintTop_toBottomOf="@id/tv_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_data_unit"
+        app:layout_constraintHorizontal_chainStyle="packed" />
 
-        <EditText
-            android:id="@+id/et_data"
-            style="@style/InputFieldEditText"
-            android:hint="@string/edittext_hint_income_baseincome"
-            android:autofillHints="no" />
-        <TextView
-            android:id="@+id/tv_data_unit"
-            android:text="@string/layoutitem_income_common_unit"
-            style="@style/InputFieldUnit"
-            android:layout_gravity="bottom" />
+    <TextView
+        android:id="@+id/tv_data_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/layoutitem_income_common_unit"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@id/et_data"
+        app:layout_constraintBottom_toBottomOf="@id/et_data"
+        app:layout_constraintStart_toEndOf="@id/et_data"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
