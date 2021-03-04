@@ -13,6 +13,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".view.TopMenuActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,21 +22,27 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.LicensesActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.input.common.CheckTargetYearMonthActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.input.salary.SalaryActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.input.bonus.BonusActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.analyze.annual.top.AnnualAnalyzeActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.analyze.annual.chart.AnnualAnalyzeChartActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
     </application>
 
