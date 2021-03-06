@@ -18,6 +18,10 @@ class LicensesActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         toolbar.title = getString(R.string.toolbar_title_licenses)
         setSupportActionBar(toolbar)
+        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        toolbar.setNavigationOnClickListener {
+            finish()
+        }
 
         val view: WebView = findViewById(R.id.wv_licenses)
         view.loadUrl("file:///android_asset/licenses.html")
