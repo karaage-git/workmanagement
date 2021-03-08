@@ -59,7 +59,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_baseincome
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
             }
@@ -69,7 +69,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_overtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
             }
@@ -79,7 +79,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_income_common_subtitle
                 mInputHintResId = R.string.edittext_hint_income_other
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
                 mErrorMessageResId = R.string.layoutitem_income_common_error
             }
@@ -89,7 +89,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_health
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -99,7 +99,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_longterm
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -109,7 +109,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_pension
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -119,7 +119,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_employment
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -129,7 +129,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_income
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -139,7 +139,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_resident
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
@@ -149,7 +149,7 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mSubTitleResId = R.string.layoutitem_deduction_common_subtitle
                 mInputHintResId = R.string.edittext_hint_deduction_other
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
-                mInputMaxLength = 9
+                mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
                 mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }

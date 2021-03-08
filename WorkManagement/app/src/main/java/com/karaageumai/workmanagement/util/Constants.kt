@@ -18,5 +18,5 @@ object Constants {
     // 1日の最大時間
     const val MAX_TIME_PER_DAY = 24
     // 入力可能最大値
-    const val INPUT_MAX_VALUE = 1000000000
+    const val INPUT_MAX_VALUE = 100000000
 }
