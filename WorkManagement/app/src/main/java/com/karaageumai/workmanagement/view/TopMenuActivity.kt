@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import com.karaageumai.workmanagement.BuildConfig
 import com.karaageumai.workmanagement.R
@@ -36,11 +38,23 @@ class TopMenuActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // ライセンスボタン
-        val licensesButton: Button = findViewById(R.id.btn_licenses)
+        val licensesButton: TextView = findViewById(R.id.tv_licenses)
         licensesButton.setOnClickListener {
             Log.i("Licenses")
             val intent = Intent(this, LicensesActivity::class.java)
             startActivity(intent)
+        }
+
+        // 免責事項
+        val disclaimer: TextView = findViewById(R.id.tv_disclaimer)
+        disclaimer.setOnClickListener {
+            AlertDialog.Builder(this)
+                    .setTitle(R.string.btn_topmenu_disclaimer)
+                    .setMessage(R.string.dialog_message_disclaimer)
+                    .setPositiveButton(R.string.ok) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
         }
 
         // 給与情報の登録

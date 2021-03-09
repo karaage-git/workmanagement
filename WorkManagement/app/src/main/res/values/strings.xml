@@ -22,6 +22,8 @@
     <string name="btn_topmenu_input_bonus">ボーナス情報\n登録/編集/削除</string>
     <string name="btn_topmenu_analyze_annual_data">年間データの閲覧</string>
     <string name="btn_topmenu_licenses"><u>ライセンス情報</u></string>
+    <string name="btn_topmenu_disclaimer"><u>免責事項</u></string>
+    <string name="dialog_message_disclaimer">・本アプリは、予告なく仕様を変更する場合があります。\n・本アプリが正確に動作するよう努めておりますが、未知の不具合等もあるため、必ずしも本アプリの正確性および完全性を保証するものではありません。\n・本アプリの不具合（表示誤り、計算誤りを含む）または本アプリの瑕疵から発生したいかなる損害について、当方（本アプリ開発者）では一切の責任を負いません。</string>
 
     <!--  ライセンス情報  -->
     <string name="toolbar_title_licenses">ライセンス情報</string>
