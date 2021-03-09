@@ -125,7 +125,6 @@ object ModelFacade {
      */
     fun insertBonusInfo(aBonusInfo: BonusInfo) {
         runBlocking {
-            // Todo 一応年月でデータの存在チェックしておいたほうがよい
             mBonusInfoDao.insert(aBonusInfo)
         }
         return
