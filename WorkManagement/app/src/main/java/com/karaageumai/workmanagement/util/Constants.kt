@@ -10,9 +10,9 @@ object Constants {
     // 年度の終了月
     const val WORK_YEAR_END_MONTH = 3
     // アプリで扱う年の最小値
-    const val MIN_YEAR = 2000
+    const val MIN_YEAR = 2015
     // アプリで扱う年の最大値
-    const val MAX_YEAR = 2050
+    const val MAX_YEAR = 2030
     // 1月の最大日数
     const val MAX_DAYS_PER_MONTH = 31.0
     // 1日の最大時間

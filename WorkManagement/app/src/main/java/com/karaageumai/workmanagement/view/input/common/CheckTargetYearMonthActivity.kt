@@ -158,7 +158,7 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
     }
 
     /**
-     * 2000/01 〜 2050/12の年月の組み合わせを作成する
+     * 入力可能なYYYY/MMの年月の組み合わせを作成する
      */
     private fun createYearMonthList(): List<Pair<Int, Int>> {
         val ret: MutableList<Pair<Int, Int>> = mutableListOf()
