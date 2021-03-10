@@ -41,7 +41,7 @@
         android:id="@+id/sp_target"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
+        android:spinnerMode="dropdown"
         android:layout_marginStart="@dimen/margin_top_menu_side"
         android:layout_marginEnd="@dimen/margin_top_menu_side"
         android:layout_gravity="center"/>
