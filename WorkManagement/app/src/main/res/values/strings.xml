@@ -166,6 +166,7 @@
 
     <!--  グラフ表示  -->
     <string name="toolbar_title_chart">詳細情報</string>
+    <string name="bar_chart_long_touch_guide">チャートを長押しすると\n詳細な数値を確認できます</string>
     <string name="bar_chart_description_working_day">%1$d年の勤務日数</string>
     <string name="bar_chart_description_working_day_for_work_year">%1$d年度の勤務日数</string>
     <string name="bar_chart_description_paid_holiday">%1$d年に取得した有給休暇</string>
