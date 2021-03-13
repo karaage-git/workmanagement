@@ -21,7 +21,9 @@
         android:layout_weight="1"
         android:textSize="18sp"
         android:textColor="@color/black"
-        android:gravity="end"/>
+        android:gravity="end"
+        android:autoSizeTextType="uniform"
+        android:lines="1" />
 
     <TextView
         android:id="@+id/tv_row_unit"

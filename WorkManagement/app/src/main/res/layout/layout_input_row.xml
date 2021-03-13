@@ -10,6 +10,8 @@
     <TextView
         android:id="@+id/tv_title"
         style="@style/InputItemTitle"
+        android:autoSizeTextType="uniform"
+        android:lines="1"
         android:text="@string/layoutitem_workstatus_workingtime_title"/>
 
     <LinearLayout
@@ -25,6 +27,8 @@
             android:text="@string/zero"
             android:textColor="@color/black"
             android:textSize="25sp"
+            android:autoSizeTextType="uniform"
+            android:lines="1"
             android:gravity="end"/>
 
         <TextView

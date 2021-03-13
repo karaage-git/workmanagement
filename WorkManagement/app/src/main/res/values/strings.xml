@@ -192,9 +192,9 @@
     <string name="bar_chart_label_long_term_care_insurance">介保</string>
     <string name="bar_chart_label_pension">年保</string>
     <string name="bar_chart_label_employment_insurance">雇保</string>
-    <string name="bar_chart_label_income_tax">所得税</string>
-    <string name="bar_chart_label_resident_tax">住民税</string>
-    <string name="bar_chart_label_other">その他</string>
+    <string name="bar_chart_label_income_tax">所得</string>
+    <string name="bar_chart_label_resident_tax">住民</string>
+    <string name="bar_chart_label_other">他</string>
 
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
