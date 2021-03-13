@@ -52,7 +52,7 @@
     <string name="dialog_title">下記の項目を確認してください</string>
     <string name="dialog_message">未入力の項目があります。\n未入力項目は値が0で登録されますが、よろしいですか？</string>
     <string name="dialog_message_after_tax">手取り金額（収入総額から控除総額を引いた金額）は\n%1$s円\nです。</string>
-    <string name="dialog_message_error_working_day">勤務日数と有給取得数の合計が、当月の最大日数を超えています。入力済みデータを見直してください。</string>
+    <string name="dialog_message_error_working_day">実労働日数と有給取得日数の合計が、当月の最大日数を超えています。入力済みデータを見直してください。</string>
     <string name="dialog_message_error_working_time">基本労働時間と残業時間の合計が、当月の最大時間を超えています。入力済みデータを見直してください。</string>
     <string name="dialog_message_error_money">控除の合計が、収入の合計を超えています。入力済みデータを見直してください。</string>
 
