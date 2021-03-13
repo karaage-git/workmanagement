@@ -171,7 +171,7 @@ class AnnualAnalyzeChartActivity : AppCompatActivity(), IAnnualAnalyzeChart {
             chartView.findViewById<BarChart>(R.id.bar_chart).apply {
                 legend.apply {
                     isEnabled = true
-                    // 所定労働時間用のエントリー
+                    // 基本労働時間用のエントリー
                     val entry1 = LegendEntry().apply {
                         label = getString(R.string.bar_chart_label_work_time)
                         formColor = getColor(R.color.chart_0)

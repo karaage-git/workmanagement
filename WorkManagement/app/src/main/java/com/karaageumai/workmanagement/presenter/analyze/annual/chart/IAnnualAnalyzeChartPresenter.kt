@@ -81,9 +81,9 @@ interface IAnnualAnalyzeChartPresenter {
     fun getPaidHolidayData(): List<Double>
 
     /**
-     * 所定労働時間のリストを取得する
+     * 基本労働時間のリストを取得する
      *
-     * @return 所定労働時間のリスト
+     * @return 基本労働時間のリスト
      */
     fun getWorkingBaseTimeData(): List<Double>
 

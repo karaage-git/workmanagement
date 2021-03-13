@@ -10,7 +10,6 @@ data class InputViewResData(val mTag: InputViewTag) {
     val mInputType: Int
     val mInputMaxLength: Int
     val mUnitResId: Int
-    val mErrorMessageResId: Int
 
     init {
         when(mTag) {
@@ -21,37 +20,33 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 4
                 mUnitResId = R.string.layoutitem_workstatus_workingday_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_workingday_error
             }
 
             InputViewTag.WorkingTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_workingtime_title
-                mSubTitleResId = R.string.layoutitem_workstatus_common_subtitle
+                mSubTitleResId = R.string.layoutitem_workstatus_workingtime_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_workingtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 5
-                mUnitResId = R.string.layoutitem_workstatus_common_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_common_error
+                mUnitResId = R.string.layoutitem_workstatus_workingtime_unit
             }
 
             InputViewTag.OverTimeInputViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_overtime_title
-                mSubTitleResId = R.string.layoutitem_workstatus_common_subtitle
+                mSubTitleResId = R.string.layoutitem_workstatus_overtime_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_overtime
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 5
-                mUnitResId = R.string.layoutitem_workstatus_common_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_common_error
+                mUnitResId = R.string.layoutitem_workstatus_overtime_unit
             }
 
             InputViewTag.PaidHolidaysViewData -> {
                 mTitleResId = R.string.layoutitem_workstatus_paid_holiday_title
-                mSubTitleResId = R.string.layoutitem_workstatus_workingday_subtitle
+                mSubTitleResId = R.string.layoutitem_workstatus_paid_holiday_subtitle
                 mInputHintResId = R.string.edittext_hint_workstatus_paid_holiday
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
                 mInputMaxLength = 4
-                mUnitResId = R.string.layoutitem_workstatus_workingday_unit
-                mErrorMessageResId = R.string.layoutitem_workstatus_workingday_error
+                mUnitResId = R.string.layoutitem_workstatus_paid_holiday_unit
             }
 
             InputViewTag.BaseIncomeInputViewData -> {
@@ -61,7 +56,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
-                mErrorMessageResId = R.string.layoutitem_income_common_error
             }
 
             InputViewTag.OverTimeIncomeInputViewData -> {
@@ -71,7 +65,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
-                mErrorMessageResId = R.string.layoutitem_income_common_error
             }
 
             InputViewTag.OtherIncomeInputViewData -> {
@@ -81,7 +74,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_income_common_unit
-                mErrorMessageResId = R.string.layoutitem_income_common_error
             }
 
             InputViewTag.HealthInsuranceInputViewData -> {
@@ -91,7 +83,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.LongTermCareInsuranceFeeInputViewData -> {
@@ -101,7 +92,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.PensionInsuranceInputViewData -> {
@@ -111,7 +101,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.EmploymentInsuranceInputViewData -> {
@@ -121,7 +110,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.IncomeTaxInputViewData -> {
@@ -131,7 +119,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.ResidentTaxInputViewData -> {
@@ -141,7 +128,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
 
             InputViewTag.OtherDeductionInputViewData -> {
@@ -151,7 +137,6 @@ data class InputViewResData(val mTag: InputViewTag) {
                 mInputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_CLASS_NUMBER
                 mInputMaxLength = 8
                 mUnitResId = R.string.layoutitem_deduction_common_unit
-                mErrorMessageResId = R.string.layoutitem_deduction_common_error
             }
         }
     }

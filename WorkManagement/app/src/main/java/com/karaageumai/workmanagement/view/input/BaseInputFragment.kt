@@ -175,7 +175,7 @@ class BaseInputFragment : Fragment() {
     }
 
     /**
-     * 入力チェック及びアイコン・エラーメッセージの切り替えを行う
+     * 入力チェック及びアイコンの切り替えを行う
      *
      * @param aView チェック対象のEditTextが含まれるView
      * @return true:チェックOK ,false:チェックNG
@@ -184,14 +184,13 @@ class BaseInputFragment : Fragment() {
         val et: EditText = aView.findViewById(R.id.et_data)
         val value: String = et.text.toString()
         val icon: ImageView = aView.findViewById(R.id.iv_check_ic)
-        val error: TextView = aView.findViewById(R.id.tv_error)
         val ret: Boolean = checkInputFormat(aView, value)
 
         // アイコン、エラーメッセージの切り替えを行う
         if(ret) {
-            showOKIcon(icon, error)
+            showOKIcon(icon)
         } else {
-            showNGIcon(icon, error)
+            showNGIcon(icon)
         }
 
         return ret
@@ -216,15 +215,15 @@ class BaseInputFragment : Fragment() {
     /**
      * OKアイコン表示
      */
-    private fun showOKIcon(aIcon: ImageView, aTextView: TextView) {
-        showAndChangeIcon(aIcon, R.drawable.ic_baseline_check_circle_24, aTextView, false)
+    private fun showOKIcon(aIcon: ImageView) {
+        changeIcon(aIcon, R.drawable.ic_baseline_check_circle_24)
     }
 
     /**
      * NGアイコン表示
      */
-    private fun showNGIcon(aIcon: ImageView, aTextView: TextView) {
-        showAndChangeIcon(aIcon, R.drawable.ic_baseline_error_24, aTextView, true)
+    private fun showNGIcon(aIcon: ImageView) {
+        changeIcon(aIcon, R.drawable.ic_baseline_error_24)
     }
 
     /**
@@ -267,11 +266,6 @@ class BaseInputFragment : Fragment() {
         val icon: ImageView = inputView.findViewById(R.id.iv_check_ic)
         icon.visibility = View.INVISIBLE
 
-        // エラーメッセージ（初期は非表示、表示スペースも消す）
-        val error: TextView = inputView.findViewById(R.id.tv_error)
-        error.setText(viewData.mErrorMessageResId)
-        error.visibility = View.INVISIBLE
-
         return inputView
 
     }
@@ -279,19 +273,9 @@ class BaseInputFragment : Fragment() {
     /**
      * アイコンとエラーメッセージの表示切り替え
      */
-    private fun showAndChangeIcon(
-            aImageView: ImageView,
-            aResId: Int,
-            aErrorMessageTextView: TextView,
-            isShowMessage: Boolean) {
+    private fun changeIcon(aImageView: ImageView, aResId: Int) {
         val context: Context = MainApplication.getContext()
         aImageView.setImageDrawable(ContextCompat.getDrawable(context, aResId))
         aImageView.visibility = View.VISIBLE
-
-        aErrorMessageTextView.visibility = if (isShowMessage) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
-        }
     }
 }

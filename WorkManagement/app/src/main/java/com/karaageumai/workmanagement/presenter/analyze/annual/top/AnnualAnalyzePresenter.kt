@@ -143,7 +143,7 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
     }
 
     /**
-     * 所定労働時間の合計を表示するためのデータを作成する
+     * 基本労働時間の合計を表示するためのデータを作成する
      */
     private fun createSumBaseWorkingTimeDataRow(aYear: Int): AnnualDataRow {
         return AnnualDataRow(R.string.annual_analyze_row_base_working_time,
@@ -354,7 +354,7 @@ class AnnualAnalyzePresenter(aActivity: IAnnualAnalyze) : IAnnualAnalyzePresente
     }
 
     /**
-     * 所定労働時間の合計を算出する
+     * 基本労働時間の合計を算出する
      */
     private fun getSumBaseWorkingTime(aYear: Int): Int {
         val data = getAnnualData(aYear)

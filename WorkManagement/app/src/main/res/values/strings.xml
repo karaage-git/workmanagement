@@ -45,7 +45,7 @@
     <string name="toast_error">エラーが発生しました</string>
 
     <string name="toolbar_title_input">情報入力</string>
-    <string name="tab_title_workstatus">勤怠状態</string>
+    <string name="tab_title_workstatus">勤怠</string>
     <string name="tab_title_income">収入</string>
     <string name="tab_title_deduction">控除</string>
 
@@ -53,7 +53,7 @@
     <string name="dialog_message">未入力の項目があります。\n未入力項目は値が0で登録されますが、よろしいですか？</string>
     <string name="dialog_message_after_tax">手取り金額（収入総額から控除総額を引いた金額）は\n%1$s円\nです。</string>
     <string name="dialog_message_error_working_day">勤務日数と有給取得数の合計が、当月の最大日数を超えています。入力済みデータを見直してください。</string>
-    <string name="dialog_message_error_working_time">所定労働時間と残業時間の合計が、当月の最大時間を超えています。入力済みデータを見直してください。</string>
+    <string name="dialog_message_error_working_time">基本労働時間と残業時間の合計が、当月の最大時間を超えています。入力済みデータを見直してください。</string>
     <string name="dialog_message_error_money">控除の合計が、収入の合計を超えています。入力済みデータを見直してください。</string>
 
     <string name="dialog_title_delete">削除しますか？</string>
@@ -72,32 +72,30 @@
 
 
     <!--  勤怠情報入力フラグメント  -->
-    <!--  共通  -->
-    <string name="layoutitem_workstatus_common_subtitle">0.1時間単位で入力可能です。</string>
-    <string name="layoutitem_workstatus_common_unit">時間</string>
-    <string name="layoutitem_workstatus_common_error">入力形式が正しくありません。\n0.1時間単位で入力してください。\nまた、当月の最大時間（日数×24時間）を超えて入力することはできません。</string>
-
-    <string name="layoutitem_workstatus_workingday_title">勤務日数</string>
-    <string name="layoutitem_workstatus_workingday_subtitle">0.5日単位で入力可能です。</string>
-    <string name="edittext_hint_workstatus_workingday">例：18.5</string>
+    <string name="layoutitem_workstatus_workingday_title">実労働日数</string>
+    <string name="layoutitem_workstatus_workingday_subtitle">0.5日単位で入力可能です。\n当月の日数を超える値は入力できません。</string>
+    <string name="edittext_hint_workstatus_workingday">例：19.5</string>
     <string name="layoutitem_workstatus_workingday_unit">日</string>
-    <string name="layoutitem_workstatus_workingday_error">入力形式が正しくありません。\n0.5日単位で入力してください。\nまた、当月の日数を超えて入力することはできません。</string>
 
-    <string name="layoutitem_workstatus_workingtime_title">所定労働時間</string>
+    <string name="layoutitem_workstatus_workingtime_title">残業を含めない実働時間</string>
+    <string name="layoutitem_workstatus_workingtime_subtitle">0.1時間単位で入力可能です。\n当月の最大時間（日数×24時間）を超える値は入力できません。</string>
     <string name="edittext_hint_workstatus_workingtime">例：150</string>
+    <string name="layoutitem_workstatus_workingtime_unit">時間</string>
 
     <string name="layoutitem_workstatus_overtime_title">残業時間</string>
+    <string name="layoutitem_workstatus_overtime_subtitle">0.1時間単位で入力可能です。\n当月の最大時間（日数×24時間）を超える値は入力できません。</string>
     <string name="edittext_hint_workstatus_overtime">例：19.3</string>
+    <string name="layoutitem_workstatus_overtime_unit">時間</string>
 
-    <string name="layoutitem_workstatus_paid_holiday_title">有給休暇</string>
+    <string name="layoutitem_workstatus_paid_holiday_title">取得した有給休暇</string>
+    <string name="layoutitem_workstatus_paid_holiday_subtitle">0.5日単位で入力可能です。\n当月の日数を超える値は入力できません。</string>
     <string name="edittext_hint_workstatus_paid_holiday">例：1.5</string>
-
+    <string name="layoutitem_workstatus_paid_holiday_unit">日</string>
 
     <!--  収入情報入力フラグメント  -->
     <!--  共通  -->
     <string name="layoutitem_income_common_subtitle">1円単位で入力可能です。</string>
     <string name="layoutitem_income_common_unit">円</string>
-    <string name="layoutitem_income_common_error">入力形式が正しくありません。\n1円単位で入力してください。</string>
 
     <string name="layoutitem_income_baseincome_title">基本支給額</string>
     <string name="edittext_hint_income_baseincome">例：250000</string>
@@ -112,7 +110,6 @@
     <!--  共通  -->
     <string name="layoutitem_deduction_common_subtitle">1円単位で入力可能です。</string>
     <string name="layoutitem_deduction_common_unit">円</string>
-    <string name="layoutitem_deduction_common_error">入力形式が正しくありません。\n1円単位で入力してください。</string>
 
     <string name="layoutitem_deduction_health_title">健康保険料</string>
     <string name="edittext_hint_deduction_health">例：10000</string>
@@ -143,10 +140,10 @@
     <string name="annual_analyze_row_unit_day">日</string>
     <string name="annual_analyze_row_unit_time">時間</string>
     <string name="annual_analyze_row_unit_money">円</string>
-    <string name="annual_analyze_row_working_day">合計勤務日数</string>
+    <string name="annual_analyze_row_working_day">合計実働日数</string>
     <string name="annual_analyze_row_paid_holiday">合計有給休暇</string>
-    <string name="annual_analyze_row_working_time">合計労働時間</string>
-    <string name="annual_analyze_row_base_working_time">所定労働時間</string>
+    <string name="annual_analyze_row_working_time">合計実働時間</string>
+    <string name="annual_analyze_row_base_working_time">基本時間</string>
     <string name="annual_analyze_row_over_working_time">残業時間</string>
     <string name="annual_analyze_row_income">合計収入額</string>
     <string name="annual_analyze_row_base_income">基本支給額</string>
@@ -162,17 +159,17 @@
     <string name="annual_analyze_row_deduction_income">所得税</string>
     <string name="annual_analyze_row_deduction_resident">住民税</string>
     <string name="annual_analyze_row_deduction_other">その他</string>
-    <string name="annual_analyze_row_after_tax_income">手取りの総額</string>
+    <string name="annual_analyze_row_after_tax_income">合計手取り</string>
 
     <!--  グラフ表示  -->
     <string name="toolbar_title_chart">詳細情報</string>
     <string name="bar_chart_long_touch_guide">チャートを長押しすると\n詳細な数値を確認できます</string>
-    <string name="bar_chart_description_working_day">%1$d年の勤務日数</string>
-    <string name="bar_chart_description_working_day_for_work_year">%1$d年度の勤務日数</string>
+    <string name="bar_chart_description_working_day">%1$d年の実働日数</string>
+    <string name="bar_chart_description_working_day_for_work_year">%1$d年度の実働日数</string>
     <string name="bar_chart_description_paid_holiday">%1$d年に取得した有給休暇</string>
     <string name="bar_chart_description_paid_holiday_for_work_year">%1$d年度に取得した有給休暇</string>
-    <string name="bar_chart_description_working_time">%1$d年の労働時間</string>
-    <string name="bar_chart_description_working_time_for_work_year">%1$d年度の労働時間</string>
+    <string name="bar_chart_description_working_time">%1$d年の実働時間</string>
+    <string name="bar_chart_description_working_time_for_work_year">%1$d年度の実働時間</string>
     <string name="bar_chart_description_salary">%1$d年の月収（控除前）</string>
     <string name="bar_chart_description_salary_for_work_year">%1$d年度の月収（控除前）</string>
     <string name="bar_chart_description_bonus">%1$d年のボーナス（控除前）</string>
@@ -187,7 +184,7 @@
     <string name="bar_chart_description_bonus_after_tax_for_work_year">%1$d年度のボーナス（手取り）</string>
 
     <!--  凡例用のラベル  -->
-    <string name="bar_chart_label_work_time">所定労働時間</string>
+    <string name="bar_chart_label_work_time">基本時間</string>
     <string name="bar_chart_label_overtime">残業時間</string>
     <string name="bar_chart_label_base">基本支給</string>
     <string name="bar_chart_label_overtime_salary">残業手当</string>
@@ -202,7 +199,7 @@
     <!--  グラフ長押しダイアログ  -->
     <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
     <string name="chart_dialog_title_paid_holiday">有給休暇日数\n単位：日</string>
-    <string name="chart_dialog_title_working_time">所定労働時間\n単位：時間</string>
+    <string name="chart_dialog_title_working_time">基本労働時間\n単位：時間</string>
     <string name="chart_dialog_title_overtime">残業時間\n単位：時間</string>
     <string name="chart_dialog_title_base_income">基本支給額\n単位：円</string>
     <string name="chart_dialog_title_overtime_income">残業手当\n単位：円</string>

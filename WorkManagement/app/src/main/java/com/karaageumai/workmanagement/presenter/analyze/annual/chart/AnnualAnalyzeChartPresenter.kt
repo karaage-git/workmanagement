@@ -247,7 +247,7 @@ class AnnualAnalyzeChartPresenter(aActivity: IAnnualAnalyzeChart) : IAnnualAnaly
                                     R.string.chart_dialog_value_month,
                                     data.month
                             ),
-                            // 所定労働時間
+                            // 基本労働時間
                             (data.workingTime / 10.0).toString(),
                             // 残業時間
                             (data.overtime / 10.0).toString(),

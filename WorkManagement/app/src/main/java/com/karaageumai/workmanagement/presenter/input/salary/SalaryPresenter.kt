@@ -352,7 +352,7 @@ class SalaryPresenter(aActivity: IBaseInputView) : ISalaryPresenter {
             return IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_DAY_EXCESS
         }
 
-        // 所定労働時間と残業時間のチェック（データとしては10倍で保持しているため注意）
+        // 基本労働時間と残業時間のチェック（データとしては10倍で保持しているため注意）
         if ((mSalaryInfo.workingTime + mSalaryInfo.overtime) > dayOfMonth * Constants.MAX_TIME_PER_DAY * 10) {
             Log.i("ERROR_SUM_WORKING_TIME_EXCESS")
             return IBaseInputPresenter.DataConsistency.ERROR_SUM_WORKING_TIME_EXCESS
