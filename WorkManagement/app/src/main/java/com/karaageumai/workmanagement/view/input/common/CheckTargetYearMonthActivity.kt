@@ -109,13 +109,16 @@ class CheckTargetYearMonthActivity : AppCompatActivity() {
 
         }
 
+        // ドロップダウンリストの初期位置を実行日の前月に設定する
         val yearMonthPair = CalendarUtil.getCurrentYearMonth()
         val year = yearMonthPair.first
         val month = yearMonthPair.second
         Log.i("current : $year/$month")
-        val position = mYearMonthList.indexOf(Pair(year, month))
-        if(position >= 0) {
-            mSpinner.setSelection(position)
+        val position = mYearMonthList.indexOf(Pair(year, month)) - 1
+        when {
+            position <= 0 -> mSpinner.setSelection(0)
+            position >= mYearMonthList.lastIndex -> mSpinner.setSelection(mYearMonthList.lastIndex)
+            else -> mSpinner.setSelection(position)
         }
 
         mStartButton.setOnClickListener {
