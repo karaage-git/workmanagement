@@ -10,18 +10,18 @@
         android:id="@+id/tv_row_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textColor="@color/black"
-        android:gravity="start"/>
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/tv_row_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:textColor="@color/black"
-        android:gravity="end"
+        android:gravity="end|bottom"
         android:autoSizeTextType="uniform"
         android:lines="1" />
 
@@ -29,8 +29,8 @@
         android:id="@+id/tv_row_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:textSize="15dp"
         android:textColor="@color/black"
-        android:gravity="start"/>
+        android:gravity="start" />
 
 </TableRow>
