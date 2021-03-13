@@ -197,7 +197,7 @@
     <string name="bar_chart_label_other">他</string>
 
     <!--  グラフ長押しダイアログ  -->
-    <string name="chart_dialog_title_working_day">勤務日数\n単位：日</string>
+    <string name="chart_dialog_title_working_day">実働日数\n単位：日</string>
     <string name="chart_dialog_title_paid_holiday">有給休暇日数\n単位：日</string>
     <string name="chart_dialog_title_working_time">基本労働時間\n単位：時間</string>
     <string name="chart_dialog_title_overtime">残業時間\n単位：時間</string>
