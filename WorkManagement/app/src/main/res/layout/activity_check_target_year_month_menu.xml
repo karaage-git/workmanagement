@@ -18,7 +18,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="0.3" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,7 +26,9 @@
         android:text="@string/message_check_target_year_month_1"
         android:textSize="20sp"
         android:layout_margin="10dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:autoSizeTextType="uniform"
+        android:lines="1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,17 +36,17 @@
         android:text="@string/message_check_target_year_month_2"
         android:textSize="15sp"
         android:layout_margin="10dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:autoSizeTextType="uniform"
+        android:lines="1"/>
 
-    <!--  YYYYMM入力欄  -->
     <Spinner
         android:id="@+id/sp_target"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:spinnerMode="dropdown"
-        android:layout_marginStart="@dimen/margin_top_menu_side"
-        android:layout_marginEnd="@dimen/margin_top_menu_side"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/layout_dropdown_border" />
 
     <Space
         android:layout_width="match_parent"
@@ -55,11 +57,9 @@
     <Button
         android:id="@+id/btn_start"
         style="@style/CustomLayoutButton"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/start"
         android:background="@drawable/selector_next"/>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 </LinearLayout>
