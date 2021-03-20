@@ -5,6 +5,9 @@
 毎月の労働時間、給料、控除を記録するAndroidアプリです。  
 記録したデータをチャート表示させることができます。
 
+【Google Playで公開中】  
+https://play.google.com/store/apps/details?id=com.karaageumai.workmanagement
+
 本アプリでは、労働時間や給料の記録および記録したデータの閲覧が可能です。
 
 ## データ記録  
